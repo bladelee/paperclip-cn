@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { MoreHorizontal, Play } from "lucide-react";
 import { Link } from "@/lib/router";
 import { AgentIcon } from "@/components/AgentIconPicker";
@@ -35,6 +36,7 @@ export type RoutineListRowItem = {
 };
 
 export function formatLastRunTimestamp(value: Date | string | null | undefined) {
+  const { t } = useTranslation("common");
   if (!value) return "Never";
   return new Date(value).toLocaleString();
 }

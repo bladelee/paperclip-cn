@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { cn } from "../lib/utils";
 
 const BAYER_4X4 = [
@@ -168,6 +169,7 @@ export function CompanyPatternIcon({
   className,
   logoFit = "cover",
 }: CompanyPatternIconProps) {
+  const { t } = useTranslation("common");
   const initial = companyName.trim().charAt(0).toUpperCase() || "?";
   const [imageError, setImageError] = useState(false);
   const logo = !imageError && typeof logoUrl === "string" && logoUrl.trim().length > 0 ? logoUrl : null;

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import type {
   Agent,
@@ -97,6 +98,7 @@ function filterPaperclipYaml(yaml: string, checkedFiles: Set<string>): string {
   let sectionBuffer: string[] = [];
 
   function flushSidebarSection() {
+  const { t } = useTranslation("company");
     if (currentSidebarHeaderLine !== null && currentSidebarBuffer.length > 0) {
       sectionBuffer.push(currentSidebarHeaderLine);
       sectionBuffer.push(...currentSidebarBuffer);

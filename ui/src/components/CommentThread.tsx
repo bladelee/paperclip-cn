@@ -1,4 +1,5 @@
 import { memo, useEffect, useMemo, useRef, useState, type ChangeEvent } from "react";
+import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
 import type {
   Agent,
@@ -118,6 +119,7 @@ function loadDraft(draftKey: string): string {
 }
 
 function saveDraft(draftKey: string, value: string) {
+  const { t } = useTranslation("issues");
   try {
     if (value.trim()) {
       localStorage.setItem(draftKey, value);

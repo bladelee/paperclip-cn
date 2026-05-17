@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import type { IssueRelationIssueSummary } from "@paperclipai/shared";
 import { Link } from "@/lib/router";
 import { cn } from "../lib/utils";
@@ -16,6 +17,7 @@ export function IssueReferencePill({
   className?: string;
   children?: ReactNode;
 }) {
+  const { t } = useTranslation("common");
   const issueLabel = issue.identifier ?? issue.title;
   const classNames = cn(
     "paperclip-mention-chip paperclip-mention-chip--issue",

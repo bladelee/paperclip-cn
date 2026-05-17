@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Clock, FlaskConical, Play, Search } from "lucide-react";
 import type {
@@ -21,6 +22,7 @@ import {
 } from "@/components/ui/dialog";
 
 function issueHref(identifier: string | null, issueId: string) {
+  const { t } = useTranslation("settings");
   if (!identifier) return `/issues/${issueId}`;
   const prefix = identifier.split("-")[0] || "PAP";
   return `/${prefix}/issues/${identifier}`;

@@ -13,12 +13,14 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Fragment, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { PluginSlotOutlet, usePluginSlots } from "@/plugins/slots";
 import { PluginLauncherOutlet, usePluginLaunchers } from "@/plugins/launchers";
 
 type GlobalToolbarContext = { companyId: string | null; companyPrefix: string | null };
 
 function GlobalToolbarPlugins({ context }: { context: GlobalToolbarContext }) {
+  const { t } = useTranslation("common");
   const { slots } = usePluginSlots({ slotTypes: ["globalToolbarButton"], companyId: context.companyId });
   const { launchers } = usePluginLaunchers({ placementZones: ["globalToolbarButton"], companyId: context.companyId, enabled: !!context.companyId });
   if (slots.length === 0 && launchers.length === 0) return null;

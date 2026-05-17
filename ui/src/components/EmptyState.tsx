@@ -2,6 +2,7 @@ import { Plus } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+import { useTranslation } from "react-i18next";
 interface EmptyStateProps {
   icon: LucideIcon;
   message: string;
@@ -10,6 +11,7 @@ interface EmptyStateProps {
 }
 
 export function EmptyState({ icon: Icon, message, action, onAction }: EmptyStateProps) {
+  const { t } = useTranslation("common");
   return (
     <div className="flex flex-col items-center justify-center py-16 text-center">
       <div className="bg-muted/50 p-4 mb-4">

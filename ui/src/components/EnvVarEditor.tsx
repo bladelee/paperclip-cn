@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { CompanySecret, EnvBinding, SecretVersionSelector } from "@paperclipai/shared";
 import { AlertCircle, X } from "lucide-react";
 import { cn } from "../lib/utils";
@@ -93,6 +94,7 @@ export function EnvVarEditor({
   }, [value]);
 
   function emit(nextRows: Row[]) {
+  const { t } = useTranslation("common");
     const rec: Record<string, EnvBinding> = {};
     for (const row of nextRows) {
       const key = row.key.trim();

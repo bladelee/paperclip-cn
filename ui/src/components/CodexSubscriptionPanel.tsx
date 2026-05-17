@@ -1,6 +1,7 @@
 import type { QuotaWindow } from "@paperclipai/shared";
 import { cn, quotaSourceDisplayName } from "@/lib/utils";
 
+import { useTranslation } from "react-i18next";
 interface CodexSubscriptionPanelProps {
   windows: QuotaWindow[];
   source?: string | null;
@@ -57,6 +58,7 @@ export function CodexSubscriptionPanel({
   source = null,
   error = null,
 }: CodexSubscriptionPanelProps) {
+  const { t } = useTranslation("common");
   const ordered = orderedWindows(windows);
   const accountWindows = ordered.filter((window) => !isModelSpecific(window.label));
   const modelWindows = ordered.filter((window) => isModelSpecific(window.label));

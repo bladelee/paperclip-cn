@@ -5,6 +5,7 @@ import { cn } from "../lib/utils";
 import { createIssueDetailPath } from "../lib/issueDetailBreadcrumb";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
+import { useTranslation } from "react-i18next";
 const TRIGGER_LABELS: Record<string, string> = {
   no_comment_streak: "No-comment streak",
   long_active_duration: "Long active duration",
@@ -35,6 +36,7 @@ export function ProductivityReviewBadge({
   className?: string;
   hideLabel?: boolean;
 }) {
+  const { t } = useTranslation("common");
   const label = productivityReviewTriggerLabel(review.trigger);
   const reviewIdentifier = review.reviewIdentifier ?? review.reviewIssueId.slice(0, 8);
   const reviewPath = createIssueDetailPath(review.reviewIdentifier ?? review.reviewIssueId);

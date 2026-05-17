@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { Agent } from "@paperclipai/shared";
 import {
   Popover,

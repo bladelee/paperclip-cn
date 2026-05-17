@@ -1,6 +1,7 @@
 import { UserPlus, Lightbulb, ShieldAlert, ShieldCheck } from "lucide-react";
 import { formatCents } from "../lib/utils";
 
+import { useTranslation } from "react-i18next";
 export const typeLabel: Record<string, string> = {
   hire_agent: "Hire Agent",
   approve_ceo_strategy: "CEO Strategy",
@@ -46,6 +47,7 @@ export const typeIcon: Record<string, typeof UserPlus> = {
 export const defaultTypeIcon = ShieldCheck;
 
 function PayloadField({ label, value }: { label: string; value: unknown }) {
+  const { t } = useTranslation("common");
   if (!value) return null;
   return (
     <div className="flex items-center gap-2">

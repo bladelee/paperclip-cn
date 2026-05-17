@@ -3,7 +3,9 @@ import { Button } from "@/components/ui/button";
 import { formatMonitorOffset } from "@/lib/issue-monitor";
 import { formatDateTime } from "@/lib/utils";
 
+import { useTranslation } from "react-i18next";
 function resolveScheduledMonitor(issue: Issue) {
+  const { t } = useTranslation("common");
   const nextCheckAt =
     issue.monitorNextCheckAt ??
     issue.executionPolicy?.monitor?.nextCheckAt ??

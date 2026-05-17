@@ -1,4 +1,5 @@
 import { useId, useState, type ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import {
   ChevronDown,
   CircleAlert,
@@ -99,6 +100,7 @@ const TONE_TOKENS: Record<SystemNoticeTone, ToneTokens> = {
 };
 
 function formatTimestamp(ts: string) {
+  const { t } = useTranslation("common");
   try {
     return new Date(ts).toLocaleString(undefined, {
       month: "short",

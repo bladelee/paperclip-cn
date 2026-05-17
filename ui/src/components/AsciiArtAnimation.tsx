@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 const CHARS = [" ", ".", "·", "▪", "▫", "○"] as const;
 const TARGET_FPS = 24;
@@ -60,6 +61,7 @@ function spriteSize(sprite: PaperclipSprite): { width: number; height: number } 
 }
 
 export function AsciiArtAnimation() {
+  const { t } = useTranslation("common");
   const preRef = useRef<HTMLPreElement>(null);
   const frameRef = useRef<number | null>(null);
 

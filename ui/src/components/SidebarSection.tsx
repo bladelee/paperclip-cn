@@ -1,4 +1,5 @@
 import { useState, type ComponentType, type ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "@/lib/router";
 import { ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -68,6 +69,7 @@ function SidebarSectionHeader({
   label,
   menu,
 }: Pick<SidebarSectionProps, "collapsible" | "headerAction" | "label" | "menu">) {
+  const { t } = useTranslation("common");
   const { isMobile } = useSidebar();
   const [menuOpen, setMenuOpen] = useState(false);
   const hasMenu = Boolean(

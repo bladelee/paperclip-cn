@@ -1,4 +1,5 @@
 import { startTransition, useDeferredValue, useEffect, useMemo, useState, useCallback, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { useQueries, useQuery } from "@tanstack/react-query";
 import { accessApi } from "../api/access";
 import { useDialogActions } from "../context/DialogContext";
@@ -144,6 +145,7 @@ function getViewState(key: string): IssueViewState {
 }
 
 function saveViewState(key: string, state: IssueViewState) {
+  const { t } = useTranslation("issues");
   localStorage.setItem(key, JSON.stringify(state));
 }
 

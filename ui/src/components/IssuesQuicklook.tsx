@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { Issue } from "@paperclipai/shared";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { createIssueDetailPath, withIssueDetailHeaderSeed } from "../lib/issueDetailBreadcrumb";
@@ -10,6 +11,7 @@ interface IssuesQuicklookProps {
 }
 
 export function IssuesQuicklook({ issue, children }: IssuesQuicklookProps) {
+  const { t } = useTranslation("common");
   const [open, setOpen] = useState(false);
 
   return (

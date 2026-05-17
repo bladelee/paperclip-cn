@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Dialog as DialogPrimitive } from "radix-ui";
 import { ChevronLeft, ChevronRight, Download, X } from "lucide-react";
 import type { IssueAttachment } from "@paperclipai/shared";
@@ -16,6 +17,7 @@ export function ImageGalleryModal({
   open,
   onOpenChange,
 }: ImageGalleryModalProps) {
+  const { t } = useTranslation("common");
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const imageRef = useRef<HTMLImageElement>(null);
 

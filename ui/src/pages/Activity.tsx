@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
 import type { ActivityEvent, Agent } from "@paperclipai/shared";
 import { activityApi } from "../api/activity";
@@ -23,6 +24,7 @@ import { History } from "lucide-react";
 const ACTIVITY_PAGE_LIMIT = 200;
 
 function detailString(event: ActivityEvent, ...keys: string[]) {
+  const { t } = useTranslation("dashboard");
   const details = event.details;
   for (const key of keys) {
     const value = details?.[key];

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link, Navigate, useLocation, useNavigate, useParams } from "@/lib/router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { ExecutionWorkspace, Issue, Project, ProjectWorkspace, RoutineListItem } from "@paperclipai/shared";
@@ -70,6 +71,7 @@ function resolveExecutionWorkspaceTab(pathname: string, workspaceId: string): Ex
 }
 
 function executionWorkspaceTabPath(workspaceId: string, tab: ExecutionWorkspaceTab) {
+  const { t } = useTranslation("projects");
   const segment = tab === "runtime_logs" ? "runtime-logs" : tab;
   return `/execution-workspaces/${workspaceId}/${segment}`;
 }

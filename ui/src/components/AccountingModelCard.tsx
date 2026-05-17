@@ -1,6 +1,7 @@
 import { Database, Gauge, ReceiptText } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
+import { useTranslation } from "react-i18next";
 const SURFACES = [
   {
     title: "Inference ledger",
@@ -26,6 +27,7 @@ const SURFACES = [
 ] as const;
 
 export function AccountingModelCard() {
+  const { t } = useTranslation("costs");
   return (
     <Card className="relative overflow-hidden border-border/70">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(244,114,182,0.08),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(56,189,248,0.1),transparent_32%)]" />

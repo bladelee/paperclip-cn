@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   BookOpen,
   Bot,
@@ -130,6 +131,7 @@ import { IssueReferencePill } from "@/components/IssueReferencePill";
 /* ------------------------------------------------------------------ */
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  const { t } = useTranslation("common");
   return (
     <section className="space-y-4">
       <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">

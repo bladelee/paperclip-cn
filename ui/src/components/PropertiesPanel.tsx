@@ -3,7 +3,9 @@ import { usePanel } from "../context/PanelContext";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
+import { useTranslation } from "react-i18next";
 export function PropertiesPanel() {
+  const { t } = useTranslation("common");
   const { panelContent, panelVisible, setPanelVisible } = usePanel();
 
   if (!panelContent) return null;

@@ -1,5 +1,6 @@
 import { cn } from "../lib/utils";
 
+import { useTranslation } from "react-i18next";
 interface HermesIconProps {
   className?: string;
 }
@@ -11,6 +12,7 @@ interface HermesIconProps {
  * ⚕️ inspired but as the proper caduceus (Hermes' symbol): staff + two snakes + wings.
  */
 export function HermesIcon({ className }: HermesIconProps) {
+  const { t } = useTranslation("common");
   return (
     <svg
       viewBox="0 0 24 24"

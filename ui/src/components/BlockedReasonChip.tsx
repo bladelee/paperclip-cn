@@ -1,5 +1,6 @@
 import { AlertTriangle, Clock, Pause, User, Wrench } from "lucide-react";
 import type { ComponentType } from "react";
+import { useTranslation } from "react-i18next";
 import type { IssueBlockedInboxSeverity } from "@paperclipai/shared";
 import { cn } from "../lib/utils";
 import {
@@ -53,6 +54,7 @@ export function BlockedReasonChip({
   compact = false,
   className,
 }: BlockedReasonChipProps) {
+  const { t } = useTranslation("common");
   const variant = blockedReasonVariant(reason);
   const label = blockedVariantLabel(variant);
   const Icon = VARIANT_ICONS[variant];

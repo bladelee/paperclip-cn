@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type {
   Agent,
@@ -183,6 +184,7 @@ const MAX_TURN_CONTINUATION_DEFAULT_DELAY_SEC = 1;
 const MAX_TURN_CONTINUATION_MAX_DELAY_SEC = 300;
 
 function clampInteger(value: number, min: number, max: number) {
+  const { t } = useTranslation("agents");
   return Math.max(min, Math.min(max, Math.floor(value)));
 }
 

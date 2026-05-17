@@ -1,7 +1,9 @@
 import { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { getWorktreeUiBranding } from "../lib/worktree-branding";
 
 export function WorktreeBanner() {
+  const { t } = useTranslation("common");
   const branding = getWorktreeUiBranding();
   const [copied, setCopied] = useState(false);
 

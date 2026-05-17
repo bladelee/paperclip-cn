@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
+import { useTranslation } from "react-i18next";
 type IdentitySize = "xs" | "sm" | "default" | "lg";
 
 export interface IdentityProps {
@@ -25,6 +26,7 @@ const textSize: Record<IdentitySize, string> = {
 };
 
 export function Identity({ name, avatarUrl, initials, size = "default", className }: IdentityProps) {
+  const { t } = useTranslation("common");
   const displayInitials = initials ?? deriveInitials(name);
 
   return (

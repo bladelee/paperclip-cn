@@ -1,4 +1,5 @@
 import { startTransition, useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate, useSearchParams } from "@/lib/router";
 import { ArrowUpDown, Check, ChevronDown, ChevronRight, Layers, Plus, Repeat } from "lucide-react";
@@ -59,6 +60,7 @@ const catchUpPolicyDescriptions: Record<string, string> = {
 };
 
 function autoResizeTextarea(element: HTMLTextAreaElement | null) {
+  const { t } = useTranslation("issues");
   if (!element) return;
   element.style.height = "auto";
   element.style.height = `${element.scrollHeight}px`;

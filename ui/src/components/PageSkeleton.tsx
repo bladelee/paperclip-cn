@@ -1,5 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
+import { useTranslation } from "react-i18next";
 interface PageSkeletonProps {
   variant?:
     | "list"
@@ -13,6 +14,7 @@ interface PageSkeletonProps {
 }
 
 export function PageSkeleton({ variant = "list" }: PageSkeletonProps) {
+  const { t } = useTranslation("common");
   if (variant === "dashboard") {
     return (
       <div className="space-y-6">

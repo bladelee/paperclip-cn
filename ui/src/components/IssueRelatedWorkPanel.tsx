@@ -1,6 +1,7 @@
 import type { IssueRelatedWorkItem, IssueRelatedWorkSummary } from "@paperclipai/shared";
 import { IssueReferencePill } from "./IssueReferencePill";
 
+import { useTranslation } from "react-i18next";
 type GroupedSource = {
   label: string;
   count: number;
@@ -35,6 +36,7 @@ function Section({
   items: IssueRelatedWorkItem[];
   emptyLabel: string;
 }) {
+  const { t } = useTranslation("common");
   return (
     <section className="space-y-3 rounded-lg border border-border p-3">
       <div className="space-y-1">

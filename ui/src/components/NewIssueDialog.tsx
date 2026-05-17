@@ -1,4 +1,5 @@
 import { memo, useState, useEffect, useRef, useCallback, useMemo, type ChangeEvent, type DragEvent, type RefObject } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import type { IssueWorkMode } from "@paperclipai/shared";
 import { pickTextColorForSolidBg } from "@/lib/color-contrast";
@@ -159,6 +160,7 @@ function loadDraft(): IssueDraft | null {
 }
 
 function saveDraft(draft: IssueDraft) {
+  const { t } = useTranslation("common");
   localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
 }
 

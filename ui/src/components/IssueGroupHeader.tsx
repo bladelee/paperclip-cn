@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { ChevronRight } from "lucide-react";
 import { cn } from "../lib/utils";
 
@@ -19,6 +20,7 @@ export function IssueGroupHeader({
   trailing,
   className,
 }: IssueGroupHeaderProps) {
+  const { t } = useTranslation("common");
   return (
     <div className={cn("flex items-center py-1.5 pl-1 pr-3", className)}>
       {collapsible ? (

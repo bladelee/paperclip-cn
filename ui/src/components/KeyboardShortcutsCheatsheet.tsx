@@ -1,5 +1,6 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
+import { useTranslation } from "react-i18next";
 interface ShortcutEntry {
   keys: string[];
   label: string;
@@ -48,6 +49,7 @@ const sections: ShortcutSection[] = [
 ];
 
 function KeyCap({ children }: { children: string }) {
+  const { t } = useTranslation("common");
   return (
     <kbd className="inline-flex h-6 min-w-6 items-center justify-center rounded border border-border bg-muted px-1.5 font-mono text-xs font-medium text-foreground shadow-[0_1px_0_1px_hsl(var(--border))]">
       {children}

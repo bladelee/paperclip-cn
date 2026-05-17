@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useSidebar } from "../context/SidebarContext";
 
@@ -15,6 +16,7 @@ interface PageTabBarProps {
 }
 
 export function PageTabBar({ items, value, onValueChange, align = "center" }: PageTabBarProps) {
+  const { t } = useTranslation("common");
   const { isMobile } = useSidebar();
 
   if (isMobile && value !== undefined && onValueChange) {

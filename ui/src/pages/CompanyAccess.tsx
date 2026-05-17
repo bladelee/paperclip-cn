@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   HUMAN_COMPANY_MEMBERSHIP_ROLE_LABELS,
@@ -39,6 +40,7 @@ const permissionLabels: Record<PermissionKey, string> = {
 };
 
 function formatGrantSummary(member: CompanyMember) {
+  const { t } = useTranslation("company");
   if (member.grants.length === 0) return "No explicit grants";
   return member.grants.map((grant) => permissionLabels[grant.permissionKey]).join(", ");
 }

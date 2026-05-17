@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "@/lib/router";
 import type { Issue, ExecutionWorkspace } from "@paperclipai/shared";
 import { useQuery } from "@tanstack/react-query";
@@ -23,6 +24,7 @@ const EXECUTION_WORKSPACE_OPTIONS = [
 ] as const;
 
 function issueModeForExistingWorkspace(mode: string | null | undefined) {
+  const { t } = useTranslation("common");
   if (mode === "isolated_workspace" || mode === "operator_branch" || mode === "shared_workspace") return mode;
   if (mode === "adapter_managed" || mode === "cloud_sandbox") return "agent_default";
   return "shared_workspace";

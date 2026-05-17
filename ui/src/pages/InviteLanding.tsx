@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AGENT_ADAPTER_TYPES } from "@paperclipai/shared";
 import type { AgentAdapterType, JoinRequest } from "@paperclipai/shared";
@@ -44,6 +45,7 @@ const modeButtonBaseClassName =
   "flex-1 border px-3 py-2 text-sm transition-colors";
 
 function formatHumanRole(role: string | null | undefined) {
+  const { t } = useTranslation("auth");
   if (!role) return null;
   return role.charAt(0).toUpperCase() + role.slice(1);
 }

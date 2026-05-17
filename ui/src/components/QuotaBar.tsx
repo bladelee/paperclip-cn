@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 
+import { useTranslation } from "react-i18next";
 interface QuotaBarProps {
   label: string;
   // value between 0 and 100
@@ -25,6 +26,7 @@ export function QuotaBar({
   showDeficitNotch = false,
   className,
 }: QuotaBarProps) {
+  const { t } = useTranslation("common");
   const clampedPct = Math.min(100, Math.max(0, percentUsed));
   // keep the notch visible even near the edges
   const notchLeft = Math.min(clampedPct, 97);

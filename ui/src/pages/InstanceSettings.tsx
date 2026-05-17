@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Clock3, ExternalLink, Settings } from "lucide-react";
 import type { InstanceSchedulerHeartbeatAgent } from "@paperclipai/shared";
@@ -19,6 +20,7 @@ function asRecord(value: unknown): Record<string, unknown> | null {
 }
 
 function humanize(value: string) {
+  const { t } = useTranslation("settings");
   return value.replaceAll("_", " ");
 }
 

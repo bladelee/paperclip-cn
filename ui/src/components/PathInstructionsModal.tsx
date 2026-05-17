@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Apple, Monitor, Terminal } from "lucide-react";
 import {
   Dialog,
@@ -61,6 +62,7 @@ export function PathInstructionsModal({
   open,
   onOpenChange,
 }: PathInstructionsModalProps) {
+  const { t } = useTranslation("common");
   const [platform, setPlatform] = useState<Platform>(detectPlatform);
 
   const current = instructions[platform];

@@ -1,6 +1,7 @@
 import { AlertTriangle, RotateCcw, TimerReset } from "lucide-react";
 import type { DevServerHealthStatus } from "../api/health";
 
+import { useTranslation } from "react-i18next";
 function formatRelativeTimestamp(value: string | null): string | null {
   if (!value) return null;
   const timestamp = new Date(value).getTime();
@@ -27,6 +28,7 @@ function describeReason(devServer: DevServerHealthStatus): string {
 }
 
 export function DevRestartBanner({ devServer }: { devServer?: DevServerHealthStatus }) {
+  const { t } = useTranslation("common");
   if (!devServer?.enabled || !devServer.restartRequired) return null;
 
   const changedAt = formatRelativeTimestamp(devServer.lastChangedAt);

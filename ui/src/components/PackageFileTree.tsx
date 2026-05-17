@@ -1,7 +1,9 @@
 import { FileTree } from "./FileTree";
 import type { FileTreeProps } from "./FileTree";
 
+import { useTranslation } from "react-i18next";
 export function PackageFileTree({ wrapLabels = false, ...props }: FileTreeProps) {
+  const { t } = useTranslation("common");
   return <FileTree {...props} wrapLabels={wrapLabels} />;
 }
 

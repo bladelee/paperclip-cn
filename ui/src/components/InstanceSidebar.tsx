@@ -6,7 +6,9 @@ import { queryKeys } from "@/lib/queryKeys";
 import { SIDEBAR_SCROLL_RESET_STATE } from "@/lib/navigation-scroll";
 import { SidebarNavItem } from "./SidebarNavItem";
 
+import { useTranslation } from "react-i18next";
 export function InstanceSidebar() {
+  const { t } = useTranslation("common");
   const { data: plugins } = useQuery({
     queryKey: queryKeys.plugins.all,
     queryFn: () => pluginsApi.list(),

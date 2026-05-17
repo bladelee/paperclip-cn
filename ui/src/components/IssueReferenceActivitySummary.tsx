@@ -2,6 +2,7 @@ import type { ActivityEvent } from "@paperclipai/shared";
 import { Plus, Minus } from "lucide-react";
 import { IssueReferencePill } from "./IssueReferencePill";
 
+import { useTranslation } from "react-i18next";
 type ActivityIssueReference = {
   id: string;
   identifier?: string | null;
@@ -25,6 +26,7 @@ function Section({
   items: ActivityIssueReference[];
   strikethrough?: boolean;
 }) {
+  const { t } = useTranslation("common");
   if (items.length === 0) return null;
   return (
     <div className="flex flex-wrap items-center gap-1.5">

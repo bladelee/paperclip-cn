@@ -1,4 +1,5 @@
 import { type ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "@/lib/router";
 import { cn } from "../lib/utils";
 
@@ -25,6 +26,7 @@ export function EntityRow({
   onClick,
   className,
 }: EntityRowProps) {
+  const { t } = useTranslation("common");
   const isClickable = !!(to || onClick);
   const classes = cn(
     "flex items-center gap-3 px-4 py-2 text-sm border-b border-border last:border-b-0 transition-colors",

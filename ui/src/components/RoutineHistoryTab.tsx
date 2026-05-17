@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { History as HistoryIcon, RotateCcw, Search } from "lucide-react";
 import type {
@@ -62,6 +63,7 @@ export function RoutineHistoryTab({
   onRestoreSecretMaterials,
   onRestored,
 }: Props) {
+  const { t } = useTranslation("common");
   const queryClient = useQueryClient();
   const { pushToast } = useToastActions();
   const [selectedRevisionId, setSelectedRevisionId] = useState<string | null>(null);

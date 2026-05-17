@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "@/lib/router";
 import { useQuery } from "@tanstack/react-query";
 import { useCompany } from "../context/CompanyContext";
@@ -36,6 +37,7 @@ import { agentUrl, projectUrl } from "../lib/utils";
 const SEARCH_ALL_VALUE = "__paperclip-search-all__";
 
 export function buildFullSearchPath(query: string) {
+  const { t } = useTranslation("common");
   const trimmed = query.trim();
   return trimmed.length === 0 ? "/search" : `/search?q=${encodeURIComponent(trimmed)}`;
 }

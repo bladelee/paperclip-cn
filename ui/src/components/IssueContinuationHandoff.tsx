@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { IssueDocument } from "@paperclipai/shared";
 import { ISSUE_CONTINUATION_SUMMARY_DOCUMENT_KEY } from "@paperclipai/shared";
 import { Button } from "@/components/ui/button";
@@ -15,6 +16,7 @@ export function IssueContinuationHandoff({
   document,
   focusSignal = 0,
 }: IssueContinuationHandoffProps) {
+  const { t } = useTranslation("common");
   const [expanded, setExpanded] = useState(false);
   const [copied, setCopied] = useState(false);
   const [highlighted, setHighlighted] = useState(false);

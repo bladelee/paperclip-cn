@@ -1,5 +1,6 @@
 import { DollarSign } from "lucide-react";
 
+import { useTranslation } from "react-i18next";
 export type BudgetSidebarMarkerLevel = "healthy" | "warning" | "critical";
 
 const levelClasses: Record<BudgetSidebarMarkerLevel, string> = {
@@ -21,6 +22,7 @@ export function BudgetSidebarMarker({
   title?: string;
   level?: BudgetSidebarMarkerLevel;
 }) {
+  const { t } = useTranslation("common");
   const accessibleTitle = title ?? defaultTitles[level];
 
   return (

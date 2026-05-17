@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { FeedbackDataSharingPreference, FeedbackVoteValue } from "@paperclipai/shared";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -53,6 +54,7 @@ export function OutputFeedbackButtons({
     options?: { allowSharing?: boolean; reason?: string },
     behavior?: { keepReasonPromptOpen?: boolean },
   ) {
+  const { t } = useTranslation("common");
     setIsSaving(true);
     try {
       await onVote(vote, options);

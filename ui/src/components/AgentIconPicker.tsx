@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import {
   type LucideIcon,
 } from "lucide-react";
@@ -20,6 +21,7 @@ interface AgentIconProps {
 }
 
 export function AgentIcon({ icon, className }: AgentIconProps) {
+  const { t } = useTranslation("common");
   const Icon = getAgentIcon(icon);
   return <Icon className={className} />;
 }

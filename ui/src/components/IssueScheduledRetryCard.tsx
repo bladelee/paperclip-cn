@@ -7,9 +7,11 @@ import { formatRetryReason } from "@/lib/runRetryState";
 import type { IssueScheduledRetry } from "@paperclipai/shared";
 import { useRetryNowMutation, type RetryNowError } from "../hooks/useRetryNowMutation";
 
+import { useTranslation } from "react-i18next";
 const MAX_TURN_CONTINUATION = "max_turns_continuation";
 
 function isContinuationReason(reason: string | null | undefined) {
+  const { t } = useTranslation("common");
   return reason === MAX_TURN_CONTINUATION;
 }
 

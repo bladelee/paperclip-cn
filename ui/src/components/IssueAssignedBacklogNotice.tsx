@@ -2,6 +2,7 @@ import { Flag } from "lucide-react";
 import type { Agent } from "@paperclipai/shared";
 import { Button } from "@/components/ui/button";
 
+import { useTranslation } from "react-i18next";
 interface IssueAssignedBacklogNoticeProps {
   issueStatus: string;
   assigneeAgent: Agent | null;
@@ -17,6 +18,7 @@ export function IssueAssignedBacklogNotice({
   onResume,
   resuming,
 }: IssueAssignedBacklogNoticeProps) {
+  const { t } = useTranslation("common");
   if (issueStatus !== "backlog") return null;
   if (!assigneeAgent && !assigneeUserId) return null;
 

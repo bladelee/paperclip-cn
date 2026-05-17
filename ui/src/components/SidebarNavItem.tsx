@@ -4,6 +4,7 @@ import { cn } from "../lib/utils";
 import { useSidebar } from "../context/SidebarContext";
 import type { LucideIcon } from "lucide-react";
 
+import { useTranslation } from "react-i18next";
 interface SidebarNavItemProps {
   to: string;
   label: string;
@@ -31,6 +32,7 @@ export function SidebarNavItem({
   alert = false,
   liveCount,
 }: SidebarNavItemProps) {
+  const { t } = useTranslation("common");
   const { isMobile, setSidebarOpen } = useSidebar();
 
   return (

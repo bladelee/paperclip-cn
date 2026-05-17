@@ -1,4 +1,5 @@
 import { memo, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import type { TranscriptEntry } from "../adapters";
 import type { LiveRunForIssue } from "../api/heartbeats";
 import { IssueChatThread } from "./IssueChatThread";
@@ -11,6 +12,7 @@ const EMPTY_LINKED_RUNS: [] = [];
 const handleEmbeddedAdd = async () => {};
 
 function isRunActive(run: LiveRunForIssue) {
+  const { t } = useTranslation("common");
   return run.status === "queued" || run.status === "running";
 }
 

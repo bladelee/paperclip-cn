@@ -1,4 +1,5 @@
 import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link, useLocation, useNavigate } from "@/lib/router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { INBOX_MINE_ISSUE_STATUS_FILTER } from "@paperclipai/shared";
@@ -215,6 +216,7 @@ export function formatJoinRequestInboxLabel(
     } | null;
   },
 ) {
+  const { t } = useTranslation("issues");
   if (joinRequest.requestType !== "human") {
     return `Agent join request${joinRequest.agentName ? `: ${joinRequest.agentName}` : ""}`;
   }

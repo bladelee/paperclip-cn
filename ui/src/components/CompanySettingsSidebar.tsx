@@ -8,7 +8,9 @@ import { useCompany } from "@/context/CompanyContext";
 import { useSidebar } from "@/context/SidebarContext";
 import { SidebarNavItem } from "./SidebarNavItem";
 
+import { useTranslation } from "react-i18next";
 export function CompanySettingsSidebar() {
+  const { t } = useTranslation("common");
   const { selectedCompany, selectedCompanyId } = useCompany();
   const { isMobile, setSidebarOpen } = useSidebar();
   const { data: badges } = useQuery({

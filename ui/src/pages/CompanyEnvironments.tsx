@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   AGENT_ADAPTER_TYPES,
@@ -45,6 +46,7 @@ const ENVIRONMENT_SUPPORT_ROWS = AGENT_ADAPTER_TYPES.map((adapterType) => ({
 }));
 
 function buildEnvironmentPayload(form: EnvironmentFormState) {
+  const { t } = useTranslation("environments");
   return {
     name: form.name.trim(),
     description: form.description.trim() || null,

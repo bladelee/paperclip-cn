@@ -1,10 +1,12 @@
 import { cn } from "../lib/utils";
 
+import { useTranslation } from "react-i18next";
 interface OpenCodeLogoIconProps {
   className?: string;
 }
 
 export function OpenCodeLogoIcon({ className }: OpenCodeLogoIconProps) {
+  const { t } = useTranslation("common");
   return (
     <>
       <img

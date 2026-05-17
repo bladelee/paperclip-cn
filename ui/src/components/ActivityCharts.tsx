@@ -1,5 +1,6 @@
 import type { DashboardRunActivityDay, HeartbeatRun } from "@paperclipai/shared";
 
+import { useTranslation } from "react-i18next";
 /* ---- Utilities ---- */
 
 export function getLast14Days(): string[] {
@@ -18,6 +19,7 @@ function formatDayLabel(dateStr: string): string {
 /* ---- Sub-components ---- */
 
 function DateLabels({ days }: { days: string[] }) {
+  const { t } = useTranslation("dashboard");
   return (
     <div className="flex gap-[3px] mt-1.5">
       {days.map((day, i) => (

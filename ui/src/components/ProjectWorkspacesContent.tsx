@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { ExecutionWorkspace } from "@paperclipai/shared";
 import { executionWorkspacesApi } from "../api/execution-workspaces";
@@ -19,6 +20,7 @@ export function ProjectWorkspacesContent({
   projectRef: string;
   summaries: ProjectWorkspaceSummary[];
 }) {
+  const { t } = useTranslation("common");
   const queryClient = useQueryClient();
   const [runtimeActionKey, setRuntimeActionKey] = useState<string | null>(null);
   const [closingWorkspace, setClosingWorkspace] = useState<{

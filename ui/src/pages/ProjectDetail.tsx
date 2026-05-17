@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { Link, useParams, useNavigate, useLocation, Navigate } from "@/lib/router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { PROJECT_COLORS, isUuidLike, type BudgetPolicySummary } from "@paperclipai/shared";
@@ -112,6 +113,7 @@ function ColorPicker({
   useEffect(() => {
     if (!open) return;
     function handleClick(e: MouseEvent) {
+  const { t } = useTranslation("projects");
       if (ref.current && !ref.current.contains(e.target as Node)) {
         setOpen(false);
       }

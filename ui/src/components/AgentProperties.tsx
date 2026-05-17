@@ -10,6 +10,7 @@ import { Identity } from "./Identity";
 import { formatDate, agentUrl } from "../lib/utils";
 import { Separator } from "@/components/ui/separator";
 
+import { useTranslation } from "react-i18next";
 interface AgentPropertiesProps {
   agent: Agent;
   runtimeState?: AgentRuntimeState;
@@ -18,6 +19,7 @@ interface AgentPropertiesProps {
 const roleLabels = AGENT_ROLE_LABELS as Record<string, string>;
 
 function PropertyRow({ label, children }: { label: string; children: React.ReactNode }) {
+  const { t } = useTranslation("common");
   return (
     <div className="flex items-start gap-3 py-1.5">
       <span className="text-xs text-muted-foreground shrink-0 w-20 mt-0.5">{label}</span>

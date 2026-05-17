@@ -1,5 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "@/lib/router";
 
 interface MetricCardProps {
@@ -12,6 +13,7 @@ interface MetricCardProps {
 }
 
 export function MetricCard({ icon: Icon, value, label, description, to, onClick }: MetricCardProps) {
+  const { t } = useTranslation("common");
   const isClickable = !!(to || onClick);
 
   const inner = (

@@ -1,6 +1,7 @@
 import type { QuotaWindow } from "@paperclipai/shared";
 import { cn, quotaSourceDisplayName } from "@/lib/utils";
 
+import { useTranslation } from "react-i18next";
 interface ClaudeSubscriptionPanelProps {
   windows: QuotaWindow[];
   source?: string | null;
@@ -56,6 +57,7 @@ export function ClaudeSubscriptionPanel({
   source = null,
   error = null,
 }: ClaudeSubscriptionPanelProps) {
+  const { t } = useTranslation("common");
   const ordered = orderedWindows(windows);
 
   return (

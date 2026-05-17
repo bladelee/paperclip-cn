@@ -8,7 +8,9 @@ import { cn, projectWorkspaceUrl } from "../lib/utils";
 import { timeAgo } from "../lib/timeAgo";
 import { Copy, ExternalLink, FolderOpen, GitBranch, Loader2, Play, Square } from "lucide-react";
 
+import { useTranslation } from "react-i18next";
 function workspaceKindLabel(kind: ProjectWorkspaceSummary["kind"]) {
+  const { t } = useTranslation("common");
   return kind === "execution_workspace" ? "Execution workspace" : "Project workspace";
 }
 

@@ -2,6 +2,7 @@ import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
+import { useTranslation } from "react-i18next";
 export interface FilterValue {
   key: string;
   label: string;
@@ -15,6 +16,7 @@ interface FilterBarProps {
 }
 
 export function FilterBar({ filters, onRemove, onClear }: FilterBarProps) {
+  const { t } = useTranslation("common");
   if (filters.length === 0) return null;
 
   return (

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link, useLocation, useNavigate, useParams } from "@/lib/router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -98,6 +99,7 @@ type SecretMessage = {
 };
 
 function autoResizeTextarea(element: HTMLTextAreaElement | null) {
+  const { t } = useTranslation("issues");
   if (!element) return;
   element.style.height = "auto";
   element.style.height = `${element.scrollHeight}px`;

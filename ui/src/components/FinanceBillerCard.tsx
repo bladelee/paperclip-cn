@@ -2,11 +2,13 @@ import type { FinanceByBiller } from "@paperclipai/shared";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatCents, providerDisplayName } from "@/lib/utils";
 
+import { useTranslation } from "react-i18next";
 interface FinanceBillerCardProps {
   row: FinanceByBiller;
 }
 
 export function FinanceBillerCard({ row }: FinanceBillerCardProps) {
+  const { t } = useTranslation("common");
   return (
     <Card>
       <CardHeader className="px-4 pt-4 pb-1">

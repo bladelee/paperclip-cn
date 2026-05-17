@@ -6,12 +6,14 @@ import { cn } from "@/lib/utils";
 import { Link } from "@/lib/router";
 import { StatusIcon } from "./StatusIcon";
 
+import { useTranslation } from "react-i18next";
 type IssueSiblingNavigationProps = {
   navigation: IssueSiblingNavigationState | null;
   linkState?: unknown;
 };
 
 export function IssueSiblingNavigation({ navigation, linkState }: IssueSiblingNavigationProps) {
+  const { t } = useTranslation("common");
   if (!navigation) return null;
 
   return (
