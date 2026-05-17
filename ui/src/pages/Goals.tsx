@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import i18n from "@/locales";
 import { useQuery } from "@tanstack/react-query";
 import { goalsApi } from "../api/goals";
 import { useCompany } from "../context/CompanyContext";
@@ -19,7 +20,7 @@ export function Goals() {
   const { setBreadcrumbs } = useBreadcrumbs();
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Goals" }]);
+    setBreadcrumbs([{ label: i18n.t("nav:goals") }]);
   }, [setBreadcrumbs]);
 
   const { data: goals, isLoading, error } = useQuery({

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import i18n from "@/locales";
 import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Check, ExternalLink, MailPlus } from "lucide-react";
 import { accessApi } from "@/api/access";
@@ -85,7 +86,7 @@ export function CompanyInvites() {
     setBreadcrumbs([
       { label: selectedCompany?.name ?? "Company", href: "/dashboard" },
       { label: "Settings", href: "/company/settings" },
-      { label: "Invites" },
+      { label: i18n.t("company:invites.title") },
     ]);
   }, [selectedCompany?.name, setBreadcrumbs]);
 

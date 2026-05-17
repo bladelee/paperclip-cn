@@ -1,5 +1,6 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState, type ChangeEvent, type DragEvent, type ReactNode, type Ref } from "react";
 import { useTranslation } from "react-i18next";
+import i18n from "@/locales";
 import { pickTextColorForPillBg } from "@/lib/color-contrast";
 import { Link, useLocation, useNavigate, useNavigationType, useParams } from "@/lib/router";
 import { useInfiniteQuery, useQuery, useMutation, useQueryClient, type InfiniteData, type QueryClient } from "@tanstack/react-query";
@@ -174,14 +175,14 @@ const ISSUE_COMMENT_PAGE_SIZE = 50;
 const ISSUE_COMMENT_AUTOLOAD_LIMIT = ISSUE_COMMENT_PAGE_SIZE * 3;
 const JUMP_TO_LATEST_MAX_COMMENT_PAGES = 10;
 const TREE_CONTROL_MODE_LABEL: Record<IssueTreeControlMode, string> = {
-  pause: "Pause subtree",
-  resume: "Resume subtree",
-  cancel: "Cancel subtree",
-  restore: "Restore subtree",
+  pause: i18n.t("issues:actions.pauseSubtree"),
+  resume: i18n.t("issues:actions.resumeSubtree"),
+  cancel: i18n.t("issues:actions.cancelSubtree"),
+  restore: i18n.t("issues:actions.restoreSubtree"),
 };
 const LEAF_WORK_CONTROL_MODE_LABEL: Partial<Record<IssueTreeControlMode, string>> = {
-  pause: "Pause work",
-  resume: "Resume work",
+  pause: i18n.t("issues:actions.pauseWork"),
+  resume: i18n.t("issues:actions.resumeWork"),
 };
 const TREE_CONTROL_MODE_HELP_TEXT: Record<IssueTreeControlMode, string> = {
   pause: "Pause active execution in this issue subtree until an explicit resume.",
@@ -554,7 +555,7 @@ function InboxMobileToolbar({
             navigate(backHref);
           }
         }}
-        aria-label="Back to inbox"
+        aria-label={i18n.t("issues:backToInbox")}
       >
         <ArrowLeft className="h-5 w-5" />
       </Button>
@@ -930,7 +931,7 @@ const IssueDetailChatTab = memo(function IssueDetailChatTab({
         interruptingQueuedRunId={interruptingQueuedRunId}
         stoppingRunId={pausingWorkRunId}
         onStopRun={onPauseWorkRun}
-        stopRunLabel="Pause work"
+        stopRunLabel={i18n.t("issues:actions.pauseWork")}
         stoppingRunLabel="Pausing..."
         stopRunVariant="pause"
         onAcceptInteraction={onAcceptInteraction}
@@ -3141,15 +3142,15 @@ export function IssueDetail() {
   const treeControlPrimaryButtonLabel =
     treeControlMode === "pause"
       ? treeControlScope === "leaf"
-        ? "Pause work"
+        ? i18n.t("issues:actions.pauseWork")
         : "Pause and stop work"
       : treeControlMode === "cancel"
         ? `Cancel ${previewAffectedIssueCount} issues`
       : treeControlMode === "restore"
           ? `Restore ${previewAffectedIssueCount} issues`
           : treeControlScope === "leaf"
-            ? "Resume work"
-            : "Resume subtree";
+            ? i18n.t("issues:actions.resumeWork")
+            : i18n.t("issues:actions.resumeSubtree");
   const treePreviewAffectedIssueRows = treePreviewDisplayIssues.map((candidate) => ({
     candidate,
     issue: {
@@ -3278,7 +3279,7 @@ export function IssueDetail() {
                       setTreeControlOpen(true);
                     }}
                   >
-                    {childIssues.length === 0 ? "Resume work" : "Resume subtree"}
+                    {childIssues.length === 0 ? i18n.t("issues:actions.resumeWork") : i18n.t("issues:actions.resumeSubtree")}
                   </Button>
                   <Button
                     variant="outline"

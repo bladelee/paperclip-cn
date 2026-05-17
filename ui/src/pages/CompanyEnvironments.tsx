@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import i18n from "@/locales";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   AGENT_ADAPTER_TYPES,
@@ -173,7 +174,7 @@ export function CompanyEnvironments() {
     setBreadcrumbs([
       { label: selectedCompany?.name ?? "Company", href: "/dashboard" },
       { label: "Settings", href: "/company/settings" },
-      { label: "Environments" },
+      { label: i18n.t("environments:title") },
     ]);
   }, [selectedCompany?.name, setBreadcrumbs]);
 
@@ -773,7 +774,7 @@ export function CompanyEnvironments() {
                     : "Creating..."
                   : editingEnvironmentId
                     ? "Save environment"
-                    : "Create environment"}
+                    : i18n.t("environments:create")}
               </Button>
               {editingEnvironmentId ? (
                 <Button

@@ -1,5 +1,6 @@
 import { memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import i18n from "@/locales";
 import { Link } from "@/lib/router";
 import { useQueries, useQuery } from "@tanstack/react-query";
 import type { Issue, IssueRecoveryAction } from "@paperclipai/shared";
@@ -67,13 +68,13 @@ interface ActiveAgentsPanelProps {
 
 export function ActiveAgentsPanel({
   companyId,
-  title = "Agents",
+  title = i18n.t("agents:title"),
   minRunCount = MIN_DASHBOARD_RUNS,
   fetchLimit,
   cardLimit = DASHBOARD_RUN_CARD_LIMIT,
   gridClassName,
   cardClassName,
-  emptyMessage = "No recent agent runs.",
+  emptyMessage = i18n.t("agents:noRecentRuns"),
   queryScope = "dashboard",
   showMoreLink = true,
 }: ActiveAgentsPanelProps) {
@@ -193,7 +194,7 @@ const AgentRunCard = memo(function AgentRunCard({
               <Identity name={run.agentName} size="sm" className="[&>span:last-child]:!text-[11px]" />
             </div>
             <div className="mt-2 flex items-center gap-2 text-[11px] text-muted-foreground">
-              <span>{isActive ? "Live now" : run.finishedAt ? `Finished ${relativeTime(run.finishedAt)}` : `Started ${relativeTime(run.createdAt)}`}</span>
+              <span>{isActive ? i18n.t("agents:liveNow") : run.finishedAt ? `Finished ${relativeTime(run.finishedAt)}` : `Started ${relativeTime(run.createdAt)}`}</span>
             </div>
           </div>
 

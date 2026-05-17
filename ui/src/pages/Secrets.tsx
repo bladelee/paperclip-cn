@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import i18n from "@/locales";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   AlertCircle,
@@ -378,7 +379,7 @@ export function Secrets() {
   const [vaultError, setVaultError] = useState<string | null>(null);
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Secrets" }]);
+    setBreadcrumbs([{ label: i18n.t("secrets:title") }]);
   }, [setBreadcrumbs]);
 
   const secretsQuery = useQuery({
@@ -767,7 +768,7 @@ export function Secrets() {
       >
         <PageTabBar
           items={[
-            { value: "secrets", label: "Secrets" },
+            { value: "secrets", label: i18n.t("secrets:title") },
             { value: "vaults", label: "Provider vaults" },
           ]}
           align="start"
@@ -1281,7 +1282,7 @@ export function Secrets() {
               }
             >
               {createMutation.isPending ? <Loader2 className="h-3.5 w-3.5 animate-spin mr-1" /> : null}
-              {createMode === "managed" ? "Create secret" : "Link reference"}
+              {createMode === "managed" ? i18n.t("secrets:create") : "Link reference"}
             </Button>
           </DialogFooter>
         </DialogContent>

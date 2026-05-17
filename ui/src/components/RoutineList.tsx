@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
+import i18n from "@/locales";
 import { MoreHorizontal, Play } from "lucide-react";
 import { Link } from "@/lib/router";
 import { AgentIcon } from "@/components/AgentIconPicker";

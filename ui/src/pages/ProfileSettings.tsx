@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import i18n from "@/locales";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Camera, LoaderCircle, Save, Trash2, UserRoundPen } from "lucide-react";
 import type { AuthSession, CurrentUserProfile, UpdateCurrentUserProfile } from "@paperclipai/shared";
@@ -38,7 +39,7 @@ export function ProfileSettings() {
   useEffect(() => {
     setBreadcrumbs([
       { label: "Instance Settings" },
-      { label: "Profile" },
+      { label: i18n.t("settings:profile.title") },
     ]);
   }, [setBreadcrumbs]);
 

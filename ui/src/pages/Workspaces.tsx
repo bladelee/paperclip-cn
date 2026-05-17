@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import i18n from "@/locales";
 import { Link, Navigate } from "@/lib/router";
 import { useQuery } from "@tanstack/react-query";
 import type { ExecutionWorkspace, Issue, Project } from "@paperclipai/shared";
@@ -105,7 +106,7 @@ export function Workspaces() {
   });
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Workspaces" }]);
+    setBreadcrumbs([{ label: i18n.t("projects:workspace.title") }]);
   }, [setBreadcrumbs]);
 
   const groups = useMemo(

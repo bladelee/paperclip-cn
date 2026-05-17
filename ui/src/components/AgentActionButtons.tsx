@@ -1,11 +1,12 @@
 import { Pause, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import i18n from "@/locales";
 
 import { useTranslation } from "react-i18next";
 export function RunButton({
   onClick,
   disabled,
-  label = "Run now",
+  label = i18n.t("agents:runNow"),
   size = "sm",
 }: {
   onClick: () => void;

@@ -1,5 +1,6 @@
 import type { DashboardRunActivityDay, HeartbeatRun } from "@paperclipai/shared";
 
+import i18n from "@/locales";
 import { useTranslation } from "react-i18next";
 /* ---- Utilities ---- */
 
@@ -187,13 +188,13 @@ const statusColors: Record<string, string> = {
 };
 
 const statusLabels: Record<string, string> = {
-  todo: "To Do",
-  in_progress: "In Progress",
-  in_review: "In Review",
-  done: "Done",
-  blocked: "Blocked",
-  cancelled: "Cancelled",
-  backlog: "Backlog",
+  todo: i18n.t("issues:status.todo"),
+  in_progress: i18n.t("issues:status.in_progress"),
+  in_review: i18n.t("issues:status.in_review"),
+  done: i18n.t("issues:status.done"),
+  blocked: i18n.t("issues:status.blocked"),
+  cancelled: i18n.t("issues:status.cancelled"),
+  backlog: i18n.t("issues:status.backlog"),
 };
 
 export function IssueStatusChart({ issues }: { issues: { status: string; createdAt: Date }[] }) {

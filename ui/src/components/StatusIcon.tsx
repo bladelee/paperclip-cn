@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import i18n from "@/locales";
 import type { IssueBlockerAttention } from "@paperclipai/shared";
 import { cn } from "../lib/utils";
 import { issueStatusIcon, issueStatusIconDefault } from "../lib/status-colors";
@@ -22,7 +23,7 @@ interface StatusIconProps {
 
 function blockedAttentionLabel(blockerAttention: IssueBlockerAttention | null | undefined) {
   const { t } = useTranslation("common");
-  if (!blockerAttention || blockerAttention.state === "none") return "Blocked";
+  if (!blockerAttention || blockerAttention.state === "none") return i18n.t("issues:status.blocked");
 
   if (blockerAttention.reason === "active_child") {
     const count = blockerAttention.coveredBlockerCount;
@@ -60,7 +61,7 @@ function blockedAttentionLabel(blockerAttention: IssueBlockerAttention | null | 
     return `Blocked · ${attentionCopy}`;
   }
 
-  return "Blocked";
+  return i18n.t("issues:status.blocked");
 }
 
 export function StatusIcon({ status, blockerAttention, onChange, className, showLabel }: StatusIconProps) {

@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { ChevronLeft, KeyRound, MailPlus, MonitorCog, Settings, Shield, SlidersHorizontal } from "lucide-react";
+import i18n from "@/locales";
 import { sidebarBadgesApi } from "@/api/sidebarBadges";
 import { ApiError } from "@/api/client";
 import { Link } from "@/lib/router";

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import i18n from "@/locales";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   HUMAN_COMPANY_MEMBERSHIP_ROLE_LABELS,
@@ -75,7 +76,7 @@ export function CompanyAccess() {
     setBreadcrumbs([
       { label: selectedCompany?.name ?? "Company", href: "/dashboard" },
       { label: "Settings", href: "/company/settings" },
-      { label: "Access" },
+      { label: i18n.t("company:access.title") },
     ]);
   }, [selectedCompany?.name, setBreadcrumbs]);
 
