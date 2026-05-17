@@ -1,0 +1,55 @@
+{
+  "title": "Issues",
+  "create": "Create issue",
+  "edit": "Edit issue",
+  "delete": "Delete issue",
+  "noIssues": "No issues",
+  "myIssues": "My issues",
+  "allIssues": "All issues",
+  "assignToMe": "Assign to me",
+  "unassign": "Unassign",
+  "status": {
+    "todo": "To Do",
+    "in_progress": "In Progress",
+    "in_review": "In Review",
+    "done": "Done",
+    "blocked": "Blocked",
+    "cancelled": "Cancelled",
+    "backlog": "Backlog"
+  },
+  "priority": {
+    "none": "No priority",
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High",
+    "urgent": "Urgent"
+  },
+  "properties": {
+    "title": "Title",
+    "description": "Description",
+    "assignee": "Assignee",
+    "reporter": "Reporter",
+    "status": "Status",
+    "priority": "Priority",
+    "labels": "Labels",
+    "parent": "Parent issue",
+    "subIssues": "Sub-issues",
+    "blockers": "Blockers",
+    "project": "Project",
+    "dueDate": "Due date",
+    "createdAt": "Created",
+    "updatedAt": "Updated"
+  },
+  "comment": {
+    "placeholder": "Write a comment...",
+    "add": "Comment",
+    "edit": "Edit comment",
+    "delete": "Delete comment",
+    "reply": "Reply"
+  },
+  "attachment": {
+    "add": "Add attachment",
+    "upload": "Upload file",
+    "dragDrop": "Drag and drop files here"
+  }
+}

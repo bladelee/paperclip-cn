@@ -1,0 +1,12 @@
+{
+  "title": "Plugins",
+  "install": "Install plugin",
+  "uninstall": "Uninstall plugin",
+  "settings": "Plugin settings",
+  "noPlugins": "No plugins installed",
+  "status": {
+    "active": "Active",
+    "inactive": "Inactive",
+    "error": "Error"
+  }
+}

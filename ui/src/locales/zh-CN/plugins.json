@@ -1,0 +1,8 @@
+{
+  "title": "插件",
+  "install": "安装插件",
+  "uninstall": "卸载插件",
+  "settings": "插件设置",
+  "noPlugins": "暂无已安装的插件",
+  "status": { "active": "活跃", "inactive": "未激活", "error": "错误" }
+}

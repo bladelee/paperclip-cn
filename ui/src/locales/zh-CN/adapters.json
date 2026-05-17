@@ -1,0 +1,26 @@
+{
+  "acpx_local": { "label": "ACPX", "description": "实验性本地 ACPX 多智能体适配器" },
+  "claude_local": { "label": "Claude Code", "description": "本地 Claude 智能体" },
+  "codex_local": { "label": "Codex", "description": "本地 Codex 智能体" },
+  "gemini_local": { "label": "Gemini CLI", "description": "本地 Gemini 智能体" },
+  "opencode_local": { "label": "OpenCode", "description": "本地多提供商智能体" },
+  "hermes_local": { "label": "Hermes Agent", "description": "本地 Hermes CLI 智能体" },
+  "pi_local": { "label": "Pi", "description": "本地 Pi 智能体" },
+  "cursor": { "label": "Cursor", "description": "本地 Cursor 智能体" },
+  "cursor_cloud": { "label": "Cursor Cloud", "description": "托管式远程 Cursor 智能体" },
+  "openclaw_gateway": { "label": "OpenClaw Gateway", "description": "连接 OpenClaw Gateway 实例" },
+  "process": { "label": "Process", "description": "内部进程适配器" },
+  "http": { "label": "HTTP", "description": "内部 HTTP 适配器" },
+  "external": { "label": "{{name}}", "description": "外部 {{mode}} 适配器" },
+  "suffix": { "local": "(本地)", "gateway": "(网关)" },
+  "fields": {
+    "url": "URL",
+    "gatewayUrl": "网关地址",
+    "gatewayUrlPlaceholder": "ws://127.0.0.1:18789",
+    "webhookUrl": "Webhook 地址",
+    "webhookUrlPlaceholder": "https://...",
+    "gatewayToken": "网关认证令牌",
+    "gatewayTokenPlaceholder": "OpenClaw 网关令牌",
+    "recommended": "推荐"
+  }
+}

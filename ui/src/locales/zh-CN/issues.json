@@ -1,0 +1,55 @@
+{
+  "title": "任务",
+  "create": "创建任务",
+  "edit": "编辑任务",
+  "delete": "删除任务",
+  "noIssues": "暂无任务",
+  "myIssues": "我的任务",
+  "allIssues": "全部任务",
+  "assignToMe": "分配给我",
+  "unassign": "取消分配",
+  "status": {
+    "todo": "待办",
+    "in_progress": "进行中",
+    "in_review": "审核中",
+    "done": "已完成",
+    "blocked": "已阻塞",
+    "cancelled": "已取消",
+    "backlog": "待定"
+  },
+  "priority": {
+    "none": "无优先级",
+    "low": "低",
+    "medium": "中",
+    "high": "高",
+    "urgent": "紧急"
+  },
+  "properties": {
+    "title": "标题",
+    "description": "描述",
+    "assignee": "负责人",
+    "reporter": "报告人",
+    "status": "状态",
+    "priority": "优先级",
+    "labels": "标签",
+    "parent": "父任务",
+    "subIssues": "子任务",
+    "blockers": "阻塞项",
+    "project": "项目",
+    "dueDate": "截止日期",
+    "createdAt": "创建时间",
+    "updatedAt": "更新时间"
+  },
+  "comment": {
+    "placeholder": "写评论...",
+    "add": "评论",
+    "edit": "编辑评论",
+    "delete": "删除评论",
+    "reply": "回复"
+  },
+  "attachment": {
+    "add": "添加附件",
+    "upload": "上传文件",
+    "dragDrop": "拖拽文件到此处"
+  }
+}

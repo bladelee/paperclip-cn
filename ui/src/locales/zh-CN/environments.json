@@ -1,0 +1,19 @@
+{
+  "title": "环境",
+  "create": "创建环境",
+  "edit": "编辑环境",
+  "delete": "删除环境",
+  "drivers": { "local": "本地", "ssh": "SSH", "sandbox": "沙箱", "docker": "Docker", "plugin": "插件" },
+  "ssh": {
+    "title": "SSH 环境",
+    "host": "主机",
+    "port": "端口",
+    "username": "用户名",
+    "remotePath": "远程工作区路径",
+    "privateKey": "SSH 私钥",
+    "knownHosts": "已知主机",
+    "strictHostChecking": "严格主机密钥检查"
+  },
+  "sandbox": { "title": "沙箱环境", "provider": "提供商", "image": "镜像" },
+  "probe": { "title": "环境探测", "run": "运行探测", "passed": "探测通过", "failed": "探测失败" }
+}

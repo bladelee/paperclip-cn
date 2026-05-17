@@ -1,0 +1,27 @@
+{
+  "dashboard": "Dashboard",
+  "inbox": "Inbox",
+  "work": "Work",
+  "issues": "Issues",
+  "routines": "Routines",
+  "goals": "Goals",
+  "workspaces": "Workspaces",
+  "company": "Company",
+  "org": "Org",
+  "skills": "Skills",
+  "costs": "Costs",
+  "activity": "Activity",
+  "settings": "Settings",
+  "agents": "Agents",
+  "projects": "Projects",
+  "environments": "Environments",
+  "secrets": "Secrets",
+  "search": "Search",
+  "searchPlaceholder": "Search issues, agents, projects...",
+  "profile": "Profile",
+  "instanceSettings": "Instance Settings",
+  "signOut": "Sign out",
+  "breadcrumb": {
+    "home": "Home"
+  }
+}

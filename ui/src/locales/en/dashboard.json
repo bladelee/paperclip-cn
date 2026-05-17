@@ -1,0 +1,23 @@
+{
+  "title": "Dashboard",
+  "overview": "Overview",
+  "live": "Live",
+  "stats": {
+    "totalIssues": "Total issues",
+    "openIssues": "Open issues",
+    "completedIssues": "Completed",
+    "activeAgents": "Active agents",
+    "runsToday": "Runs today",
+    "runsWeek": "Runs this week",
+    "tokensUsed": "Tokens used",
+    "costThisWeek": "Cost this week"
+  },
+  "charts": {
+    "activity": "Activity",
+    "issuesByStatus": "Issues by status",
+    "runsOverTime": "Runs over time",
+    "noData": "No data yet"
+  },
+  "recentActivity": "Recent activity",
+  "activeRuns": "Active runs"
+}

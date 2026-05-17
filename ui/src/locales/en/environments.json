@@ -1,0 +1,34 @@
+{
+  "title": "Environments",
+  "create": "Create environment",
+  "edit": "Edit environment",
+  "delete": "Delete environment",
+  "drivers": {
+    "local": "Local",
+    "ssh": "SSH",
+    "sandbox": "Sandbox",
+    "docker": "Docker",
+    "plugin": "Plugin"
+  },
+  "ssh": {
+    "title": "SSH Environment",
+    "host": "Host",
+    "port": "Port",
+    "username": "Username",
+    "remotePath": "Remote workspace path",
+    "privateKey": "SSH Private Key",
+    "knownHosts": "Known hosts",
+    "strictHostChecking": "Strict host key checking"
+  },
+  "sandbox": {
+    "title": "Sandbox Environment",
+    "provider": "Provider",
+    "image": "Image"
+  },
+  "probe": {
+    "title": "Environment probe",
+    "run": "Run probe",
+    "passed": "Probe passed",
+    "failed": "Probe failed"
+  }
+}

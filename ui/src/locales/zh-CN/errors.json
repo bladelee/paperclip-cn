@@ -1,0 +1,20 @@
+{
+  "api": {
+    "networkError": "网络错误，请检查网络连接。",
+    "unauthorized": "会话已过期，请重新登录。",
+    "forbidden": "您没有权限执行此操作。",
+    "notFound": "请求的资源未找到。",
+    "serverError": "服务器错误，请稍后重试。",
+    "rateLimited": "请求过于频繁，请稍后再试。",
+    "conflict": "该资源已存在。",
+    "validation": "请检查输入内容后重试。"
+  },
+  "form": {
+    "required": "此字段为必填项",
+    "invalidEmail": "邮箱格式不正确",
+    "minLength": "至少需要 {{min}} 个字符",
+    "maxLength": "最多 {{max}} 个字符",
+    "invalidUrl": "URL 格式不正确",
+    "invalidJson": "JSON 格式不正确"
+  }
+}

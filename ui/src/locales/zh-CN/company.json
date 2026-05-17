@@ -1,0 +1,38 @@
+{
+  "title": "公司设置",
+  "general": "通用",
+  "access": "访问权限",
+  "invites": "邀请",
+  "environments": "环境",
+  "skills": "技能",
+  "export": "导出",
+  "import": "导入",
+  "org": {
+    "title": "组织架构",
+    "chart": "组织架构图",
+    "addMember": "添加成员",
+    "removeMember": "移除成员",
+    "changeRole": "更改角色",
+    "roles": { "owner": "所有者", "admin": "管理员", "member": "成员", "viewer": "观察者" }
+  },
+  "access": {
+    "title": "访问管理",
+    "members": "成员",
+    "pending": "待审批",
+    "invites": "邀请",
+    "createInvite": "创建邀请链接",
+    "inviteUrl": "邀请链接",
+    "inviteExpiry": "有效期",
+    "joinRequests": "加入请求",
+    "approve": "批准",
+    "reject": "拒绝"
+  },
+  "invites": {
+    "title": "邀请链接",
+    "create": "创建邀请",
+    "copyLink": "复制链接",
+    "expiresIn": "{{duration}}后过期",
+    "expired": "已过期",
+    "usedCount": "已使用 {{used}}/{{max}} 次"
+  }
+}

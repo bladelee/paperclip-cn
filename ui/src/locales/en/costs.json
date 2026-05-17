@@ -1,0 +1,20 @@
+{
+  "title": "Costs",
+  "overview": "Cost Overview",
+  "byAgent": "Cost by Agent",
+  "byModel": "Cost by Model",
+  "byDay": "Cost by Day",
+  "period": {
+    "today": "Today",
+    "week": "This Week",
+    "month": "This Month",
+    "custom": "Custom Range"
+  },
+  "fields": {
+    "totalCost": "Total cost",
+    "inputTokens": "Input tokens",
+    "outputTokens": "Output tokens",
+    "runs": "Runs",
+    "avgCostPerRun": "Avg cost per run"
+  }
+}

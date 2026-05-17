@@ -1,0 +1,6 @@
+{
+  "title": "设置",
+  "profile": { "title": "个人设置", "section": "偏好", "displayName": "显示名称", "email": "邮箱", "avatar": "头像" },
+  "instance": { "title": "实例设置", "general": "通用", "access": "访问控制", "experimental": "实验性", "defaultLanguage": "默认语言", "defaultLanguageHint": "新用户和未设置语言偏好的用户使用的默认语言" },
+  "language": { "title": "语言", "description": "选择您的首选语言。更改会立即生效。", "select": "选择语言", "saved": "语言偏好已保存" }
+}

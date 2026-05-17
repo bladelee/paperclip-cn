@@ -1,0 +1,20 @@
+{
+  "title": "Projects",
+  "create": "Create project",
+  "edit": "Edit project",
+  "delete": "Delete project",
+  "noProjects": "No projects",
+  "fields": {
+    "name": "Project name",
+    "description": "Description",
+    "repository": "Repository URL",
+    "defaultBranch": "Default branch",
+    "workspacePath": "Workspace path"
+  },
+  "workspace": {
+    "title": "Workspaces",
+    "create": "Create workspace",
+    "status": "Status",
+    "branch": "Branch"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "title": "Settings",
+  "profile": {
+    "title": "Profile Settings",
+    "section": "Preferences",
+    "displayName": "Display name",
+    "email": "Email",
+    "avatar": "Avatar"
+  },
+  "instance": {
+    "title": "Instance Settings",
+    "general": "General",
+    "access": "Access Control",
+    "experimental": "Experimental",
+    "defaultLanguage": "Default language",
+    "defaultLanguageHint": "Default language for new users and users who haven't set a preference"
+  },
+  "language": {
+    "title": "Language",
+    "description": "Choose your preferred language. Changes apply immediately.",
+    "select": "Select language",
+    "saved": "Language preference saved"
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "acpx_local": {
+    "label": "ACPX",
+    "description": "Experimental local ACPX multi-agent adapter"
+  },
+  "claude_local": {
+    "label": "Claude Code",
+    "description": "Local Claude agent"
+  },
+  "codex_local": {
+    "label": "Codex",
+    "description": "Local Codex agent"
+  },
+  "gemini_local": {
+    "label": "Gemini CLI",
+    "description": "Local Gemini agent"
+  },
+  "opencode_local": {
+    "label": "OpenCode",
+    "description": "Local multi-provider agent"
+  },
+  "hermes_local": {
+    "label": "Hermes Agent",
+    "description": "Local Hermes CLI agent"
+  },
+  "pi_local": {
+    "label": "Pi",
+    "description": "Local Pi agent"
+  },
+  "cursor": {
+    "label": "Cursor",
+    "description": "Local Cursor agent"
+  },
+  "cursor_cloud": {
+    "label": "Cursor Cloud",
+    "description": "Managed remote Cursor agent"
+  },
+  "openclaw_gateway": {
+    "label": "OpenClaw Gateway",
+    "description": "Connect to an OpenClaw Gateway instance"
+  },
+  "process": {
+    "label": "Process",
+    "description": "Internal process adapter"
+  },
+  "http": {
+    "label": "HTTP",
+    "description": "Internal HTTP adapter"
+  },
+  "external": {
+    "label": "{{name}}",
+    "description": "External {{mode}} adapter"
+  },
+  "suffix": {
+    "local": "(local)",
+    "gateway": "(gateway)"
+  },
+  "fields": {
+    "url": "URL",
+    "gatewayUrl": "Gateway URL",
+    "gatewayUrlPlaceholder": "ws://127.0.0.1:18789",
+    "webhookUrl": "Webhook URL",
+    "webhookUrlPlaceholder": "https://...",
+    "gatewayToken": "Gateway Auth Token",
+    "gatewayTokenPlaceholder": "OpenClaw gateway token",
+    "recommended": "Recommended"
+  }
+}

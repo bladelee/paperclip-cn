@@ -1,0 +1,23 @@
+{
+  "title": "仪表盘",
+  "overview": "概览",
+  "live": "实时",
+  "stats": {
+    "totalIssues": "总任务",
+    "openIssues": "进行中",
+    "completedIssues": "已完成",
+    "activeAgents": "活跃智能体",
+    "runsToday": "今日运行",
+    "runsWeek": "本周运行",
+    "tokensUsed": "令牌用量",
+    "costThisWeek": "本周费用"
+  },
+  "charts": {
+    "activity": "活动",
+    "issuesByStatus": "任务状态分布",
+    "runsOverTime": "运行趋势",
+    "noData": "暂无数据"
+  },
+  "recentActivity": "最近活动",
+  "activeRuns": "活跃运行"
+}

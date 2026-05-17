@@ -1,0 +1,43 @@
+{
+  "title": "Company Settings",
+  "general": "General",
+  "access": "Access",
+  "invites": "Invites",
+  "environments": "Environments",
+  "skills": "Skills",
+  "export": "Export",
+  "import": "Import",
+  "org": {
+    "title": "Organization",
+    "chart": "Org Chart",
+    "addMember": "Add member",
+    "removeMember": "Remove member",
+    "changeRole": "Change role",
+    "roles": {
+      "owner": "Owner",
+      "admin": "Admin",
+      "member": "Member",
+      "viewer": "Viewer"
+    }
+  },
+  "access": {
+    "title": "Access Management",
+    "members": "Members",
+    "pending": "Pending requests",
+    "invites": "Invites",
+    "createInvite": "Create invite link",
+    "inviteUrl": "Invite URL",
+    "inviteExpiry": "Expires",
+    "joinRequests": "Join requests",
+    "approve": "Approve",
+    "reject": "Reject"
+  },
+  "invites": {
+    "title": "Invite Links",
+    "create": "Create invite",
+    "copyLink": "Copy link",
+    "expiresIn": "Expires in {{duration}}",
+    "expired": "Expired",
+    "usedCount": "Used {{used}}/{{max}} times"
+  }
+}

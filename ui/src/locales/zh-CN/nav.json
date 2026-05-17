@@ -1,0 +1,27 @@
+{
+  "dashboard": "仪表盘",
+  "inbox": "收件箱",
+  "work": "工作",
+  "issues": "任务",
+  "routines": "例程",
+  "goals": "目标",
+  "workspaces": "工作区",
+  "company": "公司",
+  "org": "组织",
+  "skills": "技能",
+  "costs": "成本",
+  "activity": "活动",
+  "settings": "设置",
+  "agents": "智能体",
+  "projects": "项目",
+  "environments": "环境",
+  "secrets": "密钥",
+  "search": "搜索",
+  "searchPlaceholder": "搜索任务、智能体、项目...",
+  "profile": "个人",
+  "instanceSettings": "实例设置",
+  "signOut": "退出登录",
+  "breadcrumb": {
+    "home": "首页"
+  }
+}
