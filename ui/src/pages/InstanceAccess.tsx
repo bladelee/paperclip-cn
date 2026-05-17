@@ -23,7 +23,7 @@ export function InstanceAccess() {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: "Instance Settings", href: "/instance/settings/general" },
+      { label: t("settings:instance.title"), href: "/instance/settings/general" },
       { label: "Access" },
     ]);
   }, [setBreadcrumbs]);

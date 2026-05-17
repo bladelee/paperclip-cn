@@ -113,5 +113,36 @@
     "select": "Select language",
     "en": "English",
     "zhCN": "简体中文"
-  }
+  },
+  "notFound": {
+    "pageNotFound": "Page not found",
+    "companyNotFound": "Company not found",
+    "noCompanyPrefix": "No company matches prefix \"{{prefix}}\".",
+    "routeNotExist": "This route does not exist.",
+    "requestedPath": "Requested path",
+    "openDashboard": "Open dashboard",
+    "goHome": "Go home"
+  },
+  "saving": "Saving...",
+  "working": "Working...",
+  "submitting": "Submitting...",
+  "saveChanges": "Save changes",
+  "last14Days": "Last 14 days",
+  "signInToContinue": "Sign in to continue",
+  "setupPaperclip": "Set up Paperclip",
+  "welcomeTo": "Welcome to Paperclip",
+  "welcomeSetup": "Welcome to Paperclip. Set up your first company and agent to get started.",
+  "selectCompany": "Select a company to view {{item}}.",
+  "noMatch": "No match",
+  "submitRequest": "Submit request",
+  "submittingRequest": "Submitting request...",
+  "submittingJoinRequest": "Submitting join request",
+  "requestFailed": "Request failed: {{code}}",
+  "acceptInvite": "Accept invite",
+  "authenticationFailed": "Authentication failed",
+  "successRate": "Success rate",
+  "runActivity": "Run activity",
+  "tasksInProgress": "Tasks in progress",
+  "pleaseFillRequired": "Please fill in all required fields.",
+  "requireApproval": "Require board approval for new hires"
 }

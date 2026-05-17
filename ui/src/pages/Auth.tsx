@@ -57,7 +57,7 @@ export function AuthPage() {
       navigate(nextPath, { replace: true });
     },
     onError: (err) => {
-      setError(err instanceof Error ? err.message : "Authentication failed");
+      setError(err instanceof Error ? err.message : t("common:authenticationFailed"));
     },
   });
 
@@ -101,7 +101,7 @@ export function AuthPage() {
               event.preventDefault();
               if (mutation.isPending) return;
               if (!canSubmit) {
-                setError("Please fill in all required fields.");
+                setError(t("common:pleaseFillRequired"));
                 return;
               }
               mutation.mutate();
@@ -154,9 +154,9 @@ export function AuthPage() {
               className={`w-full ${!canSubmit && !mutation.isPending ? "opacity-50" : ""}`}
             >
               {mutation.isPending
-                ? "Working…"
+                ? t("common:working")
                 : mode === "sign_in"
-                  ? "Sign In"
+                  ? t("auth:signIn")
                   : "Create Account"}
             </Button>
           </form>
@@ -171,7 +171,7 @@ export function AuthPage() {
                 setMode(mode === "sign_in" ? "sign_up" : "sign_in");
               }}
             >
-              {mode === "sign_in" ? "Create one" : "Sign in"}
+              {mode === "sign_in" ? "Create one" : t("auth:signIn")}
             </button>
           </div>
         </div>

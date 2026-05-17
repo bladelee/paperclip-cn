@@ -39,8 +39,8 @@ export function InstanceGeneralSettings() {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: "Instance Settings" },
-      { label: "General" },
+      { label: t("settings:instance.title") },
+      { label: t("settings:instance.general") },
     ]);
   }, [setBreadcrumbs]);
 
@@ -366,7 +366,7 @@ export function InstanceGeneralSettings() {
             onClick={() => signOutMutation.mutate()}
           >
             <LogOut className="size-4" />
-            {signOutMutation.isPending ? "Signing out..." : "Sign out"}
+            {signOutMutation.isPending ? "Signing out..." : t("auth:signOut")}
           </Button>
         </div>
       </section>

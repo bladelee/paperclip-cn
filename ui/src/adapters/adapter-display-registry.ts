@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { OpenCodeLogoIcon } from "@/components/OpenCodeLogoIcon";
 import { HermesIcon } from "@/components/HermesIcon";
+import i18n from "@/locales";
 
 // ---------------------------------------------------------------------------
 // Type suffix parsing
@@ -53,70 +54,71 @@ export interface AdapterDisplayInfo {
   hideFromVisualSelection?: boolean;
 }
 
-const adapterDisplayMap: Record<string, AdapterDisplayInfo> = {
+// Base display info (icon, flags) — labels come from i18n at runtime
+const adapterBaseMap: Record<string, Omit<AdapterDisplayInfo, "label" | "description"> & { labelKey: string; descKey: string }> = {
   acpx_local: {
-    label: "ACPX",
-    description: "Experimental local ACPX multi-agent adapter",
+    labelKey: "adapters:acpx_local.label",
+    descKey: "adapters:acpx_local.description",
     icon: Bot,
     experimental: true,
     hideFromVisualSelection: true,
   },
   claude_local: {
-    label: "Claude Code",
-    description: "Local Claude agent",
+    labelKey: "adapters:claude_local.label",
+    descKey: "adapters:claude_local.description",
     icon: Sparkles,
     recommended: true,
   },
   codex_local: {
-    label: "Codex",
-    description: "Local Codex agent",
+    labelKey: "adapters:codex_local.label",
+    descKey: "adapters:codex_local.description",
     icon: Code,
     recommended: true,
   },
   gemini_local: {
-    label: "Gemini CLI",
-    description: "Local Gemini agent",
+    labelKey: "adapters:gemini_local.label",
+    descKey: "adapters:gemini_local.description",
     icon: Gem,
   },
   opencode_local: {
-    label: "OpenCode",
-    description: "Local multi-provider agent",
+    labelKey: "adapters:opencode_local.label",
+    descKey: "adapters:opencode_local.description",
     icon: OpenCodeLogoIcon,
   },
   hermes_local: {
-    label: "Hermes Agent",
-    description: "Local Hermes CLI agent",
+    labelKey: "adapters:hermes_local.label",
+    descKey: "adapters:hermes_local.description",
     icon: HermesIcon,
   },
   pi_local: {
-    label: "Pi",
-    description: "Local Pi agent",
+    labelKey: "adapters:pi_local.label",
+    descKey: "adapters:pi_local.description",
     icon: Terminal,
   },
   cursor: {
-    label: "Cursor",
-    description: "Local Cursor agent",
+    labelKey: "adapters:cursor.label",
+    descKey: "adapters:cursor.description",
     icon: MousePointer2,
   },
   cursor_cloud: {
-    label: "Cursor Cloud",
-    description: "Managed remote Cursor agent",
+    labelKey: "adapters:cursor_cloud.label",
+    descKey: "adapters:cursor_cloud.description",
     icon: MousePointer2,
   },
   openclaw_gateway: {
-    label: "OpenClaw Gateway",
-    description: "Connect to an OpenClaw Gateway instance",
+    labelKey: "adapters:openclaw_gateway.label",
+    descKey: "adapters:openclaw_gateway.description",
     icon: Bot,
   },
   process: {
-    label: "Process",
-    description: "Internal process adapter",
+    labelKey: "adapters:process.label",
+    descKey: "adapters:process.description",
     icon: Cpu,
     comingSoon: true,
   },
   http: {
-    label: "HTTP",
-    description: "Internal HTTP adapter",
+    labelKey: "adapters:http.label",
+    descKey: "adapters:http.description",
     icon: Cpu,
     comingSoon: true,
   },
@@ -127,7 +129,6 @@ const adapterDisplayMap: Record<string, AdapterDisplayInfo> = {
 // ---------------------------------------------------------------------------
 
 function humanizeType(type: string): string {
-  // Strip known type suffixes so "droid_local" → "Droid", not "Droid Local"
   let base = type;
   for (const suffix of Object.keys(TYPE_SUFFIXES)) {
     if (base.endsWith(suffix)) {
@@ -139,31 +140,39 @@ function humanizeType(type: string): string {
 }
 
 export function getAdapterLabel(type: string): string {
-  const base = adapterDisplayMap[type]?.label ?? humanizeType(type);
+  const base = adapterBaseMap[type] ? i18n.t(adapterBaseMap[type].labelKey) : humanizeType(type);
   return withSuffix(base, getTypeSuffix(type));
 }
 
 export function getAdapterLabels(): Record<string, string> {
   const suffixed: Record<string, string> = {};
-  for (const [type, info] of Object.entries(adapterDisplayMap)) {
-    suffixed[type] = withSuffix(info.label, getTypeSuffix(type));
+  for (const [type] of Object.entries(adapterBaseMap)) {
+    suffixed[type] = withSuffix(i18n.t(adapterBaseMap[type].labelKey), getTypeSuffix(type));
   }
   return suffixed;
 }
 
 export function getAdapterDisplay(type: string): AdapterDisplayInfo {
-  const known = adapterDisplayMap[type];
-  if (known) return known;
+  const known = adapterBaseMap[type];
+  if (known) {
+    return {
+      ...known,
+      label: i18n.t(known.labelKey),
+      description: i18n.t(known.descKey),
+    };
+  }
 
   const suffix = getTypeSuffix(type);
   const label = withSuffix(humanizeType(type), suffix);
   return {
     label,
-    description: suffix ? `External ${suffix} adapter` : "External adapter",
+    description: suffix
+      ? i18n.t("adapters:external.description", { mode: suffix })
+      : i18n.t("adapters:external.description", { mode: "" }),
     icon: Cpu,
   };
 }
 
 export function isKnownAdapterType(type: string): boolean {
-  return type in adapterDisplayMap;
+  return type in adapterBaseMap;
 }

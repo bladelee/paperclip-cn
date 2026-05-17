@@ -113,5 +113,36 @@
     "select": "选择语言",
     "en": "English",
     "zhCN": "简体中文"
-  }
+  },
+  "notFound": {
+    "pageNotFound": "页面未找到",
+    "companyNotFound": "公司未找到",
+    "noCompanyPrefix": "没有匹配前缀 \"{{prefix}}\" 的公司。",
+    "routeNotExist": "此路由不存在。",
+    "requestedPath": "请求路径",
+    "openDashboard": "打开仪表盘",
+    "goHome": "返回首页"
+  },
+  "saving": "保存中...",
+  "working": "处理中...",
+  "submitting": "提交中...",
+  "saveChanges": "保存更改",
+  "last14Days": "最近 14 天",
+  "signInToContinue": "登录以继续",
+  "setupPaperclip": "设置 Paperclip",
+  "welcomeTo": "欢迎使用 Paperclip",
+  "welcomeSetup": "欢迎使用 Paperclip。设置您的第一个公司和智能体即可开始。",
+  "selectCompany": "选择一个公司以查看{{item}}。",
+  "noMatch": "无匹配",
+  "submitRequest": "提交请求",
+  "submittingRequest": "提交请求中...",
+  "submittingJoinRequest": "正在提交加入请求",
+  "requestFailed": "请求失败：{{code}}",
+  "acceptInvite": "接受邀请",
+  "authenticationFailed": "认证失败",
+  "successRate": "成功率",
+  "runActivity": "运行活动",
+  "tasksInProgress": "进行中的任务",
+  "pleaseFillRequired": "请填写所有必填字段。",
+  "requireApproval": "新员工需要董事会审批"
 }

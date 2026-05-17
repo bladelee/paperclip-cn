@@ -184,7 +184,6 @@ const MAX_TURN_CONTINUATION_DEFAULT_DELAY_SEC = 1;
 const MAX_TURN_CONTINUATION_MAX_DELAY_SEC = 300;
 
 function clampInteger(value: number, min: number, max: number) {
-  const { t } = useTranslation("agents");
   return Math.max(min, Math.min(max, Math.floor(value)));
 }
 
@@ -198,6 +197,7 @@ function clampDelayMsFromSeconds(value: number) {
 export function AgentConfigForm(props: AgentConfigFormProps) {
   const { mode, adapterModels: externalModels } = props;
   const isCreate = mode === "create";
+  const { t } = useTranslation("agents");
   const cards = props.sectionLayout === "cards";
   const showAdapterTypeField = props.showAdapterTypeField ?? true;
   const showAdapterTestEnvironmentButton = props.showAdapterTestEnvironmentButton ?? true;
@@ -698,7 +698,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
               onClick={handleSave}
               disabled={!isCreate && props.isSaving}
             >
-              {!isCreate && props.isSaving ? "Saving..." : "Save"}
+              {!isCreate && props.isSaving ? t("common:saving") : "Save"}
             </Button>
           </div>
         </div>
