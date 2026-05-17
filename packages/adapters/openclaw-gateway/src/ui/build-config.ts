@@ -20,6 +20,10 @@ export function buildOpenClawGatewayConfig(v: CreateConfigValues): Record<string
   ac.sessionKeyStrategy = "issue";
   ac.role = "operator";
   ac.scopes = ["operator.admin"];
+  // Inject gateway token as x-openclaw-token header
+  if (v.gatewayToken?.trim()) {
+    ac.headers = { "x-openclaw-token": v.gatewayToken.trim() };
+  }
   const payloadTemplate = parseJsonObject(v.payloadTemplateJson ?? "");
   if (payloadTemplate) ac.payloadTemplate = payloadTemplate;
   const runtimeServices = parseJsonObject(v.runtimeServicesJson ?? "");

@@ -502,4 +502,6 @@ export interface CreateConfigValues {
   intervalSec: number;
   /** Arbitrary key-value pairs populated by schema-driven config fields. */
   adapterSchemaValues?: Record<string, unknown>;
+  /** OpenClaw Gateway auth token (passed as x-openclaw-token header). */
+  gatewayToken?: string;
 }

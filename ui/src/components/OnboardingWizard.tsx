@@ -115,6 +115,7 @@ export function OnboardingWizard() {
   const [command, setCommand] = useState("");
   const [args, setArgs] = useState("");
   const [url, setUrl] = useState("");
+  const [gatewayToken, setGatewayToken] = useState("");
   const [adapterEnvResult, setAdapterEnvResult] =
     useState<AdapterEnvironmentTestResult | null>(null);
   const [adapterEnvError, setAdapterEnvError] = useState<string | null>(null);
@@ -296,6 +297,7 @@ export function OnboardingWizard() {
     setCommand("");
     setArgs("");
     setUrl("");
+    setGatewayToken("");
     setAdapterEnvResult(null);
     setAdapterEnvError(null);
     setAdapterEnvLoading(false);
@@ -334,6 +336,7 @@ export function OnboardingWizard() {
       command,
       args,
       url,
+      gatewayToken,
       dangerouslySkipPermissions:
         adapterType === "claude_local" || adapterType === "opencode_local",
       dangerouslyBypassSandbox:
@@ -1077,6 +1080,21 @@ export function OnboardingWizard() {
                         }
                         value={url}
                         onChange={(e) => setUrl(e.target.value)}
+                      />
+                    </div>
+                  )}
+
+                  {adapterType === "openclaw_gateway" && (
+                    <div>
+                      <label className="text-xs text-muted-foreground mb-1 block">
+                        Gateway Auth Token
+                      </label>
+                      <input
+                        type="password"
+                        className="w-full rounded-md border border-border bg-transparent px-3 py-2 text-sm font-mono outline-none focus:ring-1 focus:ring-ring placeholder:text-muted-foreground/50"
+                        placeholder="OpenClaw gateway token"
+                        value={gatewayToken}
+                        onChange={(e) => setGatewayToken(e.target.value)}
                       />
                     </div>
                   )}
