@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import i18n from "@/locales";
 import { AGENT_ADAPTER_TYPES } from "@paperclipai/shared";
 import type { AgentAdapterType, JoinRequest } from "@paperclipai/shared";
 import { Button } from "@/components/ui/button";
@@ -45,7 +46,6 @@ const modeButtonBaseClassName =
   "flex-1 border px-3 py-2 text-sm transition-colors";
 
 function formatHumanRole(role: string | null | undefined) {
-  const { t } = useTranslation("auth");
   if (!role) return null;
   return role.charAt(0).toUpperCase() + role.slice(1);
 }
@@ -82,7 +82,7 @@ function mapInviteAuthFeedback(
     return {
       tone: "error",
       message:
-        "That email and password did not match an existing Paperclip account. Check both fields, or create an account first if you are new here.",
+        i18n.t("auth:emailPasswordMismatch"),
     };
   }
 
@@ -90,7 +90,7 @@ function mapInviteAuthFeedback(
     return {
       tone: "error",
       message:
-        "That email and password did not match an existing Paperclip account. Check both fields, or create an account first if you are new here.",
+        i18n.t("auth:emailPasswordMismatch"),
     };
   }
 
@@ -103,7 +103,7 @@ function mapInviteAuthFeedback(
 
   return {
     tone: "error",
-    message: message ?? "Authentication failed",
+    message: message ?? i18n.t("auth:authenticationFailed"),
   };
 }
 
@@ -163,7 +163,8 @@ function AwaitingJoinApprovalPanel({
   onboardingTextUrl = null,
 }: AwaitingJoinApprovalPanelProps) {
   const approvalUrl = `${window.location.origin}/company/settings/access`;
-  const approverLabel = invitedByUserName ?? "A company admin";
+  const { t } = useTranslation("auth");
+  const approverLabel = invitedByUserName ?? t("auth:invite.companyAdmin");
 
   return (
     <div className="min-h-screen bg-zinc-950 px-6 py-12 text-zinc-100">
@@ -216,6 +217,7 @@ function AwaitingJoinApprovalPanel({
 
 export function InviteLandingPage() {
   const queryClient = useQueryClient();
+  const { t } = useTranslation("auth");
   const navigate = useNavigate();
   const { setSelectedCompanyId } = useCompany();
   const params = useParams();
@@ -320,12 +322,12 @@ export function InviteLandingPage() {
 
   const acceptMutation = useMutation({
     mutationFn: async () => {
-      if (!invite) throw new Error("Invite not found");
+      if (!invite) throw new Error(i18n.t("auth:invite.invalid"));
       if (isCheckingExistingMembership) {
-        throw new Error("Checking your company access. Try again in a moment.");
+        throw new Error(i18n.t("auth:invite.checkingAccess"));
       }
       if (isCurrentMember) {
-        throw new Error("This account already belongs to the company.");
+        throw new Error(i18n.t("auth:invite.alreadyMember"));
       }
       if (invite.inviteType === "bootstrap_ceo" || invite.allowedJoinTypes !== "agent") {
         return accessApi.acceptInvite(token, { requestType: "human" });
@@ -350,7 +352,7 @@ export function InviteLandingPage() {
       }
     },
     onError: (err) => {
-      setError(err instanceof Error ? err.message : "Failed to accept invite");
+      setError(err instanceof Error ? err.message : i18n.t("auth:invite.failedAccept"));
     },
   });
 
@@ -414,10 +416,10 @@ export function InviteLandingPage() {
   });
 
   const joinButtonLabel = useMemo(() => {
-    if (!invite) return "Continue";
-    if (invite.inviteType === "bootstrap_ceo") return "Accept invite";
-    if (showsAgentForm) return "Submit request";
-    return sessionQuery.data ? "Accept invite" : "Continue";
+    if (!invite) return t("common:continue");
+    if (invite.inviteType === "bootstrap_ceo") return t("auth:acceptInvite");
+    if (showsAgentForm) return t("common:submitRequest");
+    return sessionQuery.data ? t("auth:acceptInvite") : t("common:continue");
   }, [invite, sessionQuery.data, showsAgentForm]);
 
   if (!token) {
@@ -471,8 +473,8 @@ export function InviteLandingPage() {
           <h1 className="text-lg font-semibold">Invite not available</h1>
           <p className="mt-2 text-sm text-muted-foreground">
             {inviteJoinRequestStatus === "rejected"
-              ? "This join request was not approved."
-              : "This invite has already been used."}
+              ? i18n.t("auth:invite.notApproved")
+              : i18n.t("auth:invite.expired")}
           </p>
         </div>
       </div>
@@ -556,7 +558,7 @@ export function InviteLandingPage() {
                   You&apos;ve been invited to join Paperclip
                 </p>
                 <h1 className="mt-2 text-2xl font-semibold">
-                  {invite.inviteType === "bootstrap_ceo" ? "Set up Paperclip" : `Join ${companyDisplayName}`}
+                  {invite.inviteType === "bootstrap_ceo" ? t("common:setupPaperclip") : `Join ${companyDisplayName}`}
                 </h1>
                 <p className="mt-2 max-w-2xl text-sm leading-6 text-zinc-300">
                   {showsAgentForm
@@ -575,7 +577,7 @@ export function InviteLandingPage() {
               </div>
               <div className="border border-zinc-800 p-3">
                 <div className="text-xs uppercase tracking-[0.2em] text-zinc-500">Invited by</div>
-                <div className="mt-1 text-sm text-zinc-100">{invitedByUserName ?? "Paperclip board"}</div>
+                <div className="mt-1 text-sm text-zinc-100">{invitedByUserName ?? i18n.t("auth:invite.paperclipBoard")}</div>
               </div>
               <div className="border border-zinc-800 p-3">
                 <div className="text-xs uppercase tracking-[0.2em] text-zinc-500">Requested access</div>

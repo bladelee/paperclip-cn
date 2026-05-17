@@ -51,5 +51,12 @@
     "add": "添加附件",
     "upload": "上传文件",
     "dragDrop": "拖拽文件到此处"
-  }
+  },
+  "actions.pauseSubtree": "暂停子树",
+  "actions.resumeSubtree": "恢复子树",
+  "actions.cancelSubtree": "取消子树",
+  "actions.restoreSubtree": "恢复子树",
+  "actions.pauseWork": "暂停工作",
+  "actions.resumeWork": "恢复工作",
+  "backToInbox": "返回收件箱"
 }

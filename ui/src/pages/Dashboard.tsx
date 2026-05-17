@@ -178,14 +178,14 @@ export function Dashboard() {
       return (
         <EmptyState
           icon={LayoutDashboard}
-          message="Welcome to Paperclip. Set up your first company and agent to get started."
-          action="Get Started"
+          message={t("welcomeSetup")}
+          action={t("getStarted")}
           onAction={openOnboarding}
         />
       );
     }
     return (
-      <EmptyState icon={LayoutDashboard} message="Create or select a company to view the dashboard." />
+      <EmptyState icon={LayoutDashboard} message={t("selectCompanyDashboard")} />
     );
   }
 
@@ -243,7 +243,7 @@ export function Dashboard() {
             <MetricCard
               icon={Bot}
               value={data.agents.active + data.agents.running + data.agents.paused + data.agents.error}
-              label="Agents Enabled"
+              label={t("agentsEnabled")}
               to="/agents"
               description={
                 <span>
@@ -268,26 +268,26 @@ export function Dashboard() {
             <MetricCard
               icon={DollarSign}
               value={formatCents(data.costs.monthSpendCents)}
-              label="Month Spend"
+              label={t("monthSpend")}
               to="/costs"
               description={
                 <span>
                   {data.costs.monthBudgetCents > 0
                     ? `${data.costs.monthUtilizationPercent}% of ${formatCents(data.costs.monthBudgetCents)} budget`
-                    : "Unlimited budget"}
+                    : t("unlimitedBudget")}
                 </span>
               }
             />
             <MetricCard
               icon={ShieldCheck}
               value={data.pendingApprovals + data.budgets.pendingApprovals}
-              label="Pending Approvals"
+              label={t("pendingApprovals")}
               to="/approvals"
               description={
                 <span>
                   {data.budgets.pendingApprovals > 0
                     ? `${data.budgets.pendingApprovals} budget overrides awaiting board review`
-                    : "Awaiting board review"}
+                    : t("awaitingBoardReview")}
                 </span>
               }
             />
@@ -297,10 +297,10 @@ export function Dashboard() {
             <ChartCard title={t("common:runActivity")} subtitle={t("common:last14Days")}>
               <RunActivityChart activity={data.runActivity} />
             </ChartCard>
-            <ChartCard title="Issues by Priority" subtitle={t("common:last14Days")}>
+            <ChartCard title={t("issuesByPriority")} subtitle={t("common:last14Days")}>
               <PriorityChart issues={issues ?? []} />
             </ChartCard>
-            <ChartCard title="Issues by Status" subtitle={t("common:last14Days")}>
+            <ChartCard title={t("issuesByStatus")} subtitle={t("common:last14Days")}>
               <IssueStatusChart issues={issues ?? []} />
             </ChartCard>
             <ChartCard title={t("common:successRate")} subtitle={t("common:last14Days")}>

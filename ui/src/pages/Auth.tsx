@@ -57,7 +57,7 @@ export function AuthPage() {
       navigate(nextPath, { replace: true });
     },
     onError: (err) => {
-      setError(err instanceof Error ? err.message : t("common:authenticationFailed"));
+      setError(err instanceof Error ? err.message : t("authenticationFailed"));
     },
   });
 
@@ -69,7 +69,7 @@ export function AuthPage() {
   if (isSessionLoading) {
     return (
       <div className="fixed inset-0 flex items-center justify-center">
-        <p className="text-sm text-muted-foreground">Loading…</p>
+        <p className="text-sm text-muted-foreground">{t("common:loading")}</p>
       </div>
     );
   }
@@ -85,12 +85,12 @@ export function AuthPage() {
           </div>
 
           <h1 className="text-xl font-semibold">
-            {mode === "sign_in" ? "Sign in to Paperclip" : "Create your Paperclip account"}
+            {mode === "sign_in" ? t("signInToPaperclip") : t("signUpToPaperclip")}
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
             {mode === "sign_in"
-              ? "Use your email and password to access this instance."
-              : "Create an account for this instance. Email confirmation is not required in v1."}
+              ? t("signInDescription")
+              : t("signUpDescription")}
           </p>
 
           <form
@@ -109,7 +109,7 @@ export function AuthPage() {
           >
             {mode === "sign_up" && (
               <div>
-                <label htmlFor="name" className="text-xs text-muted-foreground mb-1 block">Name</label>
+                <label htmlFor="name" className="text-xs text-muted-foreground mb-1 block">{t("name")}</label>
                 <input
                   id="name"
                   name="name"
@@ -122,7 +122,7 @@ export function AuthPage() {
               </div>
             )}
             <div>
-              <label htmlFor="email" className="text-xs text-muted-foreground mb-1 block">Email</label>
+              <label htmlFor="email" className="text-xs text-muted-foreground mb-1 block">{t("email")}</label>
               <input
                 id="email"
                 name="email"
@@ -135,7 +135,7 @@ export function AuthPage() {
               />
             </div>
             <div>
-              <label htmlFor="password" className="text-xs text-muted-foreground mb-1 block">Password</label>
+              <label htmlFor="password" className="text-xs text-muted-foreground mb-1 block">{t("password")}</label>
               <input
                 id="password"
                 name="password"
@@ -156,13 +156,13 @@ export function AuthPage() {
               {mutation.isPending
                 ? t("common:working")
                 : mode === "sign_in"
-                  ? t("auth:signIn")
-                  : "Create Account"}
+                  ? t("signIn")
+                  : t("createAccount")}
             </Button>
           </form>
 
           <div className="mt-5 text-sm text-muted-foreground">
-            {mode === "sign_in" ? "Need an account?" : "Already have an account?"}{" "}
+            {mode === "sign_in" ? t("noAccount") : t("hasAccount")}{" "}
             <button
               type="button"
               className="font-medium text-foreground underline underline-offset-2"
@@ -171,7 +171,7 @@ export function AuthPage() {
                 setMode(mode === "sign_in" ? "sign_up" : "sign_in");
               }}
             >
-              {mode === "sign_in" ? "Create one" : t("auth:signIn")}
+              {mode === "sign_in" ? t("createAccount") : t("signIn")}
             </button>
           </div>
         </div>

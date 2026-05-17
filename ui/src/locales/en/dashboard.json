@@ -19,5 +19,14 @@
     "noData": "No data yet"
   },
   "recentActivity": "Recent activity",
-  "activeRuns": "Active runs"
+  "activeRuns": "Active runs",
+  "getStarted": "Get Started",
+  "selectCompanyDashboard": "Create or select a company to view the dashboard.",
+  "agentsEnabled": "Agents Enabled",
+  "monthSpend": "Month Spend",
+  "unlimitedBudget": "Unlimited budget",
+  "pendingApprovals": "Pending Approvals",
+  "awaitingBoardReview": "Awaiting board review",
+  "issuesByPriority": "Issues by Priority",
+  "issuesByStatus": "Issues by Status"
 }

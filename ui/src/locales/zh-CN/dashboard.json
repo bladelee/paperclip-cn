@@ -19,5 +19,14 @@
     "noData": "暂无数据"
   },
   "recentActivity": "最近活动",
-  "activeRuns": "活跃运行"
+  "activeRuns": "活跃运行",
+  "getStarted": "开始使用",
+  "selectCompanyDashboard": "创建或选择一个公司以查看仪表盘。",
+  "agentsEnabled": "已启用智能体",
+  "monthSpend": "月消费",
+  "unlimitedBudget": "无限制预算",
+  "pendingApprovals": "待审批",
+  "awaitingBoardReview": "等待董事会审核",
+  "issuesByPriority": "按优先级",
+  "issuesByStatus": "按状态"
 }

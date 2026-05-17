@@ -118,7 +118,7 @@ export function Agents() {
   }, [agents]);
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Agents" }]);
+    setBreadcrumbs([{ label: t("agents:title") }]);
   }, [setBreadcrumbs]);
 
   if (!selectedCompanyId) {
@@ -218,7 +218,7 @@ export function Agents() {
         <EmptyState
           icon={Bot}
           message="Create your first agent to get started."
-          action="New Agent"
+          action={t("agents:new")}
           onAction={openNewAgent}
         />
       )}

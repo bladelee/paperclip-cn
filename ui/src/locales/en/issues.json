@@ -51,5 +51,12 @@
     "add": "Add attachment",
     "upload": "Upload file",
     "dragDrop": "Drag and drop files here"
-  }
+  },
+  "actions.pauseSubtree": "Pause subtree",
+  "actions.resumeSubtree": "Resume subtree",
+  "actions.cancelSubtree": "Cancel subtree",
+  "actions.restoreSubtree": "Restore subtree",
+  "actions.pauseWork": "Pause work",
+  "actions.resumeWork": "Resume work",
+  "backToInbox": "Back to inbox"
 }
