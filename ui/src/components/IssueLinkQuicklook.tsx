@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
 import * as RouterDom from "react-router-dom";
 import type { Issue } from "@paperclipai/shared";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -17,7 +16,6 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { StatusIcon } from "@/components/StatusIcon";
 
 function summarizeIssueDescription(description: string | null | undefined) {
-  const { t } = useTranslation("common");
   if (!description) return null;
   const summary = description
     .replace(/!\[[^\]]*]\([^)]+\)/g, " ")

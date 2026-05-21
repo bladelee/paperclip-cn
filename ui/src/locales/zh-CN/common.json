@@ -144,5 +144,43 @@
   "runActivity": "运行活动",
   "tasksInProgress": "进行中的任务",
   "pleaseFillRequired": "请填写所有必填字段。",
-  "requireApproval": "新员工需要董事会审批"
+  "requireApproval": "新员工需要董事会审批",
+  "statusLabel": {
+    "backlog": "待定",
+    "todo": "待办",
+    "in_progress": "进行中",
+    "in_review": "审核中",
+    "done": "已完成",
+    "blocked": "已阻塞",
+    "cancelled": "已取消"
+  },
+  "priorityLabel": {
+    "critical": "紧急",
+    "high": "高",
+    "medium": "中",
+    "low": "低"
+  },
+  "issue": {
+    "assignee": "负责人",
+    "unassigned": "未分配",
+    "noProject": "无项目"
+  },
+  "fileTree": {
+    "noFiles": "暂无文件",
+    "filesWillAppear": "文件可用后将显示在此处。"
+  },
+  "frontmatterLabels": {
+    "name": "名称",
+    "title": "标题",
+    "kind": "类型",
+    "reportsTo": "汇报给",
+    "skills": "技能",
+    "status": "状态",
+    "description": "描述",
+    "priority": "优先级",
+    "assignee": "负责人",
+    "project": "项目",
+    "recurring": "循环",
+    "targetDate": "目标日期"
+  }
 }

@@ -1,5 +1,4 @@
 import { useMemo, useState, type ReactNode } from "react";
-import { useTranslation } from "react-i18next";
 import type { ActivityEvent, Issue, Agent } from "@paperclipai/shared";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@/lib/router";
@@ -157,7 +156,6 @@ function asRecord(value: unknown): Record<string, unknown> | null {
 }
 
 function readString(value: unknown) {
-  const { t } = useTranslation("common");
   return typeof value === "string" && value.trim().length > 0 ? value.trim() : null;
 }
 

@@ -113,7 +113,6 @@ function layoutForest(roots: OrgNode[]): LayoutNode[] {
 function flattenLayout(nodes: LayoutNode[]): LayoutNode[] {
   const result: LayoutNode[] = [];
   function walk(n: LayoutNode) {
-  const { t } = useTranslation("company");
     result.push(n);
     n.children.forEach(walk);
   }
@@ -173,6 +172,7 @@ const defaultDotColor = "#a3a3a3";
 // ── Main component ──────────────────────────────────────────────────────
 
 export function OrgChart() {
+  const { t } = useTranslation("company");
   const { selectedCompanyId } = useCompany();
   const { setBreadcrumbs } = useBreadcrumbs();
   const navigate = useNavigate();
@@ -196,7 +196,7 @@ export function OrgChart() {
   }, [agents]);
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Org Chart" }]);
+    setBreadcrumbs([{ label: t("orgChart") }]);
   }, [setBreadcrumbs]);
 
   // Layout computation
@@ -431,7 +431,7 @@ export function OrgChart() {
   }, [pan, zoom]);
 
   if (!selectedCompanyId) {
-    return <EmptyState icon={Network} message="Select a company to view the org chart." />;
+    return <EmptyState icon={Network} message={t("org.selectCompany")} />;
   }
 
   if (isLoading) {
@@ -439,7 +439,7 @@ export function OrgChart() {
   }
 
   if (orgTree && orgTree.length === 0) {
-    return <EmptyState icon={Network} message="No organizational hierarchy defined." />;
+    return <EmptyState icon={Network} message={t("org.noHierarchy")} />;
   }
 
   return (
@@ -448,13 +448,13 @@ export function OrgChart() {
         <Link to="/company/import">
           <Button variant="outline" size="sm">
             <Upload className="mr-1.5 h-3.5 w-3.5" />
-            Import company
+            {t("org.importCompany")}
           </Button>
         </Link>
         <Link to="/company/export">
           <Button variant="outline" size="sm">
             <Download className="mr-1.5 h-3.5 w-3.5" />
-            Export company
+            {t("org.exportCompany")}
           </Button>
         </Link>
       </div>

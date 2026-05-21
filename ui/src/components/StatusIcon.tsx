@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
 import i18n from "@/locales";
 import type { IssueBlockerAttention } from "@paperclipai/shared";
 import { cn } from "../lib/utils";
@@ -22,7 +21,6 @@ interface StatusIconProps {
 }
 
 function blockedAttentionLabel(blockerAttention: IssueBlockerAttention | null | undefined) {
-  const { t } = useTranslation("common");
   if (!blockerAttention || blockerAttention.state === "none") return i18n.t("issues:status.blocked");
 
   if (blockerAttention.reason === "active_child") {

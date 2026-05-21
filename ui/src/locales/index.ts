@@ -18,6 +18,10 @@ import costs_en from "./en/costs.json";
 import secrets_en from "./en/secrets.json";
 import errors_en from "./en/errors.json";
 import plugins_en from "./en/plugins.json";
+import activity_en from "./en/activity.json";
+import inbox_en from "./en/inbox.json";
+import routines_en from "./en/routines.json";
+import search_en from "./en/search.json";
 
 // Lazy loader for non-base languages (zh-CN, etc.)
 const lazyBackend = {
@@ -37,6 +41,7 @@ const NAMESPACES = [
   "common", "nav", "auth", "agents", "adapters", "issues",
   "projects", "company", "environments", "dashboard",
   "settings", "costs", "secrets", "errors", "plugins",
+  "activity", "inbox", "routines", "search",
 ] as const;
 
 i18n
@@ -44,6 +49,7 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
+    partialBundledLanguages: true,
     resources: {
       en: {
         common: common_en,
@@ -61,6 +67,10 @@ i18n
         secrets: secrets_en,
         errors: errors_en,
         plugins: plugins_en,
+        activity: activity_en,
+        inbox: inbox_en,
+        routines: routines_en,
+        search: search_en,
       },
     },
     fallbackLng: "en",
@@ -84,7 +94,7 @@ i18n
 // Sync document lang attribute
 i18n.on("languageChanged", (lng: string) => {
   document.documentElement.setAttribute("lang", lng);
-  document.documentElement.dir = "ltr"; // zh-CN and en are both LTR
+  document.documentElement.dir = "ltr";
 });
 
 // Set initial lang attribute

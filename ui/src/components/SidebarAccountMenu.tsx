@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
 import i18n from "@/locales";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -43,7 +42,6 @@ interface MenuActionProps {
 }
 
 function deriveInitials(name: string) {
-  const { t } = useTranslation("common");
   const parts = name.trim().split(/\s+/).filter(Boolean);
   if (parts.length >= 2) {
     return `${parts[0]?.[0] ?? ""}${parts[parts.length - 1]?.[0] ?? ""}`.toUpperCase();

@@ -1,5 +1,4 @@
 import { Profiler, useEffect, useLayoutEffect, useMemo, useRef, useState, type ProfilerOnRenderCallback } from "react";
-import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { IssueChatThread } from "../components/IssueChatThread";
@@ -35,7 +34,6 @@ const initialMetrics: RenderMetrics = {
 };
 
 function formatMs(value: number | null) {
-  const { t } = useTranslation("common");
   if (value === null || !Number.isFinite(value)) return "pending";
   return `${value.toFixed(1)} ms`;
 }

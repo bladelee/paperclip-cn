@@ -150,6 +150,7 @@ function FinanceSummaryCard({
 }
 
 export function Costs() {
+  const { t } = useTranslation("costs");
   const { selectedCompanyId } = useCompany();
   const { setBreadcrumbs } = useBreadcrumbs();
   const queryClient = useQueryClient();
@@ -532,7 +533,7 @@ export function Costs() {
   }), [budgetPolicies]);
 
   if (!selectedCompanyId) {
-    return <EmptyState icon={DollarSign} message="Select a company to view costs." />;
+    return <EmptyState icon={DollarSign} message={t("selectCompany")} />;
   }
 
   const showCustomPrompt = preset === "custom" && !customReady;
@@ -544,9 +545,9 @@ export function Costs() {
       <div className="space-y-5">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
             <div>
-                <h1 className="text-3xl font-semibold tracking-tight">Costs</h1>
+                <h1 className="text-3xl font-semibold tracking-tight">{t("title")}</h1>
                 <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-                  Inference spend, platform fees, credits, and live quota windows.
+                  {t("subtitle")}
                 </p>
             </div>
 
@@ -572,7 +573,7 @@ export function Costs() {
                 onChange={(event) => setCustomFrom(event.target.value)}
                 className="h-9 rounded-md border border-input bg-background px-3 text-sm text-foreground"
               />
-              <span className="text-sm text-muted-foreground">to</span>
+              <span className="text-sm text-muted-foreground">{t("to")}</span>
               <input
                 type="date"
                 value={customTo}
@@ -584,24 +585,24 @@ export function Costs() {
 
           <div className="grid gap-3 lg:grid-cols-4">
             <MetricTile
-              label="Inference spend"
+              label={t("metric.inferenceSpend")}
               value={formatCents(spendData?.summary.spendCents ?? 0)}
-              subtitle={`${formatTokens(inferenceTokenTotal)} tokens across request-scoped events`}
+              subtitle={t("metric.inferenceSubtitle", { tokens: formatTokens(inferenceTokenTotal) })}
               icon={DollarSign}
             />
             <MetricTile
-              label="Budget"
+              label={t("metric.budget")}
               value={activeBudgetIncidents.length > 0 ? String(activeBudgetIncidents.length) : (
                 spendData?.summary.budgetCents && spendData.summary.budgetCents > 0
                   ? `${spendData.summary.utilizationPercent}%`
-                  : "Open"
+                  : t("metric.budgetOpen")
               )}
               subtitle={
                 activeBudgetIncidents.length > 0
-                  ? `${budgetData?.pausedAgentCount ?? 0} agents paused · ${budgetData?.pausedProjectCount ?? 0} projects paused`
+                  ? t("metric.budgetPaused", { agents: budgetData?.pausedAgentCount ?? 0, projects: budgetData?.pausedProjectCount ?? 0 })
                   : spendData?.summary.budgetCents && spendData.summary.budgetCents > 0
                     ? `${formatCents(spendData.summary.spendCents)} of ${formatCents(spendData.summary.budgetCents)}`
-                    : "No monthly cap configured"
+                    : t("metric.noBudgetCap")
               }
               icon={Coins}
             />

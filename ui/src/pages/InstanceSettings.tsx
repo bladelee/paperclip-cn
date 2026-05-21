@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
 import i18n from "@/locales";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Clock3, ExternalLink, Settings } from "lucide-react";
@@ -21,7 +20,6 @@ function asRecord(value: unknown): Record<string, unknown> | null {
 }
 
 function humanize(value: string) {
-  const { t } = useTranslation("settings");
   return value.replaceAll("_", " ");
 }
 

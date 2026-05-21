@@ -1,0 +1,13 @@
+diff --git a/cjs/react-dom-client.production.js b/cjs/react-dom-client.production.js
+index e6bfbe364be2030268e3d9ccb444c0a735230586..904bcdab710f5111cc7baf184eb617f88685d07a 100644
+--- a/cjs/react-dom-client.production.js
++++ b/cjs/react-dom-client.production.js
+@@ -4325,7 +4325,7 @@ function throwInvalidHookError() {
+   throw Error(formatProdErrorMessage(321));
+ }
+ function areHookInputsEqual(nextDeps, prevDeps) {
+-  if (null === prevDeps) return !1;
++  if (null == prevDeps) return !1;
+   for (var i = 0; i < prevDeps.length && i < nextDeps.length; i++)
+     if (!objectIs(nextDeps[i], prevDeps[i])) return !1;
+   return !0;

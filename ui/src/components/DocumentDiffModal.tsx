@@ -1,5 +1,4 @@
 import { useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
 import type { DocumentRevision } from "@paperclipai/shared";
 import { issuesApi } from "../api/issues";
@@ -21,7 +20,6 @@ import {
 } from "@/components/ui/select";
 
 function getRevisionLabel(revision: DocumentRevision) {
-  const { t } = useTranslation("common");
   const actor = revision.createdByUserId
     ? "board"
     : revision.createdByAgentId

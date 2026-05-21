@@ -121,7 +121,6 @@ const COMMAND_ENV_KEY_RE = /(^command$|^cmd$|command[-_]?line|resolved[-_]?comma
 const JWT_VALUE_RE = /^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+(?:\.[A-Za-z0-9_-]+)?$/;
 
 function redactPathText(value: string, censorUsernameInLogs: boolean) {
-  const { t } = useTranslation("agents");
   return redactHomePathUserSegments(value, { enabled: censorUsernameInLogs });
 }
 
@@ -311,6 +310,7 @@ export function RunInvocationCard({
   payload: Record<string, unknown>;
   censorUsernameInLogs: boolean;
 }) {
+  const { t } = useTranslation("agents");
   const rawCommandLine = [
     typeof payload.command === "string" ? payload.command : null,
     ...(Array.isArray(payload.commandArgs)
@@ -330,29 +330,29 @@ export function RunInvocationCard({
 
   return (
     <div className="rounded-lg border border-border bg-background/60 p-3 space-y-2">
-      <div className="text-xs font-medium text-muted-foreground">Invocation</div>
+      <div className="text-xs font-medium text-muted-foreground">{t("detail.invocation")}</div>
       {typeof payload.adapterType === "string" && (
-        <div className="text-xs"><span className="text-muted-foreground">Adapter: </span>{payload.adapterType}</div>
+        <div className="text-xs"><span className="text-muted-foreground">{t("detail.adapter")}: </span>{payload.adapterType}</div>
       )}
       {typeof payload.cwd === "string" && (
-        <div className="text-xs break-all"><span className="text-muted-foreground">Working dir: </span><span className="font-mono">{payload.cwd}</span></div>
+        <div className="text-xs break-all"><span className="text-muted-foreground">{t("detail.workingDir")}: </span><span className="font-mono">{payload.cwd}</span></div>
       )}
       {hasAdvancedDetails && (
         <Collapsible>
           <CollapsibleTrigger className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors group">
             <ChevronRight className="h-3 w-3 transition-transform group-data-[state=open]:rotate-90" />
-            Details
+            {t("detail.details")}
           </CollapsibleTrigger>
           <CollapsibleContent className="pt-2 space-y-2">
             {commandLine && (
               <div className="text-xs break-all">
-                <span className="text-muted-foreground">Command: </span>
+                <span className="text-muted-foreground">{t("detail.command")}: </span>
                 <span className="font-mono">{commandLine}</span>
               </div>
             )}
             {Array.isArray(payload.commandNotes) && payload.commandNotes.length > 0 && (
               <div>
-                <div className="text-xs text-muted-foreground mb-1">Command notes</div>
+                <div className="text-xs text-muted-foreground mb-1">{t("detail.commandNotes")}</div>
                 <ul className="list-disc pl-5 space-y-1">
                   {payload.commandNotes
                     .filter((value): value is string => typeof value === "string" && value.trim().length > 0)
@@ -366,7 +366,7 @@ export function RunInvocationCard({
             )}
             {payload.prompt !== undefined && (
               <div>
-                <div className="text-xs text-muted-foreground mb-1">Prompt</div>
+                <div className="text-xs text-muted-foreground mb-1">{t("detail.prompt")}</div>
                 <pre className="bg-neutral-100 dark:bg-neutral-950 rounded-md p-2 text-xs overflow-x-auto whitespace-pre-wrap">
                   {typeof payload.prompt === "string"
                     ? redactPathText(payload.prompt, censorUsernameInLogs)
@@ -376,7 +376,7 @@ export function RunInvocationCard({
             )}
             {payload.context !== undefined && (
               <div>
-                <div className="text-xs text-muted-foreground mb-1">Context</div>
+                <div className="text-xs text-muted-foreground mb-1">{t("detail.context")}</div>
                 <pre className="bg-neutral-100 dark:bg-neutral-950 rounded-md p-2 text-xs overflow-x-auto whitespace-pre-wrap">
                   {JSON.stringify(redactPathValue(payload.context, censorUsernameInLogs), null, 2)}
                 </pre>
@@ -384,7 +384,7 @@ export function RunInvocationCard({
             )}
             {payload.env !== undefined && (
               <div>
-                <div className="text-xs text-muted-foreground mb-1">Environment</div>
+                <div className="text-xs text-muted-foreground mb-1">{t("detail.environment")}</div>
                 <pre className="bg-neutral-100 dark:bg-neutral-950 rounded-md p-2 text-xs overflow-x-auto whitespace-pre-wrap font-mono">
                   {formatEnvForDisplay(payload.env, censorUsernameInLogs)}
                 </pre>
@@ -417,16 +417,16 @@ function parseStoredLogContent(content: string): RunLogChunk[] {
   return parsed;
 }
 
-function workspaceOperationPhaseLabel(phase: WorkspaceOperation["phase"]) {
+function workspaceOperationPhaseLabel(phase: WorkspaceOperation["phase"], t: (key: string) => string) {
   switch (phase) {
     case "worktree_prepare":
-      return "Worktree setup";
+      return t("detail.workspacePhase.worktree_prepare");
     case "workspace_provision":
-      return "Provision";
+      return t("detail.workspacePhase.workspace_provision");
     case "workspace_teardown":
-      return "Teardown";
+      return t("detail.workspacePhase.workspace_teardown");
     case "worktree_cleanup":
-      return "Worktree cleanup";
+      return t("detail.workspacePhase.worktree_cleanup");
     default:
       return phase;
   }
@@ -467,6 +467,7 @@ function WorkspaceOperationLogViewer({
   operation: WorkspaceOperation;
   censorUsernameInLogs: boolean;
 }) {
+  const { t } = useTranslation("agents");
   const [open, setOpen] = useState(false);
   const { data: logData, isLoading, error } = useQuery({
     queryKey: ["workspace-operation-log", operation.id],
@@ -487,18 +488,18 @@ function WorkspaceOperationLogViewer({
         className="text-[11px] text-muted-foreground underline underline-offset-2 hover:text-foreground"
         onClick={() => setOpen((value) => !value)}
       >
-        {open ? "Hide full log" : "Show full log"}
+        {open ? t("detail.hideFullLog") : t("detail.showFullLog")}
       </button>
       {open && (
         <div className="rounded-md border border-border bg-background/70 p-2">
-          {isLoading && <div className="text-xs text-muted-foreground">Loading log...</div>}
+          {isLoading && <div className="text-xs text-muted-foreground">{t("detail.loadingLog")}</div>}
           {error && (
             <div className="text-xs text-destructive">
-              {error instanceof Error ? error.message : "Failed to load workspace operation log"}
+              {error instanceof Error ? error.message : t("detail.failedToLoadWorkspaceLog")}
             </div>
           )}
           {!isLoading && !error && chunks.length === 0 && (
-            <div className="text-xs text-muted-foreground">No persisted log lines.</div>
+            <div className="text-xs text-muted-foreground">{t("detail.noPersistedLogLines")}</div>
           )}
           {chunks.length > 0 && (
             <div className="max-h-64 overflow-y-auto rounded bg-neutral-100 p-2 font-mono text-xs dark:bg-neutral-950">
@@ -537,6 +538,7 @@ function WorkspaceOperationsSection({
   operations: WorkspaceOperation[];
   censorUsernameInLogs: boolean;
 }) {
+  const { t } = useTranslation("agents");
   if (operations.length === 0) return null;
 
   return (
@@ -550,7 +552,7 @@ function WorkspaceOperationsSection({
           return (
             <div key={operation.id} className="rounded-md border border-border/70 bg-background/70 p-3 space-y-2">
               <div className="flex flex-wrap items-center gap-2">
-                <div className="text-sm font-medium">{workspaceOperationPhaseLabel(operation.phase)}</div>
+                <div className="text-sm font-medium">{workspaceOperationPhaseLabel(operation.phase, t)}</div>
                 <WorkspaceOperationStatusBadge status={operation.status} />
                 <div className="text-[11px] text-muted-foreground">
                   {relativeTime(operation.startedAt)}
@@ -559,13 +561,13 @@ function WorkspaceOperationsSection({
               </div>
               {operation.command && (
                 <div className="text-xs break-all">
-                  <span className="text-muted-foreground">Command: </span>
+                  <span className="text-muted-foreground">{t("detail.command")}: </span>
                   <span className="font-mono">{operation.command}</span>
                 </div>
               )}
               {operation.cwd && (
                 <div className="text-xs break-all">
-                  <span className="text-muted-foreground">Working dir: </span>
+                  <span className="text-muted-foreground">{t("detail.workingDir")}: </span>
                   <span className="font-mono">{operation.cwd}</span>
                 </div>
               )}
@@ -576,25 +578,25 @@ function WorkspaceOperationsSection({
                 || asNonEmptyString(metadata?.cleanupAction)) && (
                 <div className="grid gap-1 text-xs sm:grid-cols-2">
                   {asNonEmptyString(metadata?.branchName) && (
-                    <div><span className="text-muted-foreground">Branch: </span><span className="font-mono">{metadata?.branchName as string}</span></div>
+                    <div><span className="text-muted-foreground">{t("detail.branch")}: </span><span className="font-mono">{metadata?.branchName as string}</span></div>
                   )}
                   {asNonEmptyString(metadata?.baseRef) && (
-                    <div><span className="text-muted-foreground">Base ref: </span><span className="font-mono">{metadata?.baseRef as string}</span></div>
+                    <div><span className="text-muted-foreground">{t("detail.baseRef")}: </span><span className="font-mono">{metadata?.baseRef as string}</span></div>
                   )}
                   {asNonEmptyString(metadata?.worktreePath) && (
-                    <div className="break-all"><span className="text-muted-foreground">Worktree: </span><span className="font-mono">{metadata?.worktreePath as string}</span></div>
+                    <div className="break-all"><span className="text-muted-foreground">{t("detail.worktree")}: </span><span className="font-mono">{metadata?.worktreePath as string}</span></div>
                   )}
                   {asNonEmptyString(metadata?.repoRoot) && (
-                    <div className="break-all"><span className="text-muted-foreground">Repo root: </span><span className="font-mono">{metadata?.repoRoot as string}</span></div>
+                    <div className="break-all"><span className="text-muted-foreground">{t("detail.repoRoot")}: </span><span className="font-mono">{metadata?.repoRoot as string}</span></div>
                   )}
                   {asNonEmptyString(metadata?.cleanupAction) && (
-                    <div><span className="text-muted-foreground">Cleanup: </span><span className="font-mono">{metadata?.cleanupAction as string}</span></div>
+                    <div><span className="text-muted-foreground">{t("detail.cleanup")}: </span><span className="font-mono">{metadata?.cleanupAction as string}</span></div>
                   )}
                 </div>
               )}
               {typeof metadata?.created === "boolean" && (
                 <div className="text-xs text-muted-foreground">
-                  {metadata.created ? "Created by this run" : "Reused existing workspace"}
+                  {metadata.created ? t("detail.createdByThisRun") : t("detail.reusedExistingWorkspace")}
                 </div>
               )}
               {operation.stderrExcerpt && operation.stderrExcerpt.trim() && (
@@ -628,6 +630,7 @@ function WorkspaceOperationsSection({
 }
 
 export function AgentDetail() {
+  const { t } = useTranslation("agents");
   const { companyPrefix, agentId, tab: urlTab, runId: urlRunId } = useParams<{
     companyPrefix?: string;
     agentId: string;
@@ -720,7 +723,7 @@ export function AgentDetail() {
       companyId: resolvedCompanyId ?? "",
       scopeType: "agent",
       scopeId: agent?.id ?? routeAgentRef,
-      scopeName: agent?.name ?? "Agent",
+      scopeName: agent?.name ?? t("title"),
       metric: "billed_cents",
       windowKind: "calendar_month_utc",
       amount: budgetMonthlyCents,
@@ -803,7 +806,7 @@ export function AgentDetail() {
       }
     },
     onError: (err) => {
-      setActionError(err instanceof Error ? err.message : "Action failed");
+      setActionError(err instanceof Error ? err.message : t("detail.actionFailed"));
     },
   });
 
@@ -845,7 +848,7 @@ export function AgentDetail() {
       queryClient.invalidateQueries({ queryKey: queryKeys.agents.taskSessions(agentLookupRef) });
     },
     onError: (err) => {
-      setActionError(err instanceof Error ? err.message : "Failed to reset session");
+      setActionError(err instanceof Error ? err.message : t("detail.failedToResetSession"));
     },
   });
 
@@ -861,34 +864,34 @@ export function AgentDetail() {
       }
     },
     onError: (err) => {
-      setActionError(err instanceof Error ? err.message : "Failed to update permissions");
+      setActionError(err instanceof Error ? err.message : t("detail.failedToUpdatePermissions"));
     },
   });
 
   useEffect(() => {
     const crumbs: { label: string; href?: string }[] = [
-      { label: "Agents", href: "/agents" },
+      { label: t("title"), href: "/agents" },
     ];
-    const agentName = agent?.name ?? routeAgentRef ?? "Agent";
+    const agentName = agent?.name ?? routeAgentRef ?? t("title");
     if (activeView === "dashboard" && !urlRunId) {
       crumbs.push({ label: agentName });
     } else {
       crumbs.push({ label: agentName, href: `/agents/${canonicalAgentRef}/dashboard` });
       if (urlRunId) {
-        crumbs.push({ label: "Runs", href: `/agents/${canonicalAgentRef}/runs` });
+        crumbs.push({ label: t("tabs.runs", "Runs"), href: `/agents/${canonicalAgentRef}/runs` });
         crumbs.push({ label: `Run ${urlRunId.slice(0, 8)}` });
       } else if (activeView === "instructions") {
-        crumbs.push({ label: "Instructions" });
+        crumbs.push({ label: t("tabs.instructions", "Instructions") });
       } else if (activeView === "configuration") {
-        crumbs.push({ label: "Configuration" });
+        crumbs.push({ label: t("tabs.configuration", "Configuration") });
       // } else if (activeView === "skills") { // TODO: bring back later
-      //   crumbs.push({ label: "Skills" });
+      //   crumbs.push({ label: t("tabs.skills", "Skills") });
       } else if (activeView === "runs") {
-        crumbs.push({ label: "Runs" });
+        crumbs.push({ label: t("tabs.runs", "Runs") });
       } else if (activeView === "budget") {
-        crumbs.push({ label: "Budget" });
+        crumbs.push({ label: t("tabs.budget", "Budget") });
       } else {
-        crumbs.push({ label: "Dashboard" });
+        crumbs.push({ label: t("tabs.dashboard", "Dashboard") });
       }
     }
     setBreadcrumbs(crumbs);
@@ -944,12 +947,12 @@ export function AgentDetail() {
             onClick={() => openNewIssue({ assigneeAgentId: agent.id })}
           >
             <Plus className="h-3.5 w-3.5 sm:mr-1" />
-            <span className="hidden sm:inline">Assign Task</span>
+            <span className="hidden sm:inline">{t("assignTask", "Assign Task")}</span>
           </Button>
           <RunButton
             onClick={() => agentAction.mutate("invoke")}
             disabled={agentAction.isPending || isPendingApproval}
-            label="Run Heartbeat"
+            label={t("runHeartbeat", "Run Heartbeat")}
           />
           <PauseResumeButton
             isPaused={agent.status === "paused"}
@@ -967,7 +970,7 @@ export function AgentDetail() {
                 <span className="animate-pulse absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500" />
               </span>
-              <span className="text-[11px] font-medium text-blue-600 dark:text-blue-400">Live</span>
+              <span className="text-[11px] font-medium text-blue-600 dark:text-blue-400">{t("live", "Live")}</span>
             </Link>
           )}
 
@@ -1021,12 +1024,12 @@ export function AgentDetail() {
         >
           <PageTabBar
             items={[
-              { value: "dashboard", label: "Dashboard" },
-              { value: "instructions", label: "Instructions" },
-              { value: "skills", label: "Skills" },
-              { value: "configuration", label: "Configuration" },
-              { value: "runs", label: "Runs" },
-              { value: "budget", label: "Budget" },
+              { value: "dashboard", label: t("tabs.dashboard", "Dashboard") },
+              { value: "instructions", label: t("tabs.instructions", "Instructions") },
+              { value: "skills", label: t("tabs.skills", "Skills") },
+              { value: "configuration", label: t("tabs.configuration", "Configuration") },
+              { value: "runs", label: t("tabs.runs", "Runs") },
+              { value: "budget", label: t("tabs.budget", "Budget") },
             ]}
             value={activeView}
             onValueChange={(value) => navigate(`/agents/${canonicalAgentRef}/${value}`)}
@@ -1037,7 +1040,7 @@ export function AgentDetail() {
       {actionError && <p className="text-sm text-destructive">{actionError}</p>}
       {isPendingApproval && (
         <div className="flex flex-wrap items-center gap-3 rounded-md border border-amber-300/60 bg-amber-50 px-3 py-2 text-sm text-amber-900 dark:border-amber-400/40 dark:bg-amber-950/30 dark:text-amber-200">
-          <span>This agent is pending board approval and cannot be invoked yet.</span>
+          <span>{t("detail.pendingApproval")}</span>
           <Button
             variant="outline"
             size="sm"
@@ -1045,7 +1048,7 @@ export function AgentDetail() {
             disabled={agentAction.isPending}
           >
             <CheckCircle2 className="h-3.5 w-3.5 sm:mr-1" />
-            <span>Approve agent</span>
+            <span>{t("approveAgent", "Approve agent")}</span>
           </Button>
         </div>
       )}
@@ -1067,7 +1070,7 @@ export function AgentDetail() {
               onClick={() => saveConfigActionRef.current?.()}
               disabled={configSaving}
             >
-              {configSaving ? "Saving…" : "Save"}
+              {configSaving ? t("detail.saving") : t("detail.save")}
             </Button>
           </div>
         </div>
@@ -1093,7 +1096,7 @@ export function AgentDetail() {
               onClick={() => saveConfigActionRef.current?.()}
               disabled={configSaving}
             >
-              {configSaving ? "Saving…" : "Save"}
+              {configSaving ? t("detail.saving") : t("detail.save")}
             </Button>
           </div>
         </div>
@@ -1180,20 +1183,22 @@ function SummaryRow({ label, children }: { label: string; children: React.ReactN
 }
 
 function LatestRunCard({ runs, agentId }: { runs: HeartbeatRun[]; agentId: string }) {
-  if (runs.length === 0) return null;
+  const { t } = useTranslation("agents");
 
-  const sorted = [...runs].sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  );
+  const sorted = runs.length > 0
+    ? [...runs].sort(
+        (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      )
+    : [];
 
   const liveRun = sorted.find((r) => r.status === "running" || r.status === "queued");
   const run = liveRun ?? sorted[0];
-  const isLive = run.status === "running" || run.status === "queued";
-  const statusInfo = runStatusIcons[run.status] ?? { icon: Clock, color: "text-neutral-400" };
+  const isLive = run ? (run.status === "running" || run.status === "queued") : false;
+  const statusInfo = run ? (runStatusIcons[run.status] ?? { icon: Clock, color: "text-neutral-400" }) : { icon: Clock, color: "text-neutral-400" };
   const StatusIcon = statusInfo.icon;
-  const summaryRaw = run.resultJson
+  const summaryRaw = run?.resultJson
     ? String((run.resultJson as Record<string, unknown>).summary ?? (run.resultJson as Record<string, unknown>).result ?? "")
-    : run.error ?? "";
+    : run?.error ?? "";
 
   // Extract a clean 2-3 line excerpt: first non-empty, non-header, non-list-mark lines
   const summary = useMemo(() => {
@@ -1213,6 +1218,8 @@ function LatestRunCard({ runs, agentId }: { runs: HeartbeatRun[]; agentId: strin
     return excerpt.join(" ");
   }, [summaryRaw]);
 
+  if (!run) return null;
+
   return (
     <div className="space-y-3">
       <div className="flex w-full items-center justify-between">
@@ -1223,13 +1230,13 @@ function LatestRunCard({ runs, agentId }: { runs: HeartbeatRun[]; agentId: strin
               <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400" />
             </span>
           )}
-          {isLive ? "Live Run" : "Latest Run"}
+          {isLive ? t("detail.liveRun") : t("detail.latestRun")}
         </h3>
         <Link
           to={`/agents/${agentId}/runs/${run.id}`}
           className="shrink-0 text-xs text-muted-foreground hover:text-foreground transition-colors no-underline"
         >
-          View details &rarr;
+          {t("detail.viewDetails")}
         </Link>
       </div>
 
@@ -1283,6 +1290,7 @@ function AgentOverview({
   agentId: string;
   agentRouteId: string;
 }) {
+  const { t } = useTranslation("agents");
   return (
     <div className="space-y-8">
       {/* Latest Run */}
@@ -1290,16 +1298,16 @@ function AgentOverview({
 
       {/* Charts */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <ChartCard title="Run Activity" subtitle="Last 14 days">
+        <ChartCard title={t("detail.runActivity")} subtitle={t("detail.last14Days")}>
           <RunActivityChart runs={runs} />
         </ChartCard>
-        <ChartCard title="Issues by Priority" subtitle="Last 14 days">
+        <ChartCard title={t("detail.issuesByPriority")} subtitle={t("detail.last14Days")}>
           <PriorityChart issues={assignedIssues} />
         </ChartCard>
-        <ChartCard title="Issues by Status" subtitle="Last 14 days">
+        <ChartCard title={t("detail.issuesByStatus")} subtitle={t("detail.last14Days")}>
           <IssueStatusChart issues={assignedIssues} />
         </ChartCard>
-        <ChartCard title="Success Rate" subtitle="Last 14 days">
+        <ChartCard title={t("detail.successRate")} subtitle={t("detail.last14Days")}>
           <SuccessRateChart runs={runs} />
         </ChartCard>
       </div>
@@ -1307,7 +1315,7 @@ function AgentOverview({
       {/* Recent Issues */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-medium">Recent Issues</h3>
+          <h3 className="text-sm font-medium">{t("recentIssues", "Recent Issues")}</h3>
           <Link
             to={`/issues?participantAgentId=${agentId}`}
             className="text-xs text-muted-foreground hover:text-foreground transition-colors"
@@ -1316,7 +1324,7 @@ function AgentOverview({
           </Link>
         </div>
         {assignedIssues.length === 0 ? (
-          <p className="text-sm text-muted-foreground">No recent issues.</p>
+          <p className="text-sm text-muted-foreground">{t("detail.noRecentIssues")}</p>
         ) : (
           <div className="border border-border rounded-lg">
             {assignedIssues.slice(0, 10).map((issue) => (
@@ -1339,7 +1347,7 @@ function AgentOverview({
 
       {/* Costs */}
       <div className="space-y-3">
-        <h3 className="text-sm font-medium">Costs</h3>
+        <h3 className="text-sm font-medium">{t("costs", "Costs")}</h3>
         <CostsSection runtimeState={runtimeState} runs={runs} />
       </div>
     </div>
@@ -1355,6 +1363,7 @@ function CostsSection({
   runtimeState?: AgentRuntimeState;
   runs: HeartbeatRun[];
 }) {
+  const { t } = useTranslation("agents");
   const runsWithCost = runs
     .filter((r) => {
       const metrics = runMetrics(r);
@@ -1368,19 +1377,19 @@ function CostsSection({
         <div className="border border-border rounded-lg p-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 tabular-nums">
             <div>
-              <span className="text-xs text-muted-foreground block">Input tokens</span>
+              <span className="text-xs text-muted-foreground block">{t("inputTokens", "Input tokens")}</span>
               <span className="text-lg font-semibold">{formatTokens(runtimeState.totalInputTokens)}</span>
             </div>
             <div>
-              <span className="text-xs text-muted-foreground block">Output tokens</span>
+              <span className="text-xs text-muted-foreground block">{t("outputTokens", "Output tokens")}</span>
               <span className="text-lg font-semibold">{formatTokens(runtimeState.totalOutputTokens)}</span>
             </div>
             <div>
-              <span className="text-xs text-muted-foreground block">Cached tokens</span>
+              <span className="text-xs text-muted-foreground block">{t("cachedTokens", "Cached tokens")}</span>
               <span className="text-lg font-semibold">{formatTokens(runtimeState.totalCachedInputTokens)}</span>
             </div>
             <div>
-              <span className="text-xs text-muted-foreground block">Total cost</span>
+              <span className="text-xs text-muted-foreground block">{t("totalCost", "Total cost")}</span>
               <span className="text-lg font-semibold">{formatCents(runtimeState.totalCostCents)}</span>
             </div>
           </div>
@@ -1391,11 +1400,11 @@ function CostsSection({
           <table className="w-full text-xs">
             <thead>
               <tr className="border-b border-border bg-accent/20">
-                <th className="text-left px-3 py-2 font-medium text-muted-foreground">Date</th>
-                <th className="text-left px-3 py-2 font-medium text-muted-foreground">Run</th>
-                <th className="text-right px-3 py-2 font-medium text-muted-foreground">Input</th>
-                <th className="text-right px-3 py-2 font-medium text-muted-foreground">Output</th>
-                <th className="text-right px-3 py-2 font-medium text-muted-foreground">Cost</th>
+                <th className="text-left px-3 py-2 font-medium text-muted-foreground"> {t("tableDate", "Date")}</th>
+                <th className="text-left px-3 py-2 font-medium text-muted-foreground"> {t("tableRun", "Run")}</th>
+                <th className="text-right px-3 py-2 font-medium text-muted-foreground"> {t("tableInput", "Input")}</th>
+                <th className="text-right px-3 py-2 font-medium text-muted-foreground"> {t("tableOutput", "Output")}</th>
+                <th className="text-right px-3 py-2 font-medium text-muted-foreground"> {t("tableCost", "Cost")}</th>
               </tr>
             </thead>
             <tbody>
@@ -1445,6 +1454,7 @@ function AgentConfigurePage({
   onSavingChange: (saving: boolean) => void;
   updatePermissions: { mutate: (permissions: AgentPermissionUpdate) => void; isPending: boolean };
 }) {
+  const { t } = useTranslation("agents");
   const queryClient = useQueryClient();
   const [revisionsOpen, setRevisionsOpen] = useState(false);
 
@@ -1476,7 +1486,7 @@ function AgentConfigurePage({
         hideInstructionsFile
       />
       <div>
-        <h3 className="text-sm font-medium mb-3">API Keys</h3>
+        <h3 className="text-sm font-medium mb-3"> {t("apiKeys", "API Keys")}</h3>
         <KeysTab agentId={agentId} companyId={companyId} />
       </div>
 
@@ -1490,13 +1500,13 @@ function AgentConfigurePage({
             ? <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
             : <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />
           }
-          Configuration Revisions
+          {t("detail.configurationRevisions")}
           <span className="text-xs font-normal text-muted-foreground">{configRevisions?.length ?? 0}</span>
         </button>
         {revisionsOpen && (
           <div className="mt-3">
             {(configRevisions ?? []).length === 0 ? (
-              <p className="text-sm text-muted-foreground">No configuration revisions yet.</p>
+              <p className="text-sm text-muted-foreground">{t("detail.noConfigRevisions")}</p>
             ) : (
               <div className="space-y-2">
                 {(configRevisions ?? []).slice(0, 10).map((revision) => (
@@ -1516,12 +1526,12 @@ function AgentConfigurePage({
                         onClick={() => rollbackConfig.mutate(revision.id)}
                         disabled={rollbackConfig.isPending}
                       >
-                        Restore
+                        {t("detail.restore")}
                       </Button>
                     </div>
                     <p className="text-xs text-muted-foreground">
-                      Changed:{" "}
-                      {revision.changedKeys.length > 0 ? revision.changedKeys.join(", ") : "no tracked changes"}
+                      {t("detail.changed")}{" "}
+                      {(revision.changedKeys?.length ?? 0) > 0 ? revision.changedKeys.join(", ") : t("detail.noTrackedChanges")}
                     </p>
                   </div>
                 ))}
@@ -1557,6 +1567,7 @@ function ConfigurationTab({
   hidePromptTemplate?: boolean;
   hideInstructionsFile?: boolean;
 }) {
+  const { t } = useTranslation("agents");
   const queryClient = useQueryClient();
   const { pushToast } = useToastActions();
   const [awaitingRefreshAfterSave, setAwaitingRefreshAfterSave] = useState(false);
@@ -1589,8 +1600,8 @@ function ConfigurationTab({
           ? err.message
           : err instanceof Error
             ? err.message
-            : "Could not save agent";
-      pushToast({ title: "Save failed", body: message, tone: "error" });
+            : t("detail.couldNotSaveAgent");
+      pushToast({ title: t("detail.saveFailed"), body: message, tone: "error" });
     },
   });
 
@@ -1612,12 +1623,12 @@ function ConfigurationTab({
   const taskAssignLocked = agent.role === "ceo" || canCreateAgents;
   const taskAssignHint =
     taskAssignSource === "ceo_role"
-      ? "Enabled automatically for CEO agents."
+      ? t("detail.taskAssignCeoRole")
       : taskAssignSource === "agent_creator"
-        ? "Enabled automatically while this agent can create new agents."
+        ? t("detail.taskAssignAgentCreator")
         : taskAssignSource === "explicit_grant"
-          ? "Enabled via explicit company permission grant."
-          : "Disabled unless explicitly granted.";
+          ? t("detail.taskAssignExplicitGrant")
+          : t("detail.taskAssignNone");
 
   return (
     <div className="space-y-6">
@@ -1637,13 +1648,13 @@ function ConfigurationTab({
       />
 
       <div>
-        <h3 className="text-sm font-medium mb-3">Permissions</h3>
+        <h3 className="text-sm font-medium mb-3"> {t("permissions", "Permissions")}</h3>
         <div className="border border-border rounded-lg p-4 space-y-4">
           <div className="flex items-center justify-between gap-4 text-sm">
             <div className="space-y-1">
-              <div>Can create new agents</div>
+              <div>{t("canCreateAgents", "Can create new agents")}</div>
               <p className="text-xs text-muted-foreground">
-                Lets this agent create or hire agents and implicitly assign tasks.
+                {t("detail.canCreateAgentsHint")}
               </p>
             </div>
             <ToggleSwitch
@@ -1659,7 +1670,7 @@ function ConfigurationTab({
           </div>
           <div className="flex items-center justify-between gap-4 text-sm">
             <div className="space-y-1">
-              <div>Can assign tasks</div>
+              <div>{t("canAssignTasks", "Can assign tasks")}</div>
               <p className="text-xs text-muted-foreground">
                 {taskAssignHint}
               </p>
@@ -1698,6 +1709,7 @@ function PromptsTab({
   onCancelActionChange: (cancel: (() => void) | null) => void;
   onSavingChange: (saving: boolean) => void;
 }) {
+  const { t } = useTranslation("agents");
   const queryClient = useQueryClient();
   const { selectedCompanyId } = useCompany();
   const { isMobile } = useSidebar();
@@ -1828,7 +1840,7 @@ function PromptsTab({
 
   const uploadMarkdownImage = useMutation({
     mutationFn: async ({ file, namespace }: { file: File; namespace: string }) => {
-      if (!selectedCompanyId) throw new Error("Select a company to upload images");
+      if (!selectedCompanyId) throw new Error(t("detail.couldNotSaveAgent"));
       return assetsApi.uploadImage(selectedCompanyId, file, namespace);
     },
   });
@@ -1880,7 +1892,7 @@ function PromptsTab({
     });
     observer.observe(element);
     return () => observer.disconnect();
-  }, [bundleLoading, isMobile, visibleFilePaths.length]);
+  }, [bundleLoading, isMobile, visibleFilePaths?.length]);
 
   useEffect(() => {
     const versionKey = selectedFileExists && selectedFileDetail
@@ -2203,7 +2215,7 @@ function PromptsTab({
           isMobile && !showFilePanel && "hidden",
         )}>
           <div className="flex items-center justify-between">
-            <h4 className="text-sm font-medium">Files</h4>
+            <h4 className="text-sm font-medium"> {t("files", "Files")}</h4>
             <div className="flex items-center gap-1">
               {!showNewFileInput && (
                 <Button
@@ -2350,9 +2362,9 @@ function PromptsTab({
                 <p className="text-xs text-muted-foreground">
                   {selectedFileExists
                     ? selectedFileSummary?.deprecated
-                      ? "Deprecated virtual file"
+                      ? t("detail.deprecatedVirtualFile")
                       : `${selectedFileDetail?.language ?? "text"} file`
-                    : "New file in this bundle"}
+                    : t("detail.newFileInBundle")}
                 </p>
               </div>
             </div>
@@ -2361,8 +2373,8 @@ function PromptsTab({
                 <CopyText
                   text={displayValue}
                   ariaLabel="Copy instructions file as markdown"
-                  title="Copy as markdown"
-                  copiedLabel="Copied"
+                  title={t("detail.copyAsMarkdown")}
+                  copiedLabel={t("detail.copiedExclamation")}
                   className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-border text-muted-foreground hover:bg-accent hover:text-foreground"
                 >
                   <Copy className="h-3.5 w-3.5" />
@@ -2412,7 +2424,7 @@ function PromptsTab({
               value={displayValue}
               onChange={(event) => setDraft(event.target.value)}
               className="min-h-[420px] w-full min-w-0 rounded-md border border-border bg-transparent px-3 py-2 font-mono text-sm outline-none"
-              placeholder="File contents"
+              placeholder={t("detail.fileContents")}
             />
           )}
         </div>
@@ -2496,6 +2508,7 @@ export function AgentSkillsTab({
     adapterEntry: AgentSkillEntry | null;
   };
 
+  const { t } = useTranslation("agents");
   const queryClient = useQueryClient();
   const [skillDraft, setSkillDraft] = useState<string[]>([]);
   const [lastSavedSkills, setLastSavedSkills] = useState<string[]>([]);
@@ -2648,13 +2661,13 @@ export function AgentSkillsTab({
   const skillApplicationLabel = useMemo(() => {
     switch (skillSnapshot?.mode) {
       case "persistent":
-        return "Kept in the workspace";
+        return t("detail.skillModeKept");
       case "ephemeral":
-        return "Applied when the agent runs";
+        return t("detail.skillModeApplied");
       case "unsupported":
-        return "Tracked only";
+        return t("detail.skillModeTracked");
       default:
-        return "Unknown";
+        return t("detail.skillModeUnknown");
     }
   }, [skillSnapshot?.mode]);
   const unsupportedSkillMessage = useMemo(() => {
@@ -2664,18 +2677,18 @@ export function AgentSkillsTab({
       typeof agent.adapterConfig.agent === "string" &&
       agent.adapterConfig.agent === "custom"
     ) {
-      return "Paperclip cannot manage skills for custom ACP commands yet.";
+      return t("detail.unsupportedCustomAcp");
     }
     if (agent.adapterType === "openclaw_gateway") {
-      return "Paperclip cannot manage OpenClaw skills here. Visit your OpenClaw instance to manage this agent's skills.";
+      return t("detail.unsupportedOpenClaw");
     }
-    return "Paperclip cannot manage skills for this adapter yet. Manage them in the adapter directly.";
+    return t("detail.unsupportedAdapter");
   }, [agent.adapterConfig.agent, agent.adapterType, skillSnapshot?.mode]);
   const hasUnsavedChanges = !arraysEqual(skillDraft, lastSavedSkills);
   const saveStatusLabel = syncSkills.isPending
-    ? "Saving changes..."
+    ? t("detail.savingChanges")
     : hasUnsavedChanges
-      ? "Saving soon..."
+      ? t("detail.savingSoon")
       : null;
 
   return (
@@ -2695,7 +2708,7 @@ export function AgentSkillsTab({
         ) : null}
       </div>
 
-      {skillSnapshot?.warnings.length ? (
+      {skillSnapshot?.warnings?.length ? (
         <div className="space-y-1 rounded-xl border border-amber-300/60 bg-amber-50/60 px-4 py-3 text-sm text-amber-800 dark:border-amber-500/30 dark:bg-amber-950/20 dark:text-amber-200">
           {skillSnapshot.warnings.map((warning) => (
             <div key={warning}>{warning}</div>
@@ -2794,7 +2807,7 @@ export function AgentSkillsTab({
                         <span>{checkbox}</span>
                       </TooltipTrigger>
                       <TooltipContent side="top">
-                        {unsupportedSkillMessage ?? "Manage skills in the adapter directly."}
+                        {unsupportedSkillMessage ?? t("detail.manageSkillsDirectly")}
                       </TooltipContent>
                     </Tooltip>
                   ) : (
@@ -2857,7 +2870,7 @@ export function AgentSkillsTab({
 
           {desiredOnlyMissingSkills.length > 0 && (
             <div className="rounded-xl border border-amber-300/60 bg-amber-50/60 px-4 py-3 text-sm text-amber-800 dark:border-amber-500/30 dark:bg-amber-950/20 dark:text-amber-200">
-              <div className="font-medium">Requested skills missing from the company library</div>
+              <div className="font-medium">{t("detail.requestedSkillsMissing")}</div>
               <div className="mt-1 text-xs">
                 {desiredOnlyMissingSkills.join(", ")}
               </div>
@@ -2867,22 +2880,22 @@ export function AgentSkillsTab({
           <section className="border-t border-border pt-4">
             <div className="grid gap-2 text-sm sm:grid-cols-2">
               <div className="flex items-center justify-between gap-3 border-b border-border/60 py-2">
-                <span className="text-muted-foreground">Adapter</span>
+                <span className="text-muted-foreground">{t("detail.adapter")}</span>
                 <span className="font-medium">{adapterLabels[agent.adapterType] ?? agent.adapterType}</span>
               </div>
               <div className="flex items-center justify-between gap-3 border-b border-border/60 py-2">
-                <span className="text-muted-foreground">Skills applied</span>
+                <span className="text-muted-foreground">{t("detail.skillsApplied")}</span>
                 <span>{skillApplicationLabel}</span>
               </div>
               <div className="flex items-center justify-between gap-3 border-b border-border/60 py-2">
-                <span className="text-muted-foreground">Selected skills</span>
+                <span className="text-muted-foreground">{t("detail.selectedSkills")}</span>
                 <span>{skillDraft.length}</span>
               </div>
             </div>
 
             {syncSkills.isError && (
               <p className="mt-3 text-xs text-destructive">
-                {syncSkills.error instanceof Error ? syncSkills.error.message : "Failed to update skills"}
+                {syncSkills.error instanceof Error ? syncSkills.error.message : t("detail.failedToUpdateSkills")}
               </p>
             )}
           </section>
@@ -2960,10 +2973,11 @@ function RunsTab({
   adapterType: string;
   adapterConfig: Record<string, unknown>;
 }) {
+  const { t } = useTranslation("agents");
   const { isMobile } = useSidebar();
 
   if (runs.length === 0) {
-    return <p className="text-sm text-muted-foreground">No runs yet.</p>;
+    return <p className="text-sm text-muted-foreground">{t("detail.noRuns")}</p>;
   }
 
   // Sort by created descending
@@ -3028,6 +3042,7 @@ function RunsTab({
 /* ---- Run Detail (expanded) ---- */
 
 function RunDetail({ run: initialRun, agentRouteId, adapterType, adapterConfig }: { run: HeartbeatRun; agentRouteId: string; adapterType: string; adapterConfig: Record<string, unknown> }) {
+  const { t } = useTranslation("agents");
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { data: hydratedRun } = useQuery({
@@ -3076,7 +3091,7 @@ function RunDetail({ run: initialRun, agentRouteId, adapterType, adapterConfig }
         payload: resumePayload,
       }, run.companyId);
       if (!("id" in result)) {
-        throw new Error(result.message ?? "Resume request was skipped.");
+        throw new Error(result.message ?? t("detail.failedToResumeRun"));
       }
       return result;
     },
@@ -3108,7 +3123,7 @@ function RunDetail({ run: initialRun, agentRouteId, adapterType, adapterConfig }
         payload: retryPayload,
       }, run.companyId);
       if (!("id" in result)) {
-        throw new Error(result.message ?? "Retry was skipped.");
+        throw new Error(result.message ?? t("detail.failedToRetryRun"));
       }
       return result;
     },
@@ -3194,7 +3209,7 @@ function RunDetail({ run: initialRun, agentRouteId, adapterType, adapterConfig }
                   onClick={() => cancelRun.mutate()}
                   disabled={cancelRun.isPending}
                 >
-                  {cancelRun.isPending ? "Cancelling…" : "Cancel"}
+                  {cancelRun.isPending ? t("detail.cancelling") : t("detail.cancel")}
                 </Button>
               )}
               {canResumeLostRun && (
@@ -3206,7 +3221,7 @@ function RunDetail({ run: initialRun, agentRouteId, adapterType, adapterConfig }
                   disabled={resumeRun.isPending}
                 >
                   <RotateCcw className="h-3.5 w-3.5 mr-1" />
-                  {resumeRun.isPending ? "Resuming…" : "Resume"}
+                  {resumeRun.isPending ? t("resuming", "Resuming…") : t("resume", t("detail.resume"))}
                 </Button>
               )}
               {canRetryRun && !canResumeLostRun && (
@@ -3218,7 +3233,7 @@ function RunDetail({ run: initialRun, agentRouteId, adapterType, adapterConfig }
                   disabled={retryRun.isPending}
                 >
                   <RotateCcw className="h-3.5 w-3.5 mr-1" />
-                  {retryRun.isPending ? "Retrying…" : "Retry"}
+                  {retryRun.isPending ? t("detail.retrying") : t("detail.resume")}
                 </Button>
               )}
             </div>
@@ -3245,12 +3260,12 @@ function RunDetail({ run: initialRun, agentRouteId, adapterType, adapterConfig }
             })()}
             {resumeRun.isError && (
               <div className="text-xs text-destructive">
-                {resumeRun.error instanceof Error ? resumeRun.error.message : "Failed to resume run"}
+                {resumeRun.error instanceof Error ? resumeRun.error.message : t("detail.failedToResumeRun")}
               </div>
             )}
             {retryRun.isError && (
               <div className="text-xs text-destructive">
-                {retryRun.error instanceof Error ? retryRun.error.message : "Failed to retry run"}
+                {retryRun.error instanceof Error ? retryRun.error.message : t("detail.failedToRetryRun")}
               </div>
             )}
             {startTime && (
@@ -3286,13 +3301,13 @@ function RunDetail({ run: initialRun, agentRouteId, adapterType, adapterConfig }
                   onClick={() => runClaudeLogin.mutate()}
                   disabled={runClaudeLogin.isPending}
                 >
-                  {runClaudeLogin.isPending ? "Running claude login..." : "Login to Claude Code"}
+                  {runClaudeLogin.isPending ? t("detail.runningClaudeLogin") : t("detail.loginToClaudeCode")}
                 </Button>
                 {runClaudeLogin.isError && (
                   <p className="text-xs text-destructive">
                     {runClaudeLogin.error instanceof Error
                       ? runClaudeLogin.error.message
-                      : "Failed to run Claude login"}
+                      : t("detail.failedToRunClaudeLogin")}
                   </p>
                 )}
                 {claudeLoginResult?.loginUrl && (
@@ -3360,19 +3375,19 @@ function RunDetail({ run: initialRun, agentRouteId, adapterType, adapterConfig }
           {hasMetrics && (
             <div className="border-t sm:border-t-0 sm:border-l border-border p-4 grid grid-cols-2 gap-x-4 sm:gap-x-8 gap-y-3 content-center tabular-nums">
               <div>
-                <div className="text-xs text-muted-foreground">Input</div>
+                <div className="text-xs text-muted-foreground">{t("detail.inputTokens")}</div>
                 <div className="text-sm font-medium font-mono">{formatTokens(metrics.input)}</div>
               </div>
               <div>
-                <div className="text-xs text-muted-foreground">Output</div>
+                <div className="text-xs text-muted-foreground">{t("detail.outputTokens")}</div>
                 <div className="text-sm font-medium font-mono">{formatTokens(metrics.output)}</div>
               </div>
               <div>
-                <div className="text-xs text-muted-foreground">Cached</div>
+                <div className="text-xs text-muted-foreground">{t("detail.cached")}</div>
                 <div className="text-sm font-medium font-mono">{formatTokens(metrics.cached)}</div>
               </div>
               <div>
-                <div className="text-xs text-muted-foreground">Cost</div>
+                <div className="text-xs text-muted-foreground">{t("detail.cost")}</div>
                 <div className="text-sm font-medium font-mono">{metrics.cost > 0 ? `$${metrics.cost.toFixed(4)}` : "-"}</div>
               </div>
             </div>
@@ -3400,7 +3415,7 @@ function RunDetail({ run: initialRun, agentRouteId, adapterType, adapterConfig }
                 )}
                 {sessionChanged && run.sessionIdAfter && (
                   <div className="flex items-center gap-2">
-                    <span className="text-muted-foreground w-12">After</span>
+                    <span className="text-muted-foreground w-12">{t("detail.after")}</span>
                     <CopyText text={run.sessionIdAfter} className="font-mono" />
                   </div>
                 )}
@@ -3427,7 +3442,7 @@ function RunDetail({ run: initialRun, agentRouteId, adapterType, adapterConfig }
                       <p className="text-[11px] text-destructive mt-1">
                         {clearSessionsForTouchedIssues.error instanceof Error
                           ? clearSessionsForTouchedIssues.error.message
-                          : "Failed to clear sessions"}
+                          : t("detail.failedToClearSessions")}
                       </p>
                     )}
                   </div>
@@ -3486,6 +3501,7 @@ function RunDetail({ run: initialRun, agentRouteId, adapterType, adapterConfig }
 /* ---- Log Viewer ---- */
 
 function LogViewer({ run, adapterType }: { run: HeartbeatRun; adapterType: string }) {
+  const { t } = useTranslation("agents");
   const [events, setEvents] = useState<HeartbeatRunEvent[]>([]);
   const [logLines, setLogLines] = useState<Array<{ ts: string; stream: "stdout" | "stderr" | "system"; chunk: string }>>([]);
   const [loading, setLoading] = useState(true);
@@ -3674,7 +3690,7 @@ function LogViewer({ run, adapterType }: { run: HeartbeatRun; adapterType: strin
             setLogLoading(false);
             return;
           }
-          setLogError(err instanceof Error ? err.message : "Failed to load run log");
+          setLogError(err instanceof Error ? err.message : t("detail.failedToLoadWorkspaceLog"));
         }
       } finally {
         if (!cancelled) setLogLoading(false);
@@ -3698,7 +3714,7 @@ function LogViewer({ run, adapterType }: { run: HeartbeatRun; adapterType: strin
       setLogOffset(next);
       setHasMoreLog(result.nextOffset !== undefined);
     } catch (err) {
-      setLogError(err instanceof Error ? err.message : "Failed to load more run log");
+      setLogError(err instanceof Error ? err.message : t("detail.failedToLoadWorkspaceLog"));
     } finally {
       setLoadingMoreLog(false);
     }
@@ -3886,11 +3902,11 @@ function LogViewer({ run, adapterType }: { run: HeartbeatRun; adapterType: strin
   }, [run.id]);
 
   if (loading && logLoading) {
-    return <p className="text-xs text-muted-foreground">Loading run logs...</p>;
+    return <p className="text-xs text-muted-foreground">{t("detail.loadingRunLogs")}</p>;
   }
 
   if (events.length === 0 && logLines.length === 0 && !logError) {
-    return <p className="text-xs text-muted-foreground">No log events.</p>;
+    return <p className="text-xs text-muted-foreground">{t("detail.noLogEvents")}</p>;
   }
 
   const levelColors: Record<string, string> = {
@@ -3968,7 +3984,7 @@ function LogViewer({ run, adapterType }: { run: HeartbeatRun; adapterType: strin
           entries={transcript}
           mode={transcriptMode}
           streaming={isLive}
-          emptyMessage={run.logRef ? "Waiting for transcript..." : "No persisted transcript for this run."}
+          emptyMessage={run.logRef ? t("detail.waitingForTranscript") : t("detail.noPersistedTranscript")}
         />
         {hasMoreLog && (
           <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-border/60 pt-3">
@@ -3979,7 +3995,7 @@ function LogViewer({ run, adapterType }: { run: HeartbeatRun; adapterType: strin
               onClick={loadMorePersistedLog}
               disabled={loadingMoreLog}
             >
-              {loadingMoreLog ? "Loading..." : "Load more log"}
+              {loadingMoreLog ? t("detail.loading") : t("detail.loadMoreLog")}
             </Button>
             <span className="text-xs text-muted-foreground">
               Showing the first {Math.round(logOffset / 1024).toLocaleString("en-US")} KB
@@ -3999,10 +4015,10 @@ function LogViewer({ run, adapterType }: { run: HeartbeatRun; adapterType: strin
 
       {(run.status === "failed" || run.status === "timed_out") && (
         <div className="rounded-lg border border-red-300 dark:border-red-500/30 bg-red-50 dark:bg-red-950/20 p-3 space-y-2">
-          <div className="text-xs font-medium text-red-700 dark:text-red-300">Failure details</div>
+          <div className="text-xs font-medium text-red-700 dark:text-red-300">{t("detail.failureDetails")}</div>
           {run.error && (
             <div className="text-xs text-red-600 dark:text-red-200">
-              <span className="text-red-700 dark:text-red-300">Error: </span>
+              <span className="text-red-700 dark:text-red-300">{t("detail.error")}: </span>
               {redactPathText(run.error, censorUsernameInLogs)}
             </div>
           )}
@@ -4071,6 +4087,7 @@ function LogViewer({ run, adapterType }: { run: HeartbeatRun; adapterType: strin
 /* ---- Keys Tab ---- */
 
 function KeysTab({ agentId, companyId }: { agentId: string; companyId?: string }) {
+  const { t } = useTranslation("agents");
   const queryClient = useQueryClient();
   const [newKeyName, setNewKeyName] = useState("");
   const [newToken, setNewToken] = useState<string | null>(null);
@@ -4125,7 +4142,7 @@ function KeysTab({ agentId, companyId }: { agentId: string; companyId?: string }
               variant="ghost"
               size="icon-sm"
               onClick={() => setTokenVisible((v) => !v)}
-              title={tokenVisible ? "Hide" : "Show"}
+              title={tokenVisible ? t("detail.hide") : t("detail.show")}
             >
               {tokenVisible ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
             </Button>
@@ -4133,11 +4150,11 @@ function KeysTab({ agentId, companyId }: { agentId: string; companyId?: string }
               variant="ghost"
               size="icon-sm"
               onClick={copyToken}
-              title="Copy"
+              title={t("detail.copy")}
             >
               <Copy className="h-3.5 w-3.5" />
             </Button>
-            {copied && <span className="text-xs text-green-400">Copied!</span>}
+            {copied && <span className="text-xs text-green-400">{t("detail.copiedExclamation")}</span>}
           </div>
           <Button
             variant="ghost"
@@ -4161,7 +4178,7 @@ function KeysTab({ agentId, companyId }: { agentId: string; companyId?: string }
         </p>
         <div className="flex items-center gap-2">
           <Input
-            placeholder="Key name (e.g. production)"
+            placeholder={t("detail.keyNamePlaceholder")}
             value={newKeyName}
             onChange={(e) => setNewKeyName(e.target.value)}
             className="h-8 text-sm"
@@ -4181,10 +4198,10 @@ function KeysTab({ agentId, companyId }: { agentId: string; companyId?: string }
       </div>
 
       {/* Active keys */}
-      {isLoading && <p className="text-sm text-muted-foreground">Loading keys...</p>}
+      {isLoading && <p className="text-sm text-muted-foreground">{t("detail.loadingKeys")}</p>}
 
       {!isLoading && activeKeys.length === 0 && !newToken && (
-        <p className="text-sm text-muted-foreground">No active API keys.</p>
+        <p className="text-sm text-muted-foreground">{t("detail.noActiveApiKeys")}</p>
       )}
 
       {activeKeys.length > 0 && (

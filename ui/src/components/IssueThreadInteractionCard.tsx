@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
 import type { Agent } from "@paperclipai/shared";
 import { AlertTriangle, CheckCircle2, ChevronRight, CircleDashed, GitBranch, ListChecks, Loader2, MessageSquareQuote, XCircle } from "lucide-react";
 import { Link } from "@/lib/router";
@@ -56,7 +55,6 @@ function resolveActorLabel(args: {
   currentUserId?: string | null;
   userLabelMap?: ReadonlyMap<string, string> | null;
 }) {
-  const { t } = useTranslation("common");
   const { agentId, userId, agentMap, currentUserId, userLabelMap } = args;
   if (agentId) {
     return agentMap?.get(agentId)?.name ?? agentId.slice(0, 8);

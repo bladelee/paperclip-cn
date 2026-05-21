@@ -144,5 +144,43 @@
   "runActivity": "Run activity",
   "tasksInProgress": "Tasks in progress",
   "pleaseFillRequired": "Please fill in all required fields.",
-  "requireApproval": "Require board approval for new hires"
+  "requireApproval": "Require board approval for new hires",
+  "statusLabel": {
+    "backlog": "Backlog",
+    "todo": "Todo",
+    "in_progress": "In progress",
+    "in_review": "In review",
+    "done": "Done",
+    "blocked": "Blocked",
+    "cancelled": "Cancelled"
+  },
+  "priorityLabel": {
+    "critical": "Critical",
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low"
+  },
+  "issue": {
+    "assignee": "Assignee",
+    "unassigned": "Unassigned",
+    "noProject": "No project"
+  },
+  "fileTree": {
+    "noFiles": "No files",
+    "filesWillAppear": "Files will appear here when they are available."
+  },
+  "frontmatterLabels": {
+    "name": "Name",
+    "title": "Title",
+    "kind": "Kind",
+    "reportsTo": "Reports to",
+    "skills": "Skills",
+    "status": "Status",
+    "description": "Description",
+    "priority": "Priority",
+    "assignee": "Assignee",
+    "project": "Project",
+    "recurring": "Recurring",
+    "targetDate": "Target date"
+  }
 }

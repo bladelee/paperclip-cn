@@ -204,14 +204,14 @@ export function Dashboard() {
           <div className="flex items-center gap-2.5">
             <Bot className="h-4 w-4 text-amber-600 dark:text-amber-400 shrink-0" />
             <p className="text-sm text-amber-900 dark:text-amber-100">
-              You have no agents.
+              {t("noAgents")}
             </p>
           </div>
           <button
             onClick={() => openOnboarding({ initialStep: 2, companyId: selectedCompanyId! })}
             className="text-sm font-medium text-amber-700 hover:text-amber-900 dark:text-amber-300 dark:hover:text-amber-100 underline underline-offset-2 shrink-0"
           >
-            Create one here
+            {t("createAgentHere")}
           </button>
         </div>
       )}
@@ -226,15 +226,15 @@ export function Dashboard() {
                 <PauseCircle className="mt-0.5 h-4 w-4 shrink-0 text-red-300" />
                 <div>
                   <p className="text-sm font-medium text-red-50">
-                    {data.budgets.activeIncidents} active budget incident{data.budgets.activeIncidents === 1 ? "" : "s"}
+                    {t("activeBudgetIncidents", { count: data.budgets.activeIncidents })}
                   </p>
                   <p className="text-xs text-red-100/70">
-                    {data.budgets.pausedAgents} agents paused · {data.budgets.pausedProjects} projects paused · {data.budgets.pendingApprovals} pending budget approvals
+                    {t("budgetIncidentDetails", { agents: data.budgets.pausedAgents, projects: data.budgets.pausedProjects, approvals: data.budgets.pendingApprovals })}
                   </p>
                 </div>
               </div>
               <Link to="/costs" className="text-sm underline underline-offset-2 text-red-100">
-                Open budgets
+                {t("openBudgets")}
               </Link>
             </div>
           ) : null}
@@ -247,9 +247,9 @@ export function Dashboard() {
               to="/agents"
               description={
                 <span>
-                  {data.agents.running} running{", "}
-                  {data.agents.paused} paused{", "}
-                  {data.agents.error} errors
+                  {t("agentsRunning", { count: data.agents.running })}{", "}
+                  {t("agentsPaused", { count: data.agents.paused })}{", "}
+                  {t("agentsErrors", { count: data.agents.error })}
                 </span>
               }
             />
@@ -260,8 +260,8 @@ export function Dashboard() {
               to="/issues"
               description={
                 <span>
-                  {data.tasks.open} open{", "}
-                  {data.tasks.blocked} blocked
+                  {t("tasksOpen", { count: data.tasks.open })}{", "}
+                  {t("tasksBlocked", { count: data.tasks.blocked })}
                 </span>
               }
             />
@@ -273,7 +273,7 @@ export function Dashboard() {
               description={
                 <span>
                   {data.costs.monthBudgetCents > 0
-                    ? `${data.costs.monthUtilizationPercent}% of ${formatCents(data.costs.monthBudgetCents)} budget`
+                    ? t("budgetUtilization", { percent: data.costs.monthUtilizationPercent, budget: formatCents(data.costs.monthBudgetCents) })
                     : t("unlimitedBudget")}
                 </span>
               }
@@ -286,7 +286,7 @@ export function Dashboard() {
               description={
                 <span>
                   {data.budgets.pendingApprovals > 0
-                    ? `${data.budgets.pendingApprovals} budget overrides awaiting board review`
+                    ? t("budgetOverridesAwaiting", { count: data.budgets.pendingApprovals })
                     : t("awaitingBoardReview")}
                 </span>
               }
@@ -320,7 +320,7 @@ export function Dashboard() {
             {recentActivity.length > 0 && (
               <div className="min-w-0">
                 <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
-                  Recent Activity
+                  {t("recentActivity")}
                 </h3>
                 <div className="border border-border divide-y divide-border overflow-hidden">
                   {recentActivity.map((event) => (
@@ -341,11 +341,11 @@ export function Dashboard() {
             {/* Recent Tasks */}
             <div className="min-w-0">
               <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
-                Recent Tasks
+                {t("recentTasks")}
               </h3>
               {recentIssues.length === 0 ? (
                 <div className="border border-border p-4">
-                  <p className="text-sm text-muted-foreground">No tasks yet.</p>
+                  <p className="text-sm text-muted-foreground">{t("noTasksYet")}</p>
                 </div>
               ) : (
                 <div className="border border-border divide-y divide-border overflow-hidden">

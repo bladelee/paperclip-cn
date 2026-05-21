@@ -1,0 +1,11 @@
+diff --git a/cjs/react-dom-client.production.js b/cjs/react-dom-client.production.js
+index 1234567..abcdefg 100644
+--- a/cjs/react-dom-client.production.js
++++ b/cjs/react-dom-client.production.js
+@@ -4325,7 +4325,7 @@
+ function areHookInputsEqual(nextDeps, prevDeps) {
+-  if (null === prevDeps) return !1;
++  if (null == prevDeps) return !1;
+   for (var i = 0; i < prevDeps.length && i < nextDeps.length; i++)
+     if (!objectIs(nextDeps[i], prevDeps[i])) return !1;
+   return !0;

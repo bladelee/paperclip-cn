@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
-import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type {
   DocumentRevision,
@@ -56,7 +55,6 @@ const DOCUMENT_KEY_PATTERN = /^[a-z0-9][a-z0-9_-]*$/;
 const getFoldedDocumentsStorageKey = (issueId: string) => `paperclip:issue-document-folds:${issueId}`;
 
 function loadFoldedDocumentKeys(issueId: string) {
-  const { t } = useTranslation("common");
   if (typeof window === "undefined") return [];
   try {
     const raw = window.localStorage.getItem(getFoldedDocumentsStorageKey(issueId));

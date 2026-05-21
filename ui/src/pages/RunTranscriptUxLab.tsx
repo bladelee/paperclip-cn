@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn, formatDateTime } from "../lib/utils";
@@ -42,7 +41,6 @@ const surfaceOptions: Array<{
 ];
 
 function previewEntries(surface: SurfaceId) {
-  const { t } = useTranslation("common");
   if (surface === "dashboard") {
     return runTranscriptFixtureEntries.slice(-9);
   }

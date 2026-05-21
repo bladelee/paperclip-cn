@@ -61,7 +61,6 @@ const catchUpPolicyDescriptions: Record<string, string> = {
 };
 
 function autoResizeTextarea(element: HTMLTextAreaElement | null) {
-  const { t } = useTranslation("issues");
   if (!element) return;
   element.style.height = "auto";
   element.style.height = `${element.scrollHeight}px`;
@@ -203,6 +202,7 @@ function buildRoutinesTabHref(tab: RoutinesTab) {
 }
 
 export function Routines() {
+  const { t } = useTranslation("routines");
   const { selectedCompanyId } = useCompany();
   const { setBreadcrumbs } = useBreadcrumbs();
   const queryClient = useQueryClient();
@@ -313,10 +313,10 @@ export function Routines() {
       setAdvancedOpen(false);
       await queryClient.invalidateQueries({ queryKey: queryKeys.routines.list(selectedCompanyId!) });
       pushToast({
-        title: "Routine created",
+        title: t("toast.routineCreated"),
         body: routine.assigneeAgentId
-          ? "Add the first trigger to turn it into a live workflow."
-          : "Draft saved. Add a default agent before enabling automation.",
+          ? t("toast.addTrigger")
+          : t("toast.draftSaved"),
         tone: "success",
       });
       navigate(`/routines/${routine.id}?tab=triggers`);
@@ -346,8 +346,8 @@ export function Routines() {
     },
     onError: (mutationError) => {
       pushToast({
-        title: "Failed to update routine",
-        body: mutationError instanceof Error ? mutationError.message : "Paperclip could not update the routine.",
+        title: t("toast.failedUpdate"),
+        body: mutationError instanceof Error ? mutationError.message : t("toast.couldNotUpdate"),
         tone: "error",
       });
     },
@@ -381,8 +381,8 @@ export function Routines() {
     },
     onError: (mutationError) => {
       pushToast({
-        title: "Routine run failed",
-        body: mutationError instanceof Error ? mutationError.message : "Paperclip could not start the routine run.",
+        title: t("toast.runFailed"),
+        body: mutationError instanceof Error ? mutationError.message : t("toast.couldNotStart"),
         tone: "error",
       });
     },
@@ -462,8 +462,8 @@ export function Routines() {
   function handleToggleEnabled(routine: RoutineListItem, enabled: boolean) {
     if (!enabled && !routine.assigneeAgentId) {
       pushToast({
-        title: "Default agent required",
-        body: "Set a default agent before enabling routine automation.",
+        title: t("toast.defaultAgentRequired"),
+        body: t("toast.setAgentFirst"),
         tone: "warn",
       });
       return;
@@ -482,7 +482,7 @@ export function Routines() {
   }
 
   if (!selectedCompanyId) {
-    return <EmptyState icon={Repeat} message="Select a company to view routines." />;
+    return <EmptyState icon={Repeat} message={t("selectCompany")} />;
   }
 
   if (isLoading) {
@@ -494,15 +494,15 @@ export function Routines() {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div className="space-y-1">
           <h1 className="text-2xl font-semibold tracking-tight">
-            Routines
+            {t("title")}
           </h1>
           <p className="text-sm text-muted-foreground">
-            Recurring work definitions that materialize into auditable execution issues.
+            {t("subtitle")}
           </p>
         </div>
         <Button onClick={() => setComposerOpen(true)}>
           <Plus className="mr-2 h-4 w-4" />
-          Create routine
+          {t("createRoutine")}
         </Button>
       </div>
 
@@ -513,29 +513,29 @@ export function Routines() {
           onValueChange={handleTabChange}
           items={[
             { value: "routines", label: i18n.t("nav:routines") },
-            { value: "runs", label: "Recent Runs" },
+            { value: "runs", label: t("recentRuns") },
           ]}
         />
         <TabsContent value="routines" className="space-y-4">
           <div className="flex items-center justify-between gap-3">
             <p className="text-sm text-muted-foreground">
-              {(routines ?? []).length} routine{(routines ?? []).length === 1 ? "" : "s"}
+              {t("routinesCount", { count: (routines ?? []).length })}
             </p>
             <div className="flex items-center gap-1">
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant="ghost" size="sm" className="text-xs" title="Sort">
+                  <Button variant="ghost" size="sm" className="text-xs" title={t("sort")}>
                     <ArrowUpDown className="h-3.5 w-3.5 sm:h-3 sm:w-3 sm:mr-1" />
-                    <span className="hidden sm:inline">Sort</span>
+                    <span className="hidden sm:inline">{t("sort")}</span>
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent align="end" className="w-44 p-0">
                   <div className="p-2 space-y-0.5">
                     {([
-                      ["updated", "Updated"],
-                      ["created", "Created"],
-                      ["lastRun", "Last run"],
-                      ["title", "Title"],
+                      ["updated", t("sortField.updated")],
+                      ["created", t("sortField.created")],
+                      ["lastRun", t("sortField.lastRun")],
+                      ["title", t("sortField.title")],
                     ] as const).map(([field, label]) => (
                       <button
                         key={field}
@@ -555,7 +555,7 @@ export function Routines() {
                         <span>{label}</span>
                         {routineViewState.sortField === field ? (
                           <span className="text-xs text-muted-foreground">
-                            {routineViewState.sortDir === "asc" ? "Asc" : "Desc"}
+                            {routineViewState.sortDir === "asc" ? t("sortDir.asc") : t("sortDir.desc")}
                           </span>
                         ) : null}
                       </button>
@@ -565,17 +565,17 @@ export function Routines() {
               </Popover>
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant="ghost" size="sm" className="text-xs" title="Group">
+                  <Button variant="ghost" size="sm" className="text-xs" title={t("group")}>
                     <Layers className="h-3.5 w-3.5 sm:h-3 sm:w-3 sm:mr-1" />
-                    <span className="hidden sm:inline">Group</span>
+                    <span className="hidden sm:inline">{t("group")}</span>
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent align="end" className="w-44 p-0">
                   <div className="p-2 space-y-0.5">
                     {([
-                      ["project", "Project"],
-                      ["assignee", "Agent"],
-                      ["none", "None"],
+                      ["project", t("groupBy.project")],
+                      ["assignee", t("groupBy.assignee")],
+                      ["none", t("groupBy.none")],
                     ] as const).map(([value, label]) => (
                       <button
                         key={value}
@@ -625,9 +625,9 @@ export function Routines() {
         >
           <div className="shrink-0 flex flex-wrap items-center justify-between gap-3 border-b border-border/60 px-5 py-3">
             <div>
-              <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">New routine</p>
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">{t("composer.title")}</p>
               <p className="text-sm text-muted-foreground">
-                Define the recurring work first. Default project and agent are optional for draft routines.
+                {t("composer.subtitle")}
               </p>
             </div>
             <Button
@@ -639,7 +639,7 @@ export function Routines() {
               }}
               disabled={createRoutine.isPending}
             >
-              Cancel
+              {t("composer.cancel")}
             </Button>
           </div>
 
@@ -648,7 +648,7 @@ export function Routines() {
               <textarea
                 ref={titleInputRef}
                 className="w-full resize-none overflow-hidden bg-transparent text-xl font-semibold outline-none placeholder:text-muted-foreground/50"
-                placeholder="Routine title"
+                placeholder={t("composer.titlePlaceholder")}
                 rows={1}
                 value={draft.title}
                 onChange={(event) => {
@@ -681,16 +681,16 @@ export function Routines() {
             <div className="px-5 pb-3">
               <div className="overflow-x-auto overscroll-x-contain">
                 <div className="inline-flex min-w-full flex-wrap items-center gap-2 text-sm text-muted-foreground sm:min-w-max sm:flex-nowrap">
-                  <span>For</span>
+                  <span>{t("composer.for")}</span>
                   <InlineEntitySelector
                     ref={assigneeSelectorRef}
                     value={draft.assigneeAgentId}
                     options={assigneeOptions}
                     recentOptionIds={recentAssigneeIds}
-                    placeholder="Assignee"
-                    noneLabel="No assignee"
-                    searchPlaceholder="Search assignees..."
-                    emptyMessage="No assignees found."
+                    placeholder={t("composer.assignee")}
+                    noneLabel={t("composer.noAssignee")}
+                    searchPlaceholder={t("composer.searchAssignees")}
+                    emptyMessage={t("composer.noAssigneesFound")}
                     onChange={(assigneeAgentId) => {
                       if (assigneeAgentId) trackRecentAssignee(assigneeAgentId);
                       setDraft((current) => ({ ...current, assigneeAgentId }));
@@ -713,7 +713,7 @@ export function Routines() {
                           <span className="truncate">{option.label}</span>
                         )
                       ) : (
-                        <span className="text-muted-foreground">Assignee</span>
+                        <span className="text-muted-foreground">{t("composer.assignee")}</span>
                       )
                     }
                     renderOption={(option) => {
@@ -727,16 +727,16 @@ export function Routines() {
                       );
                     }}
                   />
-                  <span>in</span>
+                  <span>{t("composer.in")}</span>
                   <InlineEntitySelector
                     ref={projectSelectorRef}
                     value={draft.projectId}
                     options={projectOptions}
                     recentOptionIds={recentProjectIds}
-                    placeholder="Project"
-                    noneLabel="No project"
-                    searchPlaceholder="Search projects..."
-                    emptyMessage="No projects found."
+                    placeholder={t("composer.project")}
+                    noneLabel={t("composer.noProject")}
+                    searchPlaceholder={t("composer.searchProjects")}
+                    emptyMessage={t("composer.noProjectsFound")}
                     onChange={(projectId) => {
                       if (projectId) trackRecentProject(projectId);
                       setDraft((current) => ({ ...current, projectId }));
@@ -752,7 +752,7 @@ export function Routines() {
                           <span className="truncate">{option.label}</span>
                         </>
                       ) : (
-                        <span className="text-muted-foreground">Project</span>
+                        <span className="text-muted-foreground">{t("composer.project")}</span>
                       )
                     }
                     renderOption={(option) => {

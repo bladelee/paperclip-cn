@@ -99,7 +99,6 @@ type SecretMessage = {
 };
 
 function autoResizeTextarea(element: HTMLTextAreaElement | null) {
-  const { t } = useTranslation("issues");
   if (!element) return;
   element.style.height = "auto";
   element.style.height = `${element.scrollHeight}px`;

@@ -313,9 +313,24 @@ export async function createApp(
       const indexHtml = applyUiBranding(fs.readFileSync(path.join(uiDist, "index.html"), "utf-8"));
       // Hashed asset files (Vite emits them under /assets/<name>.<hash>.<ext>)
       // never change once built, so they can be cached aggressively.
+      // Serve pre-compressed .gz files when the client supports it.
+      const assetsDir = path.join(uiDist, "assets");
       app.use(
         "/assets",
-        express.static(path.join(uiDist, "assets"), {
+        (req, res, next) => {
+          if ((req.path.endsWith(".js") || req.path.endsWith(".css")) && req.acceptsEncodings("gzip")) {
+            const gzPath = path.join(assetsDir, req.path + ".gz");
+            if (fs.existsSync(gzPath)) {
+              res.set("Content-Encoding", "gzip");
+              res.set("Content-Type", req.path.endsWith(".js") ? "text/javascript; charset=utf-8" : "text/css; charset=utf-8");
+              res.set("Cache-Control", "public, max-age=31536000, immutable");
+              res.sendFile(gzPath);
+              return;
+            }
+          }
+          next();
+        },
+        express.static(assetsDir, {
           maxAge: "1y",
           immutable: true,
         }),

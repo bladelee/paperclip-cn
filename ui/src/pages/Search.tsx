@@ -82,7 +82,6 @@ function isCompanySearchScope(value: string | null): value is CompanySearchScope
 }
 
 function describeScope(scope: CompanySearchScope) {
-  const { t } = useTranslation("common");
   if (scope === "all") return "All scopes";
   return SCOPE_LABELS[scope];
 }
@@ -112,6 +111,7 @@ function shapeError(error: unknown): { message: string; status?: number } {
 }
 
 export function Search() {
+  const { t } = useTranslation("search");
   const { selectedCompanyId } = useCompany();
   const { setBreadcrumbs } = useBreadcrumbs();
   const { openNewIssue } = useDialogActions();
@@ -345,15 +345,15 @@ export function Search() {
                 }
               }
             }}
-            placeholder="Search issues, comments, documents, agents, projects…"
-            aria-label="Search query"
+            placeholder={t("placeholder")}
+            aria-label={t("searchQuery")}
             className="h-10 pl-9 pr-20 text-sm"
           />
           {draftQuery.length > 0 ? (
             <button
               type="button"
               onClick={handleClear}
-              aria-label="Clear search"
+              aria-label={t("clearSearch")}
               className="absolute right-12 top-1/2 inline-flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full text-muted-foreground hover:bg-accent/50"
             >
               <X className="h-3.5 w-3.5" />
@@ -449,19 +449,20 @@ function SearchTabContent({
   isFetching,
   agentsById,
 }: SearchTabContentProps) {
+  const { t } = useTranslation("search");
   if (showInitialState) {
     return (
       <div className="mx-auto flex w-full max-w-2xl flex-col gap-4 px-4 py-10 sm:px-6">
         <div>
-          <h2 className="text-lg font-semibold">Type to search company memory.</h2>
+          <h2 className="text-lg font-semibold">{t("initialTitle")}</h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            Issues, comments, plan documents, agents, projects — same surface, ranked by relevance.
+            {t("initialDescription")}
           </p>
         </div>
         {recentSearches.length > 0 ? (
           <div>
             <div className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-              Recent searches
+              {t("recentSearches")}
             </div>
             <ul className="flex flex-col divide-y divide-border rounded-md border border-border">
               {recentSearches.map((entry) => (
@@ -481,16 +482,16 @@ function SearchTabContent({
         ) : null}
         <ul className="space-y-1 text-xs text-muted-foreground">
           <li>
-            <span className="font-medium text-foreground">Identifier lookup:</span> type{" "}
-            <code className="rounded bg-muted px-1 py-0.5 text-[11px]">PAP-123</code> to jump straight to an issue.
+            <span className="font-medium text-foreground">{t("identifierLookup")}:</span>{" "}
+            {t("identifierHint", { code: <code className="rounded bg-muted px-1 py-0.5 text-[11px]">PAP-123</code> })}
           </li>
           <li>
-            <span className="font-medium text-foreground">Quoted phrases:</span> wrap a phrase in quotes to match the
-            exact sequence.
+            <span className="font-medium text-foreground">{t("quotedPhrases")}:</span>{" "}
+            {t("quotedHint")}
           </li>
           <li>
-            <span className="font-medium text-foreground">⌘K:</span> reopens the command palette pre-seeded with your
-            current query.
+            <span className="font-medium text-foreground">⌘K:</span>{" "}
+            {t("shortcutHint")}
           </li>
         </ul>
       </div>
@@ -502,17 +503,16 @@ function SearchTabContent({
     return (
       <div className="mx-auto flex w-full max-w-xl flex-col items-center justify-center gap-3 px-4 py-12 text-center">
         <AlertTriangle className="h-10 w-10 text-destructive" aria-hidden />
-        <div className="text-base font-semibold">Couldn’t run that search</div>
+        <div className="text-base font-semibold">{t("errorTitle")}</div>
         <p className="text-sm text-muted-foreground">
-          {status ? `The server returned ${status}.` : "The request failed."} Your input and filters are still here, so
-          you can retry or fall back to the Issues filter.
+          {status ? t("errorDescription", { status }) : t("errorFallback")} {t("errorGuidance")}
         </p>
         <div className="flex flex-wrap items-center justify-center gap-2">
           <Button onClick={refetch} variant="default" size="sm">
-            Retry
+            {t("retry")}
           </Button>
           <Button onClick={navigateIssuesFallback} variant="outline" size="sm">
-            Open Issues filter view
+            {t("openIssuesFilter")}
           </Button>
         </div>
       </div>
@@ -523,7 +523,7 @@ function SearchTabContent({
     return (
       <div className="flex flex-col gap-2 px-2 py-3 sm:px-4">
         <div className="px-3 text-xs text-muted-foreground" data-testid="search-loading">
-          Searching for &ldquo;{trimmedQuery}&rdquo;…
+          {t("searching", { query: trimmedQuery })}
         </div>
         <div className="flex flex-col">
           <div className="px-3 py-2">
@@ -549,7 +549,7 @@ function SearchTabContent({
         <FileQuestion className="h-10 w-10 text-muted-foreground" aria-hidden />
         <div className="text-base font-semibold">No results for &ldquo;{trimmedQuery}&rdquo;</div>
         <p className="text-sm text-muted-foreground">
-          We couldn’t find a match in {describeScope(scope).toLowerCase()}. Try widening the scope or rephrasing your
+          We couldn't find a match in {describeScope(scope).toLowerCase()}. Try widening the scope or rephrasing your
           query.
         </p>
         <div className="flex flex-wrap items-center justify-center gap-2">

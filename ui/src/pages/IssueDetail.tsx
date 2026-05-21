@@ -1,5 +1,4 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState, type ChangeEvent, type DragEvent, type ReactNode, type Ref } from "react";
-import { useTranslation } from "react-i18next";
 import i18n from "@/locales";
 import { pickTextColorForPillBg } from "@/lib/color-contrast";
 import { Link, useLocation, useNavigate, useNavigationType, useParams } from "@/lib/router";
@@ -184,36 +183,32 @@ const LEAF_WORK_CONTROL_MODE_LABEL: Partial<Record<IssueTreeControlMode, string>
   pause: i18n.t("issues:actions.pauseWork"),
   resume: i18n.t("issues:actions.resumeWork"),
 };
-const TREE_CONTROL_MODE_HELP_TEXT: Record<IssueTreeControlMode, string> = {
-  pause: "Pause active execution in this issue subtree until an explicit resume.",
-  resume: "Release the active subtree pause hold so held work can continue.",
-  cancel: "Cancel non-terminal issues in this subtree and stop queued/running work where possible.",
-  restore: "Restore issues cancelled by this subtree operation so work can resume.",
-};
-const LEAF_WORK_CONTROL_MODE_HELP_TEXT: Partial<Record<IssueTreeControlMode, string>> = {
-  pause: "Pause active execution on this issue until an explicit resume.",
-  resume: "Release the active pause hold so this issue can continue.",
-};
+function getTreeControlHelpTextKey(mode: IssueTreeControlMode, scope: "leaf" | "subtree"): string {
+  const prefix = scope === "leaf" ? "issues:treeControlHelp.pauseLeaf" : "issues:treeControlHelp.pauseSubtree";
+  switch (mode) {
+    case "pause": return scope === "leaf" ? "issues:treeControlHelp.pauseLeaf" : "issues:treeControlHelp.pauseSubtree";
+    case "resume": return scope === "leaf" ? "issues:treeControlHelp.resumeLeaf" : "issues:treeControlHelp.resumeSubtree";
+    case "cancel": return "issues:treeControlHelp.cancelSubtree";
+    case "restore": return "issues:treeControlHelp.restoreSubtree";
+  }
+}
 function issueTreeControlLabel(mode: IssueTreeControlMode, scope: "leaf" | "subtree") {
-  const { t } = useTranslation("issues");
   return scope === "leaf"
     ? LEAF_WORK_CONTROL_MODE_LABEL[mode] ?? TREE_CONTROL_MODE_LABEL[mode]
     : TREE_CONTROL_MODE_LABEL[mode];
 }
 
 function issueTreeControlHelpText(mode: IssueTreeControlMode, scope: "leaf" | "subtree") {
-  return scope === "leaf"
-    ? LEAF_WORK_CONTROL_MODE_HELP_TEXT[mode] ?? TREE_CONTROL_MODE_HELP_TEXT[mode]
-    : TREE_CONTROL_MODE_HELP_TEXT[mode];
+  return i18n.t(getTreeControlHelpTextKey(mode, scope));
 }
 
 function treeControlPreviewErrorCopy(error: unknown): string {
   if (error instanceof ApiError) {
-    if (error.status === 403) return "Only board users can preview subtree controls.";
-    if (error.status === 409) return "Preview is stale because subtree hold state changed. Retry to refresh.";
-    if (error.status === 422) return "This subtree action is currently invalid for the selected issues.";
+    if (error.status === 403) return i18n.t("issues:previewErrors.boardUsersOnly");
+    if (error.status === 409) return i18n.t("issues:previewErrors.previewStale");
+    if (error.status === 422) return i18n.t("issues:previewErrors.invalidAction");
   }
-  return error instanceof Error ? error.message : "Unable to load preview.";
+  return error instanceof Error ? error.message : i18n.t("issues:previewErrors.unableToLoadPreview");
 }
 
 export function canBoardResolveRecoveryAction(
@@ -377,12 +372,12 @@ function ActorIdentity({ evt, agentMap, userProfileMap }: { evt: ActivityEvent; 
     const agent = agentMap.get(id);
     return <Identity name={agent?.name ?? id.slice(0, 8)} size="sm" />;
   }
-  if (evt.actorType === "system") return <Identity name="System" size="sm" />;
+  if (evt.actorType === "system") return <Identity name={i18n.t("issues:identity.system")} size="sm" />;
   if (evt.actorType === "user") {
     const profile = userProfileMap?.get(id);
-    return <Identity name={profile?.label ?? "Board"} avatarUrl={profile?.image} size="sm" />;
+    return <Identity name={profile?.label ?? i18n.t("issues:identity.board")} avatarUrl={profile?.image} size="sm" />;
   }
-  return <Identity name={id || "Unknown"} size="sm" />;
+  return <Identity name={id || i18n.t("issues:identity.unknown")} size="sm" />;
 }
 
 function IssueSectionSkeleton({
@@ -458,7 +453,7 @@ function IssueDetailLoadingState({
               {headerSeed.originKind === "routine_execution" && headerSeed.originId ? (
                 <span className="inline-flex items-center gap-1 rounded-full border border-violet-500/30 bg-violet-500/10 px-2 py-0.5 text-[10px] font-medium text-violet-600 dark:text-violet-400 shrink-0">
                   <Repeat className="h-3 w-3" />
-                  Routine
+                  {i18n.t("issues:detail.routine")}
                 </span>
               ) : null}
               {headerSeed.projectId ? (
@@ -471,7 +466,7 @@ function IssueDetailLoadingState({
               ) : (
                 <span className="inline-flex items-center gap-1 text-xs text-muted-foreground opacity-50 px-1 -mx-1 py-0.5">
                   <Hexagon className="h-3 w-3 shrink-0" />
-                  No project
+                  {i18n.t("issues:detail.noProject")}
                 </span>
               )}
             </>
@@ -567,7 +562,7 @@ function InboxMobileToolbar({
             size="icon-sm"
             onClick={onArchive}
             disabled={archivePending}
-            aria-label="Archive from inbox"
+            aria-label={i18n.t("issues:detail.archiveFromInbox")}
           >
             <Archive className="h-5 w-5" />
           </Button>
@@ -575,7 +570,7 @@ function InboxMobileToolbar({
 
         <Popover open={menuOpen} onOpenChange={setMenuOpen}>
           <PopoverTrigger asChild>
-            <Button variant="ghost" size="icon-sm" aria-label="More actions">
+            <Button variant="ghost" size="icon-sm" aria-label={i18n.t("issues:detail.moreActions")}>
               <MoreVertical className="h-5 w-5" />
             </Button>
           </PopoverTrigger>
@@ -585,14 +580,14 @@ function InboxMobileToolbar({
               onClick={() => { onCopy(); setMenuOpen(false); }}
             >
               <Copy className="h-3 w-3" />
-              Copy as markdown
+              {i18n.t("issues:detail.copyIssueAsMarkdown")}
             </button>
             <button
               className="flex items-center gap-2 w-full px-2 py-1.5 text-xs rounded hover:bg-accent/50"
               onClick={() => { onProperties(); setMenuOpen(false); }}
             >
               <SlidersHorizontal className="h-3 w-3" />
-              Properties
+              {i18n.t("issues:detail.properties")}
             </button>
             {issueIdProp && (
               <button
@@ -600,7 +595,7 @@ function InboxMobileToolbar({
                 onClick={() => { onHide(); setMenuOpen(false); }}
               >
                 <EyeOff className="h-3 w-3" />
-                Hide this issue
+                {i18n.t("issues:detail.hideThisIssue")}
               </button>
             )}
           </PopoverContent>
@@ -885,7 +880,7 @@ const IssueDetailChatTab = memo(function IssueDetailChatTab({
             disabled={commentsLoadingOlder}
             onClick={onLoadOlderComments}
           >
-            {commentsLoadingOlder ? "Loading earlier comments..." : "Load earlier comments"}
+            {commentsLoadingOlder ? i18n.t("issues:detail.loadingEarlierComments") : i18n.t("issues:detail.loadEarlierComments")}
           </Button>
         </div>
       ) : null}
@@ -932,7 +927,7 @@ const IssueDetailChatTab = memo(function IssueDetailChatTab({
         stoppingRunId={pausingWorkRunId}
         onStopRun={onPauseWorkRun}
         stopRunLabel={i18n.t("issues:actions.pauseWork")}
-        stoppingRunLabel="Pausing..."
+        stoppingRunLabel={i18n.t("issues:detail.pausing")}
         stopRunVariant="pause"
         onAcceptInteraction={onAcceptInteraction}
         onRejectInteraction={onRejectInteraction}
@@ -1102,13 +1097,13 @@ function IssueDetailActivityTab({
     <>
       {shouldShowCostSummary && (
         <div className="mb-3 px-3 py-2 rounded-lg border border-border">
-          <div className="text-sm font-medium text-muted-foreground mb-1">Cost Summary</div>
+          <div className="text-sm font-medium text-muted-foreground mb-1">{i18n.t("issues:detail.costSummary")}</div>
           {!issueCostSummary.hasCost && !issueCostSummary.hasTokens && !hasIssueTreeCost ? (
-            <div className="text-xs text-muted-foreground">No cost data yet.</div>
+            <div className="text-xs text-muted-foreground">{i18n.t("issues:detail.noCostData")}</div>
           ) : (
             <div className="space-y-1 text-xs text-muted-foreground tabular-nums">
               <div className="flex flex-wrap gap-3">
-                <span className="font-medium text-foreground">This issue</span>
+                <span className="font-medium text-foreground">{i18n.t("issues:detail.thisIssue")}</span>
                 {issueCostSummary.hasCost ? (
                   <span className="font-medium text-foreground">
                     ${issueCostSummary.cost.toFixed(4)}
@@ -1116,26 +1111,26 @@ function IssueDetailActivityTab({
                 ) : null}
                 {issueCostSummary.hasTokens ? (
                   <span>
-                    Tokens {formatTokens(issueCostSummary.totalTokens)}
+                    {i18n.t("issues:detail.tokens")} {formatTokens(issueCostSummary.totalTokens)}
                     {issueCostSummary.cached > 0
-                      ? ` (in ${formatTokens(issueCostSummary.input)}, out ${formatTokens(issueCostSummary.output)}, cached ${formatTokens(issueCostSummary.cached)})`
-                      : ` (in ${formatTokens(issueCostSummary.input)}, out ${formatTokens(issueCostSummary.output)})`}
+                      ? ` (${i18n.t("issues:detail.in")} ${formatTokens(issueCostSummary.input)}, ${i18n.t("issues:detail.out")} ${formatTokens(issueCostSummary.output)}, ${i18n.t("issues:detail.cached")} ${formatTokens(issueCostSummary.cached)})`
+                      : ` (${i18n.t("issues:detail.in")} ${formatTokens(issueCostSummary.input)}, ${i18n.t("issues:detail.out")} ${formatTokens(issueCostSummary.output)})`}
                   </span>
                 ) : null}
                 {issueCostSummary.hasRuntime ? (
                   <span>
-                    Runtime {formatDurationMs(issueCostSummary.runtimeMs)}
-                    {` (${issueCostSummary.runCount} run${issueCostSummary.runCount === 1 ? "" : "s"})`}
+                    {i18n.t("issues:detail.runtime")} {formatDurationMs(issueCostSummary.runtimeMs)}
+                    {` (${i18n.t("issues:detail.run", { count: issueCostSummary.runCount })})`}
                   </span>
                 ) : null}
                 {!issueCostSummary.hasCost && !issueCostSummary.hasTokens && !issueCostSummary.hasRuntime ? (
-                  <span>No direct cost data.</span>
+                  <span>{i18n.t("issues:detail.noDirectCostData")}</span>
                 ) : null}
               </div>
               {hasIssueTreeCost && issueTreeCostSummary ? (
                 <div className="flex flex-wrap gap-3">
                   <span className="font-medium text-foreground">
-                    Including sub-issues {(issueTreeCostSummary.costCents / 100).toLocaleString(undefined, {
+                    {i18n.t("issues:detail.includingSubIssues")} {(issueTreeCostSummary.costCents / 100).toLocaleString(undefined, {
                       style: "currency",
                       currency: "USD",
                       minimumFractionDigits: 4,
@@ -1143,18 +1138,18 @@ function IssueDetailActivityTab({
                     })}
                   </span>
                   <span>
-                    Tokens {formatTokens(issueTreeCostTokens)}
+                    {i18n.t("issues:detail.tokens")} {formatTokens(issueTreeCostTokens)}
                     {issueTreeCostSummary.cachedInputTokens > 0
-                      ? ` (in ${formatTokens(issueTreeCostSummary.inputTokens)}, out ${formatTokens(issueTreeCostSummary.outputTokens)}, cached ${formatTokens(issueTreeCostSummary.cachedInputTokens)})`
-                      : ` (in ${formatTokens(issueTreeCostSummary.inputTokens)}, out ${formatTokens(issueTreeCostSummary.outputTokens)})`}
+                      ? ` (${i18n.t("issues:detail.in")} ${formatTokens(issueTreeCostSummary.inputTokens)}, ${i18n.t("issues:detail.out")} ${formatTokens(issueTreeCostSummary.outputTokens)}, ${i18n.t("issues:detail.cached")} ${formatTokens(issueTreeCostSummary.cachedInputTokens)})`
+                      : ` (${i18n.t("issues:detail.in")} ${formatTokens(issueTreeCostSummary.inputTokens)}, ${i18n.t("issues:detail.out")} ${formatTokens(issueTreeCostSummary.outputTokens)})`}
                   </span>
                   {issueTreeCostSummary.runCount > 0 ? (
                     <span>
-                      Runtime {formatDurationMs(issueTreeCostSummary.runtimeMs)}
-                      {` (${issueTreeCostSummary.runCount} run${issueTreeCostSummary.runCount === 1 ? "" : "s"})`}
+                      {i18n.t("issues:detail.runtime")} {formatDurationMs(issueTreeCostSummary.runtimeMs)}
+                      {` (${i18n.t("issues:detail.run", { count: issueTreeCostSummary.runCount })})`}
                     </span>
                   ) : null}
-                  <span>{issueTreeCostSummary.issueCount} issue{issueTreeCostSummary.issueCount === 1 ? "" : "s"}</span>
+                  <span>{i18n.t("issues:detail.issue", { count: issueTreeCostSummary.issueCount })}</span>
                 </div>
               ) : null}
             </div>
@@ -1581,7 +1576,7 @@ export function IssueDetail() {
       options.push({ id: `agent:${agent.id}`, label: agent.name });
     }
     if (currentUserId) {
-      options.push({ id: `user:${currentUserId}`, label: "Me" });
+      options.push({ id: `user:${currentUserId}`, label: i18n.t("issues:identity.me") });
     }
     return options;
   }, [agents, companyMembers?.users, currentUserId]);
@@ -1605,7 +1600,7 @@ export function IssueDetail() {
     () => mergeIssueComments(comments ?? [], optimisticComments),
     [comments, optimisticComments],
   );
-  const breadcrumbTitle = issue?.title ?? issueId ?? "Issue";
+  const breadcrumbTitle = issue?.title ?? issueId ?? i18n.t("issues:title");
   const issueCacheRefs = useMemo(() => {
     const refs = new Set<string>();
     if (issueId) refs.add(issueId);
@@ -1757,8 +1752,8 @@ export function IssueDetail() {
         queryClient.setQueryData(queryKeys.issues.list(context.selectedCompanyId), context.previousList);
       }
       pushToast({
-        title: "Issue update failed",
-        body: err instanceof Error ? err.message : "Unable to save issue changes",
+        title: i18n.t("issues:toasts.issueUpdateFailed"),
+        body: err instanceof Error ? err.message : i18n.t("issues:toasts.unableToSaveIssueChanges"),
         tone: "error",
       });
     },
@@ -1785,8 +1780,8 @@ export function IssueDetail() {
     },
     onError: (err) => {
       pushToast({
-        title: "Recovery resolution failed",
-        body: err instanceof Error ? err.message : "Unable to resolve recovery action",
+        title: i18n.t("issues:toasts.recoveryResolutionFailed"),
+        body: err instanceof Error ? err.message : i18n.t("issues:toasts.unableToResolveRecovery"),
         tone: "error",
       });
     },
@@ -1830,19 +1825,19 @@ export function IssueDetail() {
       const cancelCount = result.preview?.totals.activeRuns ?? 0;
       pushToast({
         title: result.kind === "release"
-          ? treeControlScope === "leaf" ? "Work resumed" : "Subtree resumed"
+          ? treeControlScope === "leaf" ? i18n.t("issues:toasts.workResumed") : i18n.t("issues:toasts.subtreeResumed")
           : result.hold.mode === "pause"
-            ? treeControlScope === "leaf" ? "Work paused" : "Subtree paused"
+            ? treeControlScope === "leaf" ? i18n.t("issues:toasts.workPaused") : i18n.t("issues:toasts.subtreePaused")
             : `${modeLabel} applied`,
         body: result.kind === "release"
-          ? (result.hold.releaseReason?.trim() || (treeControlScope === "leaf" ? "Active issue pause released." : "Active subtree pause released."))
+          ? (result.hold.releaseReason?.trim() || (treeControlScope === "leaf" ? i18n.t("issues:toasts.activeIssuePauseReleased") : i18n.t("issues:toasts.activeSubtreePauseReleased")))
           : result.hold.mode === "pause"
             ? treeControlScope === "leaf"
-              ? `Work paused. ${cancelCount} run${cancelCount === 1 ? "" : "s"} cancelled.`
-              : `Subtree paused. ${cancelCount} run${cancelCount === 1 ? "" : "s"} cancelled.`
+              ? `${i18n.t("issues:toasts.workPaused")} ${cancelCount} ${i18n.t("issues:detail.run", { count: cancelCount })} cancelled.`
+              : `${i18n.t("issues:toasts.subtreePaused")} ${cancelCount} ${i18n.t("issues:detail.run", { count: cancelCount })} cancelled.`
             : result.hold.reason?.trim()
               ? result.hold.reason
-              : "Subtree control applied.",
+              : i18n.t("issues:toasts.subtreeControlApplied"),
       });
       setTreeControlOpen(false);
       setTreeControlReason("");
@@ -1872,8 +1867,8 @@ export function IssueDetail() {
     },
     onError: (err) => {
       pushToast({
-        title: "Unable to apply subtree control",
-        body: err instanceof Error ? err.message : "Please try again.",
+        title: i18n.t("issues:toasts.unableToApplySubtreeControl"),
+        body: err instanceof Error ? err.message : i18n.t("issues:toasts.pleaseTryAgain"),
         tone: "error",
       });
     },
@@ -1882,7 +1877,7 @@ export function IssueDetail() {
     mutationFn: async ({ runId, scope }: { runId: string; scope: "leaf" | "subtree" }) => {
       const created = await issuesApi.createTreeHold(issueId!, {
         mode: "pause",
-        reason: "Paused from active run controls.",
+        reason: i18n.t("issues:toasts.pausedFromActiveRun"),
         releasePolicy: { strategy: "manual", note: scope === "leaf" ? "leaf_pause" : "full_pause" },
         metadata: { source: "issue_active_run_control", runId },
       });
@@ -1891,10 +1886,10 @@ export function IssueDetail() {
     onSuccess: async (result) => {
       const cancelCount = result.preview?.totals.activeRuns ?? 0;
       pushToast({
-        title: "Work paused",
+        title: i18n.t("issues:toasts.workPaused"),
         body: cancelCount > 0
-          ? `Work paused. ${cancelCount} run${cancelCount === 1 ? "" : "s"} cancelled.`
-          : "Work paused. This issue is held until resume.",
+          ? `${i18n.t("issues:toasts.workPaused")} ${cancelCount} ${i18n.t("issues:detail.run", { count: cancelCount })} cancelled.`
+          : i18n.t("issues:toasts.workPausedHeldUntilResume"),
         tone: "success",
       });
       await Promise.all([
@@ -1911,8 +1906,8 @@ export function IssueDetail() {
     },
     onError: (err) => {
       pushToast({
-        title: "Unable to pause work",
-        body: err instanceof Error ? err.message : "Please try again.",
+        title: i18n.t("issues:toasts.unableToPauseWork"),
+        body: err instanceof Error ? err.message : i18n.t("issues:toasts.pleaseTryAgain"),
         tone: "error",
       });
     },
@@ -1931,8 +1926,8 @@ export function IssueDetail() {
     },
     onError: (err) => {
       pushToast({
-        title: "Issue update failed",
-        body: err instanceof Error ? err.message : "Unable to save sub-issue changes",
+        title: i18n.t("issues:toasts.issueUpdateFailed"),
+        body: err instanceof Error ? err.message : i18n.t("issues:toasts.unableToSaveSubIssueChanges"),
         tone: "error",
       });
     },
@@ -1948,14 +1943,14 @@ export function IssueDetail() {
       invalidateIssueRunState();
       invalidateIssueCollections();
       pushToast({
-        title: "Monitor check queued",
+        title: i18n.t("issues:toasts.monitorCheckQueued"),
         tone: "success",
       });
     },
     onError: (err) => {
       pushToast({
-        title: "Monitor check failed",
-        body: err instanceof Error ? err.message : "Unable to trigger the monitor right now",
+        title: i18n.t("issues:toasts.monitorCheckFailed"),
+        body: err instanceof Error ? err.message : i18n.t("issues:toasts.unableToTriggerMonitor"),
         tone: "error",
       });
     },
@@ -1980,14 +1975,14 @@ export function IssueDetail() {
         queryClient.invalidateQueries({ queryKey: queryKeys.approvals.list(resolvedCompanyId) });
       }
       pushToast({
-        title: variables.action === "approve" ? "Approval approved" : "Approval rejected",
+        title: variables.action === "approve" ? i18n.t("issues:toasts.approvalApproved") : i18n.t("issues:toasts.approvalRejected"),
         tone: "success",
       });
     },
     onError: (err, variables) => {
       pushToast({
-        title: variables.action === "approve" ? "Approval failed" : "Rejection failed",
-        body: err instanceof Error ? err.message : "Unable to update approval",
+        title: variables.action === "approve" ? i18n.t("issues:toasts.approvalFailed") : i18n.t("issues:toasts.rejectionFailed"),
+        body: err instanceof Error ? err.message : i18n.t("issues:toasts.unableToUpdateApproval"),
         tone: "error",
       });
     },

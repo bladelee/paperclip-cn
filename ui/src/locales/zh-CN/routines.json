@@ -1,0 +1,76 @@
+{
+  "title": "例程",
+  "subtitle": "周期性工作定义，可生成可审计的执行任务。",
+  "createRoutine": "创建例程",
+  "selectCompany": "请选择一个公司以查看例程。",
+  "recentRuns": "最近运行",
+  "routinesCount": "{{count}} 个例程",
+  "routinesCount_other": "{{count}} 个例程",
+  "sort": "排序",
+  "group": "分组",
+  "sortField": {
+    "updated": "更新时间",
+    "created": "创建时间",
+    "lastRun": "上次运行",
+    "title": "标题"
+  },
+  "sortDir": {
+    "asc": "升序",
+    "desc": "降序"
+  },
+  "groupBy": {
+    "project": "项目",
+    "assignee": "Agent",
+    "none": "无"
+  },
+  "noProject": "无项目",
+  "unknownProject": "未知项目",
+  "unassigned": "未分配",
+  "unknownAgent": "未知 Agent",
+  "toast": {
+    "routineCreated": "例程已创建",
+    "addTrigger": "添加第一个触发器将其变为实时工作流。",
+    "draftSaved": "草稿已保存。启用自动化前请先添加默认 Agent。",
+    "failedUpdate": "更新例程失败",
+    "couldNotUpdate": "Paperclip 无法更新该例程。",
+    "runFailed": "例程运行失败",
+    "couldNotStart": "Paperclip 无法启动例程运行。",
+    "defaultAgentRequired": "需要默认 Agent",
+    "setAgentFirst": "启用例程自动化前请先设置默认 Agent。"
+  },
+  "composer": {
+    "title": "新建例程",
+    "subtitle": "先定义周期性工作。默认项目和 Agent 对草稿例程是可选的。",
+    "cancel": "取消",
+    "titlePlaceholder": "例程标题",
+    "for": "负责人",
+    "in": "所属",
+    "assignee": "负责人",
+    "noAssignee": "无负责人",
+    "searchAssignees": "搜索负责人...",
+    "noAssigneesFound": "未找到负责人。",
+    "project": "项目",
+    "noProject": "无项目",
+    "searchProjects": "搜索项目...",
+    "noProjectsFound": "未找到项目。",
+    "addInstructions": "添加说明...",
+    "advancedDelivery": "高级投递设置",
+    "advancedDeliveryDesc": "将策略控制置于工作定义之后。",
+    "concurrency": "并发",
+    "catchUp": "追赶",
+    "afterCreation": "创建后，Paperclip 会直接带你进入触发器设置。草稿例程在添加默认 Agent 前保持暂停状态。",
+    "creating": "创建中...",
+    "failedCreate": "创建例程失败"
+  },
+  "concurrencyPolicy": {
+    "coalesce_if_active": "如果有运行正在进行，则只保留一个后续运行排队。",
+    "always_enqueue": "将每次触发都加入队列，即使例程已在运行。",
+    "skip_if_active": "当运行仍在进行时，丢弃新的触发。"
+  },
+  "catchUpPolicy": {
+    "skip_missed": "忽略调度器或例程暂停期间错过的窗口。",
+    "enqueue_missed_with_cap": "恢复后以有上限的批次追赶错过的调度窗口。"
+  },
+  "noRoutinesYet": "暂无例程。使用「创建例程」定义第一个周期性工作流。",
+  "failedLoad": "加载例程失败"
+}

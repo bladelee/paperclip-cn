@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
 import {
   WORKSPACE_BRANCH_ROUTINE_VARIABLE,
   type Agent,
@@ -38,7 +37,6 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 
 function buildInitialValues(variables: RoutineVariable[]) {
-  const { t } = useTranslation("common");
   return Object.fromEntries(variables.map((variable) => [variable.name, variable.defaultValue ?? ""]));
 }
 

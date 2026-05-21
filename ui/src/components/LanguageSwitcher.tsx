@@ -4,7 +4,7 @@ import { Globe } from "lucide-react";
 const LANGUAGES = [
   { code: "en", label: "English", flag: "🇺🇸" },
   { code: "zh-CN", label: "简体中文", flag: "🇨🇳" },
-] as const;
+];
 
 export function LanguageSwitcher({ compact = false }: { compact?: boolean }) {
   const { i18n } = useTranslation();

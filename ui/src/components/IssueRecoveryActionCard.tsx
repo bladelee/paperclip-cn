@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import { useTranslation } from "react-i18next";
 import type {
   Agent,
   IssueRecoveryAction,
@@ -156,7 +155,6 @@ function pickEvidenceSummary(action: IssueRecoveryAction): string | null {
 }
 
 function readEvidenceRunId(action: IssueRecoveryAction, key: "sourceRunId" | "correctiveRunId" | "latestRunId") {
-  const { t } = useTranslation("common");
   const evidence = action.evidence ?? {};
   const next = readEvidenceString(evidence[key]);
   return next;

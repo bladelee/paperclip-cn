@@ -1,5 +1,4 @@
 import { useEffect, useMemo } from "react";
-import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
 import { AlertCircle, UserRound } from "lucide-react";
 import type { UserProfileDailyPoint, UserProfileWindowStats } from "@paperclipai/shared";
@@ -26,7 +25,6 @@ import {
 const NO_COMPANY = "__none__";
 
 function initials(name: string | null | undefined) {
-  const { t } = useTranslation("settings");
   const value = name?.trim() || "User";
   const parts = value.split(/\s+/).filter(Boolean);
   if (parts.length > 1) return `${parts[0]?.[0] ?? ""}${parts[parts.length - 1]?.[0] ?? ""}`.toUpperCase();

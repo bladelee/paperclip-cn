@@ -1,6 +1,5 @@
 import type { KeyboardEvent, ReactNode } from "react";
 import { useMemo, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { cn } from "../lib/utils";
 import {
   ChevronDown,
@@ -93,7 +92,6 @@ export function buildFileTree(
   }
 
   function sortNode(node: FileTreeNode) {
-  const { t } = useTranslation("common");
     node.children.sort((a, b) => {
       // Files before directories so PROJECT.md appears above tasks/
       if (a.kind !== b.kind) return a.kind === "file" ? -1 : 1;

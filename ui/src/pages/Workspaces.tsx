@@ -128,7 +128,7 @@ export function Workspaces() {
       </div>
 
       {groups.length === 0 ? (
-        <p className="text-sm text-muted-foreground">No workspace activity yet.</p>
+        <p className="text-sm text-muted-foreground">{t("workspace.noActivity")}</p>
       ) : (
         <div className="space-y-8">
           {groups.map((group) => (
@@ -148,7 +148,7 @@ export function Workspaces() {
                   ) : null}
                 </div>
                 <span className="text-xs text-muted-foreground">
-                  {group.summaries.length} workspace{group.summaries.length === 1 ? "" : "s"}
+                  {t("workspace.workspaceCount", { count: group.summaries.length })}
                 </span>
               </div>
               <ProjectWorkspacesContent

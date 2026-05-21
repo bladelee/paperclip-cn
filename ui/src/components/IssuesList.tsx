@@ -146,7 +146,6 @@ function getViewState(key: string): IssueViewState {
 }
 
 function saveViewState(key: string, state: IssueViewState) {
-  const { t } = useTranslation("issues");
   localStorage.setItem(key, JSON.stringify(state));
 }
 
@@ -589,6 +588,7 @@ export function IssuesList({
   onSearchChange,
   onUpdateIssue,
 }: IssuesListProps) {
+  const { t } = useTranslation("issues");
   const rootRef = useRef<HTMLDivElement | null>(null);
   const { selectedCompanyId } = useCompany();
   const { openNewIssue } = useDialogActions();
@@ -1237,8 +1237,8 @@ export function IssuesList({
     viewState.groupBy,
   ]);
 
-  const createActionLabel = createIssueLabel ? `Create ${createIssueLabel}` : "Create Issue";
-  const createButtonLabel = createIssueLabel ? `New ${createIssueLabel}` : "New Issue";
+  const createActionLabel = createIssueLabel ? t("list.createItem", "Create {{item}}", { item: createIssueLabel }) : t("list.createIssue", "Create Issue");
+  const createButtonLabel = createIssueLabel ? t("list.newItem", "New {{item}}", { item: createIssueLabel }) : t("list.newIssue", "New Issue");
   const openCreateIssueDialog = useCallback((group?: { key: string; items: Issue[] }) => {
     openNewIssue(newIssueDefaults(group));
   }, [newIssueDefaults, openNewIssue]);

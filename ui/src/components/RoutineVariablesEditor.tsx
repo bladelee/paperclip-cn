@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { ChevronDown, ChevronRight, HelpCircle } from "lucide-react";
 import { syncRoutineVariablesWithTemplate, type RoutineVariable } from "@paperclipai/shared";
 import { Badge } from "@/components/ui/badge";
@@ -25,7 +24,6 @@ import { Textarea } from "@/components/ui/textarea";
 const variableTypes: RoutineVariable["type"][] = ["text", "textarea", "number", "boolean", "select"];
 
 function serializeVariables(value: RoutineVariable[]) {
-  const { t } = useTranslation("common");
   return JSON.stringify(value);
 }
 

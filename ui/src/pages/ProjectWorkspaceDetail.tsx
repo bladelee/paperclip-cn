@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { Link, useNavigate, useParams } from "@/lib/router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { isUuidLike, type ProjectWorkspace } from "@paperclipai/shared";
@@ -50,7 +49,6 @@ const VISIBILITY_OPTIONS: Array<{ value: ProjectWorkspaceVisibility; label: stri
 ];
 
 function isSafeExternalUrl(value: string | null | undefined) {
-  const { t } = useTranslation("projects");
   if (!value) return false;
   try {
     const parsed = new URL(value);

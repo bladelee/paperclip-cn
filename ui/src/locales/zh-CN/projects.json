@@ -4,17 +4,40 @@
   "edit": "编辑项目",
   "delete": "删除项目",
   "noProjects": "暂无项目",
+  "addDescription": "添加描述...",
+  "pausedByBudget": "因预算暂停",
+  "managedBy": "由 {{name}} 管理",
+  "changeColor": "更改项目颜色",
+  "selectColor": "选择颜色 {{color}}",
+  "archived": "已归档「{{name}}」",
+  "unarchived": "已取消归档「{{name}}」",
+  "archiveFailed": "归档项目失败",
+  "unarchiveFailed": "取消归档项目失败",
+  "loadingWorkspaces": "正在加载工作区...",
   "fields": {
     "name": "项目名称",
     "description": "描述",
     "repository": "仓库地址",
     "defaultBranch": "默认分支",
-    "workspacePath": "工作区路径"
+    "workspacePath": "工作区路径",
+    "status": "状态",
+    "targetDate": "目标日期"
+  },
+  "tabs": {
+    "overview": "概览",
+    "issues": "问题",
+    "configuration": "配置",
+    "budget": "预算",
+    "workspaces": "工作区",
+    "pluginOperations": "操作"
   },
   "workspace": {
     "title": "工作区",
     "create": "创建工作区",
     "status": "状态",
-    "branch": "分支"
+    "branch": "分支",
+    "noActivity": "暂无工作区活动。",
+    "workspaceCount": "{{count}} 个工作区",
+    "workspaceCount_plural": "{{count}} 个工作区"
   }
 }

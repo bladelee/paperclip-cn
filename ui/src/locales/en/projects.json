@@ -4,17 +4,40 @@
   "edit": "Edit project",
   "delete": "Delete project",
   "noProjects": "No projects",
+  "addDescription": "Add a description...",
+  "pausedByBudget": "Paused by budget",
+  "managedBy": "Managed by {{name}}",
+  "changeColor": "Change project color",
+  "selectColor": "Select color {{color}}",
+  "archived": "\"{{name}}\" has been archived",
+  "unarchived": "\"{{name}}\" has been unarchived",
+  "archiveFailed": "Failed to archive project",
+  "unarchiveFailed": "Failed to unarchive project",
+  "loadingWorkspaces": "Loading workspaces...",
   "fields": {
     "name": "Project name",
     "description": "Description",
     "repository": "Repository URL",
     "defaultBranch": "Default branch",
-    "workspacePath": "Workspace path"
+    "workspacePath": "Workspace path",
+    "status": "Status",
+    "targetDate": "Target date"
+  },
+  "tabs": {
+    "overview": "Overview",
+    "issues": "Issues",
+    "configuration": "Configuration",
+    "budget": "Budget",
+    "workspaces": "Workspaces",
+    "pluginOperations": "Operations"
   },
   "workspace": {
     "title": "Workspaces",
     "create": "Create workspace",
     "status": "Status",
-    "branch": "Branch"
+    "branch": "Branch",
+    "noActivity": "No workspace activity yet.",
+    "workspaceCount": "{{count}} workspace",
+    "workspaceCount_plural": "{{count}} workspaces"
   }
 }

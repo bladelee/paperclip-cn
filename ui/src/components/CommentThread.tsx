@@ -1,5 +1,4 @@
 import { memo, useEffect, useMemo, useRef, useState, type ChangeEvent } from "react";
-import { useTranslation } from "react-i18next";
 import i18n from "@/locales";
 import { Link, useLocation } from "react-router-dom";
 import type {
@@ -120,7 +119,6 @@ function loadDraft(draftKey: string): string {
 }
 
 function saveDraft(draftKey: string, value: string) {
-  const { t } = useTranslation("issues");
   try {
     if (value.trim()) {
       localStorage.setItem(draftKey, value);

@@ -1,11 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { ArrowDown } from "lucide-react";
 import { usePanel } from "../context/PanelContext";
 import { cn } from "../lib/utils";
 
 function resolveScrollTarget() {
-  const { t } = useTranslation("common");
   const mainContent = document.getElementById("main-content");
 
   if (mainContent instanceof HTMLElement) {
